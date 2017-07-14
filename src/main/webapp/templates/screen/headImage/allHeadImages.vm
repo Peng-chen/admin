@@ -1,0 +1,89 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px;">
+		<div id="detailcontainer" class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有头像</h3>
+			</div>
+			
+			#if($status)
+				<div class="table-responsive">
+					<table cellpadding="15px" class="table table-hover  table-bordered table-condensed text-center">
+                        <colgroup>
+                            <col width='5%'></col>
+                            <col width='5%'></col>
+                            <col width='25%'></col>
+                            <col width='10%'></col>
+                            <col width='5%'></col>
+                            <col width='10%'></col>
+                            <col width='25%'></col>
+                            <col width='5%'></col>
+                            <col width='10%'></col>
+                        </colgroup>
+						<tr>
+							<th>id</th>
+							<th>头像名称</th>
+							<th>描述</th>
+                            <th>tag</th>
+                            <th>quality</th>
+                            <th>source</th>
+                            <th>技能</th>
+                            <th>类型</th>
+							<th>操作</th>
+						</tr>
+						#if($headImages)
+							#foreach( $headImage in $headImages)
+								<tr>
+									<td>$headImage.id</td>
+									<td>$headImage.name</td>
+									#if($headImage.description)
+									<td>$headImage.description</td>
+									#else
+									<td>无</td>
+									#end
+									
+									<td>$headImage.tag</td>
+                                    <td>$headImage.quality</td>
+                                    <td>$headImage.source</td>
+                                    <td>$headImage.skill</td>
+##                                    <td>$headImage.type</td>
+
+									#if($headImage.type==0)
+                                        <td>无差别</td>
+									#elseif($headImage.type==1)
+                                        <td>红</td>
+									#elseif($headImage.type==2)
+                                        <td>蓝</td>
+									#elseif($headImage.type==3)
+                                        <td>绿</td>
+									#elseif($headImage.type==4)
+                                        <td>黄</td>
+									#end
+
+									
+									<td><form action=" /admin/headImage/update">
+												<input type="hidden" name="headId" value="$headImage.id" />
+												<input type="hidden" name="token" value="$token"/> <input
+													type="submit" class="btn btn-default" value="修改" />
+										</form>
+
+                                        <form id="deleteHeadImage-form" action="#" onsubmit="deleteHeadImage(this);">
+                                            <input type="hidden" name="HeadImageId" value="$headImage.id" /><input type="hidden" name="token" value="$token"/> <input
+                                                id="deleteHeadImage-btn"   type="submit" class="btn btn-default" value="删除" />
+                                        </form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+
+</div>

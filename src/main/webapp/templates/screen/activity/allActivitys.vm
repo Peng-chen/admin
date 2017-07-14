@@ -1,0 +1,548 @@
+<div class="container">
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#divPKActivity").hide();
+            var usualLabel = document.getElementById('usualActivity');
+            usualLabel.addEventListener('click', function () {
+
+                $("#divPKActivity").hide();
+                $("#divUsualActivity").toggle();
+            }, false);
+
+            var PKLabel = document.getElementById('pkActivity');
+            PKLabel.addEventListener('click', function () {
+                $("#divUsualActivity").hide();
+                $("#divPKActivity").toggle();
+            }, false);
+        });
+    </script>
+    #parse("/screen/nav.vm")
+    <div class="data"
+         style="padding-left: 4%;  border: 0px">
+        <div id="detailcontainer" class="panel panel-default"
+             style="width: 95%">
+            <div class="panel-heading">
+                <h3 class="panel-title">所有活动</h3>
+
+                <div class="row">
+                    <label id="usualActivity" class="btn-primary span4 ">日常活动</label>
+                    <label id="pkActivity" class="btn-primary span4 offset2">打榜活动</label>
+                </div>
+            </div>
+
+            #if($status)
+
+
+                <div class=" table-responsive " id="divUsualActivity">
+                    <table cellpadding="10px" class="table table-hover table-bordered table-condensed text-center">
+                        <thead>
+                        <colgroup>
+                            <col width='3%'></col>
+                            <col width='3%'></col>
+                            <col width='3%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                        </colgroup>
+                        <tr>
+                            <th data-editable="true">id</th>
+                            <th data-editable="true">类型</th>
+                            <th>周期</th>
+                            <th data-editable="true">名称</th>
+                            <th>标签</th>
+                            <th> 描述、简介</th>
+                            <th>谱面列表</th>
+                            <th>首次挑战成功的奖励</th>
+                            <th>非首次挑战成功的奖励</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #if($now-allActivitys)
+                                #foreach( $activity in $now-allActivitys)
+
+                                    #if($activity.type==1)
+
+                                    <tr class="success">
+
+                                        <td>$activity.id</td>
+                                        <td>$activity.type</td>
+                                        <td>$activity.period</td>
+                                        <td>$activity.name</td>
+                                        <td>$activity.tag</td>
+                                        #if($activity.description)
+                                            <td>$activity.description</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+                                        #if($activity.schemes)
+                                            <td>$activity.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+                                        <td> #if($activity.massiveAward)
+                                    #set($award=$activity.massiveAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    ##									#if($activity.massiveAward)
+                                    ##                                        <td>$activity.massiveAward</td>
+                                    ##									#else
+                                    ##                                        <td></td>
+                                    ##									#end
+                                        <td> #if($activity.leastAward)
+                                    #set($award=$activity.leastAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    ##									#if($activity.leastAward)
+                                    ##                                        <td>$activity.leastAward</td>
+                                    ##									#else
+                                    ##                                        <td></td>
+                                    ##									#end
+                                        #if($activity.startTime)
+                                            <td>$activity.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($activity.endTime)
+                                            <td>$activity.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+                                        <td>
+                                            <form action=" /admin/activity/activityInfo">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/><input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteActivity-form" action="#" onsubmit="deleteActivity(this);">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    id="deleteActivity-btn" type="submit" class="btn btn-default"
+                                                    value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    #end
+                                #end
+                            #end
+
+                            #if($future-allActivitys)
+                                #foreach( $activity in $future-allActivitys)
+
+                                    #if($activity.type==1)
+
+                                    <tr class="warning">
+                                        <td>$activity.id</td>
+                                        <td>$activity.type</td>
+                                        <td>$activity.period</td>
+                                        <td>$activity.name</td>
+                                        <td>$activity.tag</td>
+                                        #if($activity.description)
+                                            <td>$activity.description</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+                                        #if($activity.schemes)
+                                            <td>$activity.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                    ##                                        #if($activity.massiveAward)
+                                    ##                                            <td>$activity.massiveAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                    ##                                        #if($activity.leastAward)
+                                    ##                                            <td>$activity.leastAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                        <td> #if($activity.massiveAward)
+                                    #set($award=$activity.massiveAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        <td> #if($activity.leastAward)
+                                    #set($award=$activity.leastAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        #if($activity.startTime)
+                                            <td>$activity.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($activity.endTime)
+                                            <td>$activity.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+                                        <td>
+                                            <form action=" /admin/activity/activityInfo">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteActivity-form" action="#" onsubmit="deleteActivity(this);">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/><input
+                                                    id="deleteActivity-btn" type="submit" class="btn btn-default"
+                                                    value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    #end
+                                #end
+                            #end
+
+
+                            #if($before-allActivitys)
+                                #foreach( $activity in $before-allActivitys)
+
+                                    #if($activity.type==1)
+
+                                    <tr class="danger">
+                                        <td>$activity.id</td>
+                                        <td>$activity.type</td>
+                                        <td>$activity.period</td>
+                                        <td>$activity.name</td>
+                                        <td>$activity.tag</td>
+                                        #if($activity.description)
+                                            <td>$activity.description</td>
+                                        #else
+                                            <td>无</td>
+                                        #end
+
+                                        #if($activity.schemes)
+                                            <td>$activity.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                    ##                                        #if($activity.massiveAward)
+                                    ##                                            <td>$activity.massiveAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                    ##                                        #if($activity.leastAward)
+                                    ##                                            <td>$activity.leastAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                        <td> #if($activity.massiveAward)
+                                    #set($award=$activity.massiveAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        <td> #if($activity.leastAward)
+                                    #set($award=$activity.leastAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        #if($activity.startTime)
+                                            <td>$activity.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($activity.endTime)
+                                            <td>$activity.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+                                        <td>
+                                            <form action=" /admin/activity/activityInfo">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/><input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteActivity-form" action="#" onsubmit="deleteActivity(this);">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    id="deleteActivity-btn" type="submit" class="btn btn-default"
+                                                    value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    #end
+                                #end
+                            #end
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class=" table-responsive" id="divPKActivity">
+                    <table cellpadding="10px" class="table table-hover table-bordered table-condensed text-center">
+                        <thead>
+                        <colgroup>
+                            <col width='3%'></col>
+                            <col width='3%'></col>
+                            <col width='3%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                            <col width='10%'></col>
+                        </colgroup>
+                        <tr>
+                            <th data-editable="true">id</th>
+                            <th data-editable="true">类型</th>
+                            <th>周期</th>
+                            <th data-editable="true">名称</th>
+                            <th data-editable="true">标签</th>
+                            <th> 描述、简介</th>
+                            <th>谱面列表</th>
+                            <th>首次挑战成功的奖励</th>
+                            <th>非首次挑战成功的奖励</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #if($now-allActivitys)
+                                #foreach( $activity in $now-allActivitys)
+
+                                    #if($activity.type==4)
+
+                                    <tr class="success">
+                                        <td>$activity.id</td>
+                                        <td>$activity.type</td>
+                                        <td>$activity.period</td>
+                                        <td>$activity.name</td>
+                                        <td>$activity.tag</td>
+                                        #if($activity.description)
+                                            <td>$activity.description</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+                                        #if($activity.schemes)
+                                            <td>$activity.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                    ##                                        #if($activity.massiveAward)
+                                    ##                                            <td>$activity.massiveAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                    ##                                        #if($activity.leastAward.experience)
+                                    ##                                            <td>$activity.leastAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                        <td> #if($activity.massiveAward)
+                                    #set($award=$activity.massiveAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        <td> #if($activity.leastAward)
+                                    #set($award=$activity.leastAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        #if($activity.startTime)
+                                            <td>$activity.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($activity.endTime)
+                                            <td>$activity.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+                                        <td>
+                                            <form action=" /admin/activity/activityInfo">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteActivity-form" action="#" onsubmit="deleteActivity(this);">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    id="deleteActivity-btn" type="submit" class="btn btn-default"
+                                                    value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    #end
+                                #end
+                            #end
+
+                            #if($future-allActivitys)
+                                #foreach( $activity in $future-allActivitys)
+
+                                    #if($activity.type==4)
+
+                                    <tr class="warning">
+                                        <td>$activity.id</td>
+                                        <td>$activity.type</td>
+                                        <td>$activity.period</td>
+                                        <td>$activity.name</td>
+                                        <td>$activity.tag</td>
+                                        #if($activity.description)
+                                            <td>$activity.description</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+                                        #if($activity.schemes)
+                                            <td>$activity.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                    ##                                        #if($activity.massiveAward)
+                                    ##                                            <td>$activity.massiveAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                    ##                                        #if($activity.leastAward)
+                                    ##                                            <td>$activity.leastAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                        <td> #if($activity.massiveAward)
+                                    #set($award=$activity.massiveAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        <td> #if($activity.leastAward)
+                                    #set($award=$activity.leastAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        #if($activity.startTime)
+                                            <td>$activity.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($activity.endTime)
+                                            <td>$activity.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+                                        <td>
+                                            <form action=" /admin/activity/activityInfo">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteActivity-form" action="#" onsubmit="deleteActivity(this);">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    type="submit" class="btn btn-default" value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    #end
+                                #end
+                            #end
+
+
+                            #if($before-allActivitys)
+                                #foreach( $activity in $before-allActivitys)
+
+                                    #if($activity.type==4)
+
+                                    <tr class="danger">
+                                        <td>$activity.id</td>
+                                        <td>$activity.type</td>
+                                        <td>$activity.period</td>
+                                        <td>$activity.name</td>
+                                        <td>$activity.tag</td>
+                                        #if($activity.description)
+                                            <td>$activity.description</td>
+                                        #else
+                                            <td>无</td>
+                                        #end
+
+                                        #if($activity.schemes)
+                                            <td>$activity.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                    ##                                        #if($activity.massiveAward)
+                                    ##                                            <td>$activity.massiveAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                    ##                                        #if($activity.leastAward)
+                                    ##                                            <td>$activity.leastAward</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                        <td> #if($activity.massiveAward)
+                                    #set($award=$activity.massiveAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        <td> #if($activity.leastAward)
+                                    #set($award=$activity.leastAward)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        #if($activity.startTime)
+                                            <td>$activity.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($activity.endTime)
+                                            <td>$activity.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+                                        <td>
+                                            <form action=" /admin/activity/activityInfo">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteActivity-form" action="#" onsubmit="deleteActivity(this);">
+                                                <input type="hidden" name="activityId" value=$activity.id/><input
+                                                    type="hidden" name="token" value="$token"/><input
+                                                    id="deleteActivity-btn" type="submit" class="btn btn-default"
+                                                    value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    #end
+                                #end
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            #else
+                <div style="padding-left: 10px">Server Error...</div>
+            #end
+        </div>
+
+
+    </div>
+
+</div>
+

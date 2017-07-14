@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userSystemEmail">
+	<resultMap type="com.admin.bean.UserSystemEmail" id="userSystemEmail">
+		<result property="id" column="id" />
+		<result property="systemEmailId" column="system_email_id" />
+		<result property="createTime" column="receive_time" />
+		<result property="read" column="has_read" />
+	</resultMap>
+
+	<insert id="insertUsersSystemEmail" parameterType="java.lang.Integer">
+		INSERT INTO
+		user_system_email_relation
+		(user_id, system_email_id)
+		SELECT id, #{systemEmailId} FROM user_info;
+	</insert>
+	
+	<insert id="insertUsersSystemEmails" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			INSERT INTO
+			user_system_email_relation
+			(user_id, system_email_id, receive_time)
+			SELECT id, #{item} FROM user_info
+		</foreach>
+	</insert>
+	
+	<insert id="insertUserSystemEmail" parameterType="java.util.Map">
+		INSERT INTO
+		user_system_email_relation
+		(user_id, system_email_id)
+		VALUES(#{userId}, #{systemEmailId});
+	</insert>
+	
+	<insert id="insertUserSystemEmails" parameterType="java.util.List">
+		INSERT INTO
+		user_system_email_relation
+		(user_id, system_email_id)
+		VALUES 
+		<foreach collection="systemEmailIds" item="item" index="index" open="("
+			close=")" separator=",">
+			#{userId}, #{item}
+		</foreach>
+		;
+	</insert>
+	
+	<update id="readUserSystemEmail" parameterType="java.util.Map">
+		UPDATE user_system_email_relation
+		SET has_read = true
+		WHERE id=#{id} AND has_read=false AND user_id=#{userId};
+	</update>
+	
+	<update id="readUserSystemEmails" parameterType="java.util.Map">
+		UPDATE user_system_email_relation
+		SET has_read = true
+		WHERE has_read=false AND user_id=#{userId} AND id in 
+		<foreach collection="ids" item="item" index="index" open="("
+			close=")" separator=",">
+			#{item}
+		</foreach>
+		;
+	</update>
+	
+	<select id="selectUserSystemEmail" parameterType="java.util.Map" resultMap="userSystemEmail" >
+		SELECT id, system_email_id, receive_time, has_read
+		FROM user_system_email_relation
+		WHERE id=#{id} AND user_id=#{userId};
+	</select>
+	
+	<select id="selectUserSystemEmails" parameterType="java.lang.Integer" resultMap="userSystemEmail" >
+		SELECT id, system_email_id, receive_time, has_read
+		FROM user_system_email_relation
+		WHERE user_id=#{userId};
+	</select>
+	
+	<select id="selectUserNotReadSystemEmails" parameterType="java.lang.Integer" resultMap="userSystemEmail">
+		SELECT id, system_email_id, receive_time, has_read
+		FROM user_system_email_relation
+		WHERE has_read = false AND user_id=#{userId};
+	</select>
+
+	<select id="selectUserSystemEmailV2" parameterType="java.util.Map" resultMap="userSystemEmail" >
+		SELECT id, system_email_id, receive_time, has_read
+		FROM user_system_email_relation
+		WHERE system_email_id=#{emailId} AND user_id=#{userId};
+	</select>
+
+	<update id="readUserSystemEmailV2" parameterType="java.util.Map">
+		UPDATE user_system_email_relation
+		SET has_read = true
+		WHERE system_email_id=#{emailId} AND has_read=false AND user_id=#{userId};
+	</update>
+</mapper>

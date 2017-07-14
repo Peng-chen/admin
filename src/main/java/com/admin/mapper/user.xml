@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	<resultMap type="com.admin.bean.User" id="user">
+		<result property="id" column="id" />
+		<result property="nickname" column="nickname" />
+		<result property="level" column="level" />
+		<result property="experience" column="experience" />
+		<result property="gold" column="gold" />
+		<result property="brokenChart" column="broken_chart" />
+		<result property="muscle" column="muscle" />
+		<result property="currentStoryGate" column="current_story_gate" />
+		<result property="power" column="power" />
+		<result property="currentHeadImage" column="current_headimage" />
+		<result property="currentEquip" column="current_equip"
+			javaType="List" jdbcType="ARRAY" />
+		<result property="currentChallengeGate" column="current_challenge_gate" />
+		<result property="vipLevel" column="vip_level" />
+		<result property="isSuper" column="is_Super" />
+		<result property="signature" column="signature" />
+		<result property="dropTimes" column="drop_times" javaType="List" jdbcType="ARRAY" />
+		<result property="totalScore" column="total_score" />
+		<result property="currentFrame" column="current_frame" />
+		<result property="activationScore" column="activation_score" javaType="List" jdbcType="ARRAY"/>
+		<result property="isLifeCard" column="is_life_card"/>
+		<result property="beatScores" column="beat_scores" />
+		<result property="areaId" column="area_id" />
+	</resultMap>
+
+
+
+	<resultMap type="com.admin.bean.UserRelation" id="userRelation">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="friends" column="friends" javaType="List"
+			jdbcType="ARRAY" />
+	</resultMap>
+	
+
+	<select id="selectUserLevelExperices" resultType="java.lang.Integer">
+		SELECT
+		experience FROM user_level_experience_info ORDER BY level ASC;
+	</select>
+
+	<select id="selectUserLevelTop50" resultType="java.util.Map">
+		SELECT
+		id,experience FROM user_info ORDER BY experience DESC limit 50;
+	</select>
+
+	<select id="selectUserPowerTop50" resultMap="user">
+		SELECT id, nickname,
+		level, experience, gold, broken_chart, muscle, current_story_gate,
+		power, current_headimage, current_equip, current_challenge_gate,
+		vip_level, is_super,signature,total_score,current_frame,
+		activation_score,is_life_card,beat_scores,area_id
+		FROM user_info ORDER BY power DESC limit 50;
+	</select>
+
+	<select id="selectUserCurrentChallengeGateTop50" resultType="java.util.Map">
+		SELECT id,current_challenge_gate FROM user_info ORDER BY
+		current_challenge_gate DESC limit 50;
+	</select>
+
+	<select id="selectUserBatch" parameterType="java.util.Map"
+		resultMap="user">
+		SELECT id, nickname,
+		level, experience, gold, broken_chart,
+		muscle, current_story_gate,
+		power, current_headimage, current_equip,
+		current_challenge_gate, vip_level, is_super,
+		signature,drop_times,total_score,current_frame,
+		activation_score,is_life_card,beat_scores,area_id
+		FROM user_info limit 500 offset
+		#{start};
+
+	</select>
+
+	<!--<select id="selectAllUserLevel" parameterType="java.util.Map" resultMap="user"> 
+		SELECT id, nickname, level, experience, gold, broken_chart, muscle, current_story_gate, 
+		power, current_headimage, current_equip, current_challenge_gate FROM user_info 
+		ORDER BY experience DESC limit 500 offset #{start}; </select> <select id="selectAllUserPower" 
+		parameterType="java.util.Map" resultMap="user"> SELECT id, nickname, level, 
+		experience, gold, broken_chart, muscle, current_story_gate, power, current_headimage, 
+		current_equip, current_challenge_gate FROM user_info ORDER BY power DESC 
+		limit 500 offset #{start}; </select> -->
+
+	<select id="isExistUserForNickname" resultType="int">
+		SELECT count(id)
+		FROM user_info WHERE nickname = #{nickname};
+	</select>
+
+	<insert id="insertUser" parameterType="com.admin.bean.User"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user_info(nickname,area_id)
+		VALUES(#{nickname},#{areaId});
+	</insert>
+
+	<insert id="bindUserPlatform" parameterType="java.util.Map">
+		INSERT INTO
+		platform_user_relation(platform_id, platform_uid, user_id, os_id,area_id)
+		VALUES(#{platformId}, #{platformUid}, #{userId}, #{osId}, #{areaId});
+	</insert>
+
+	<insert id="bindDevice" parameterType="java.util.Map">
+		INSERT INTO
+		device_user_relation(device_code, user_id,area_id) VALUES(#{deviceCode},
+		#{userId},#{areaId});
+	</insert>
+
+
+
+	<update id="updateUser" parameterType="com.admin.bean.User">
+		UPDATE user_info SET id=#{id}
+		<if test="nickname != null and nickname != ''">
+			,nickname=#{nickname}
+		</if>
+		<if test="level != null ">
+			,level=#{level}
+		</if>
+		<if test="experience != null ">
+			,experience=#{experience}
+		</if>
+		<if test="gold != null ">
+			,gold=#{gold}
+		</if>
+		<if test="brokenChart != null ">
+			,broken_chart=#{brokenChart}
+		</if>
+		<if test="currentStoryGate != null ">
+			,current_story_gate=#{currentStoryGate}
+		</if>
+		<if test="muscle != null">
+			,muscle = #{muscle}
+		</if>
+		<if test="power != null">
+			,power = #{power}
+		</if>
+		<if test="vipLevel != null">
+			,vip_level = #{vipLevel}
+		</if>
+		<if test="isSuper != null">
+			,is_super = #{isSuper}
+		</if>
+		<if test="signature != null">
+			,signature = #{signature}
+		</if>
+		<if test="totalScore != null">
+			,total_score = #{totalScore}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<select id="selectUserById" resultMap="user">
+		SELECT id, nickname,
+		level, experience, gold, broken_chart, muscle, current_story_gate,
+		power, current_headimage, current_equip, current_challenge_gate,
+		vip_level, is_super,signature,drop_times,total_score,current_frame,
+		activation_score,is_life_card,beat_scores,area_id
+		FROM
+		user_info WHERE id=#{userId}
+	</select>
+
+	<select id="selectUsersByIds" resultMap="userPojo">
+		SELECT id, nickname,
+		level, experience, gold, broken_chart, muscle,
+		current_story_gate,
+		power, current_headimage, current_equip,
+		current_challenge_gate, vip_level, is_super,signature,
+		drop_times,total_score,current_frame,activation_score,
+		is_life_card,beat_scores,area_id
+		FROM
+		user_info WHERE id IN
+		<foreach item="item" index="index" collection="userIds" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		ORDER BY power DESC
+	</select>
+
+	<select id="selectUsersByTotalScore" resultMap="userPojo">
+		SELECT id, nickname,
+		level, experience, gold, broken_chart, muscle,
+		current_story_gate,
+		power, current_headimage, current_equip,
+		current_challenge_gate, vip_level, is_super,signature,
+		drop_times,total_score,current_frame,activation_score,
+		is_life_card,beat_scores,area_id
+		FROM
+		user_info WHERE id IN
+		<foreach item="item" index="index" collection="userIds" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+		ORDER BY total_score DESC
+	</select>
+
+	<select id="selectUserByDevice" parameterType="java.util.HashMap" resultMap="user">
+		SELECT id, nickname,
+		level, experience, gold, broken_chart, muscle, current_story_gate,
+		power, current_headimage, current_equip, current_challenge_gate,
+		vip_level, is_super,signature,drop_times,total_score,current_frame,
+		activation_score,is_life_card,beat_scores,area_id
+		FROM
+		user_info WHERE id IN (SELECT user_id FROM
+		device_user_relation WHERE
+		device_code = #{deviceCode} AND area_id = #{areaId})
+		LIMIT 1;
+	</select>
+
+	<!--配合redis缓存使用 -->
+	<!--<select id="selectUserIdByDevice" resultType="int"> -->
+	<!--SELECT user_id -->
+	<!--FROM device_user_relation -->
+	<!--WHERE device_code = #{deviceCode} -->
+	<!--LIMIT 1; -->
+	<!--</select> -->
+
+	<!--<select id="selectUserIdByPlant" resultType="int" parameterType="java.util.Map"> -->
+	<!--SELECT user_id -->
+	<!--FROM platform_user_relation -->
+	<!--WHERE platform_id = #{platformId} -->
+	<!--AND platform_uid = #{platformUid} -->
+	<!--LIMIT 1; -->
+	<!--</select> -->
+
+	<select id="selectUserByPlant" resultMap="user" parameterType="java.util.Map">
+		SELECT id, nickname, level, experience, gold, broken_chart, muscle,
+		current_story_gate, power, current_headimage, current_equip,
+		current_challenge_gate, vip_level, is_super,signature,drop_times,
+		total_score,current_frame,activation_score,is_life_card,beat_scores,area_id
+		FROM user_info WHERE id IN (SELECT
+		user_id
+		FROM
+		platform_user_relation
+		WHERE platform_id = #{platformId}
+		AND os_id = #{osId}
+		AND platform_uid = #{platformUid}
+		AND area_id = #{areaId})
+		LIMIT 1;
+	</select>
+
+	<!-- 增加好友 -->
+	<update id="insertUserFriend" parameterType="java.util.HashMap">
+		UPDATE user_friends_relation
+		SET
+		friends=array_append(friends,#{friendId})
+		WHERE user_id=#{userId}
+	<![CDATA[
+			AND (NOT ARRAY[#{friendId}] <@ friends);
+	]]>
+	</update>
+
+	<!-- 查询大琴师用户的所有好友的基本信息 -->
+	<select id="selectUserFriends" resultMap="user">
+	<![CDATA[
+	  	SELECT id, nickname, level, experience, gold, broken_chart, muscle,
+	  	current_story_gate,power, current_headimage, current_challenge_gate,
+	  	vip_level, is_super,signature,drop_times,total_score,current_frame,
+	  	activation_score,is_life_card,beat_scores,area_id
+		FROM (SELECT unnest(friends) AS friend_id FROM user_friends_relation WHERE user_id=#{userId}) friend
+		LEFT JOIN user_info u
+		ON u.id=friend.friend_id
+	  ]]>
+
+		<!--SELECT friends FROM user_friends_relation WHERE user_id = #{userId} -->
+
+	</select>
+
+	<!-- 查询某个用户所有好友的id -->
+	<select id="selectUserFriendIds" resultType="java.lang.Integer">
+		SELECT
+		unnest(friends) AS friends FROM user_friends_relation WHERE user_id =
+		#{userId}
+	</select>
+
+	<update id="addUserStoryGate" parameterType="java.lang.Integer">
+		UPDATE user_info
+		SET
+		current_story_gate=current_story_gate + 1
+		WHERE id=#{userId};
+	</update>
+	<update id="updateUserHeadImage" parameterType="java.util.HashMap">
+		UPDATE user_info
+		SET
+		current_headimage = #{headImageId}
+		WHERE id = #{userId};
+	</update>
+	<update id="updateUserEquip" parameterType="java.util.HashMap">
+		UPDATE user_info
+		SET
+		current_equip=#{equip,
+		javaType=List,
+		jdbcType=ARRAY}
+		WHERE id=#{userId};
+	</update>
+
+	<select id="selectUserEquip" parameterType="java.lang.Integer">
+		SELECT current_equip
+		FROM user_info
+		WHERE id=#{userId}
+		LIMIT 1;
+	</select>
+
+	<select id="receiveUserAward" parameterType="java.util.Map"
+		resultType="java.lang.Boolean">
+		SELECT get_award(#{userId}, #{award, javaType=Object,
+		jdbcType=VARCHAR});
+	</select>
+
+	<select id="selectUserPower" resultType="java.util.HashMap">
+		SELECT id,power
+		FROM
+		user_info
+	</select>
+
+	<select id="selectUserLevel" resultType="java.util.HashMap">
+		SELECT id,experience
+		FROM user_info
+	</select>
+
+	<select id="selectTotalReceipt" resultType="java.lang.Float">
+		SELECT SUM(money) AS
+		total_receipt
+		FROM user_recharge_relation
+		WHERE user_id = #{userId} AND order_state = 3;
+	</select>
+
+	<update id="updateUserPower" parameterType="java.util.Map">
+		UPDATE user_info
+		SET power = #{power}
+		WHERE user_id = #{userId}
+	</update>
+
+	
+	<select id="selectExpandInfo" resultMap="userExpand">
+		SELECT user_id, super_start_time, super_stop_time, novice_guide_record, last_login_time, last_login_ip, 
+		(super_award_receive_time IS NOT NULL AND super_award_receive_time > current_date) AS is_receive_super_award,
+		(last_login_time IS NULL OR current_date > last_login_time) AS is_today_first_login
+		FROM user_expand_info
+		WHERE user_id = #{userId}
+	</select>
+	
+	<select id="upgradeSuper" parameterType="java.util.HashMap" resultType="java.lang.Boolean">
+		SELECT upgrade_super_user(#{userId}, '${stopTime}');
+	</select>
+	
+	<select id="receiveSuperAward" resultType="java.lang.Boolean">
+		SELECT get_user_super_award(#{userId});
+	</select>
+
+	<update id="updateNoviceGuideRecord" parameterType="java.util.HashMap">
+		UPDATE user_expand_info SET novice_guide_record = '${noviceGuide}'
+		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="updateUserLoginData" parameterType="java.util.HashMap">
+		UPDATE user_expand_info SET last_login_time = now(), last_login_ip = inet'${ip}'
+		WHERE user_id = #{userId}
+	</update>
+
+	<select id="selectAllPayNumById" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT SUM(money) as money FROM user_recharge_relation WHERE user_id = #{userId} and order_state = 3;
+	</select>
+
+	<select id="selectUserFirstWeek" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT to_date( to_char(now(), 'YYYY-MM-DD HH12:MI:SS 23:59:59'), 'YYYY-MM-DD') - to_date( to_char(create_time, 'YYYY-MM-DD HH12:MI:SS 23:59:59'), 'YYYY-MM-DD') register
+		,t1.continuous_login_days AS continue
+		FROM user_expand_info t1,user_info t2 WHERE t1.user_id = #{userId} AND t2.id = #{userId};
+	</select>
+
+	<update id="updateLoginDays" parameterType="java.util.HashMap">
+		UPDATE user_expand_info SET continuous_login_days = #{days} WHERE user_id = #{userId};
+	</update>
+
+	<select id="selectUserIdByDeviceCode" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT user_id, device_code FROM device_user_relation WHERE device_code = #{deviceCode} AND area_id = #{areaId};
+	</select>
+
+	<delete id="deleteUserIdByDeviceCode">
+		DELETE FROM device_user_relation WHERE device_code = #{deviceCode} AND area_id = #{areaId};
+	</delete>
+
+	<select id="selectFriendsLastTimeLogin" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT to_char(now()-last_login_time, 'YYYY-MM-DD HH24:MI:SS') date,user_id FROM user_expand_info WHERE user_id IN
+		<foreach item="item" index="index" collection="userIds" open="("
+				 separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<update id="unfriend" parameterType="java.util.HashMap">
+		UPDATE user_friends_relation SET friends = array_remove(friends, #{friendId}) where user_id = #{userId};
+	</update>
+
+	<update id = "testUpdate" parameterType="java.util.HashMap">
+		UPDATE scheme_info SET scores = array[${scores}]
+		WHERE tag = #{tag}
+	</update>
+
+	<select id="selectPlatformUidById" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT platform_uid FROM platform_user_relation where user_id = #{userId};
+	</select>
+	
+	<update id="updateDropTimes" parameterType="java.util.HashMap">
+		UPDATE user_info SET drop_times[#{num}] = #{times} WHERE id = #{userId};
+	</update>
+	
+	<update id="extendMonthCard" parameterType="java.util.HashMap">
+		UPDATE  user_expand_info SET super_stop_time = super_stop_time+'30 day' WHERE user_id=  #{userId};
+	</update>
+	<update id="extendExperienceMusic" parameterType="java.util.HashMap">
+		UPDATE  user_free_experience_relation SET end_time = end_time+'30 day' WHERE user_id=  #{userId};
+	</update>
+
+	<select id="selectGiftPackCode" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT uid,upassword,code,description FROM gift_code_relation
+		WHERE uid = #{alipayUid}
+		<if test="username != null and upassword != null">
+			or (uid=#{username} and upassword = #{upassword})
+		</if>
+		;
+	</select>
+
+	<update id="updateTotalScore"  parameterType="java.util.HashMap">
+		UPDATE user_info SET total_score = total_score + #{score} where id = #{userId};
+	</update>
+
+	<update id="loginTemporaryClear">
+		UPDATE user_login_award_relation SET first_day = null,received_days = '{}' WHERE array_length(received_days, 1) > 27;
+	</update>
+
+	<select id="insertVipMusics" parameterType="java.util.Map"
+			resultType="java.lang.Boolean">
+		SELECT get_vip_musics(#{userId});
+	</select>
+
+	<update id="updateActivationScore" parameterType="java.util.Map">
+		UPDATE user_info SET activation_score = #{activationScore} WHERE id = #{userId};
+	</update>
+
+	<update id="addActivationScore" parameterType="java.util.Map">
+		UPDATE user_info
+		SET activation_score[1] = activation_score[1] + #{score},activation_score[2] = activation_score[2] + #{score}
+		WHERE id = #{userId};
+	</update>
+
+	<insert id="shareGame" parameterType="java.util.HashMap">
+		  INSERT INTO user_share_relation (user_id, platform) VALUES (#{userId}, #{platform});
+	</insert>
+	<select id="upgradeLifeCard" parameterType="java.util.HashMap" resultType="java.lang.Boolean">
+		select get_life_musics(#{userId});
+	</select>
+
+	<update id="clearBeatScore" >
+		UPDATE user_info SET beat_scores = 0;
+	</update>
+	<update id="updateUserBeatScore" parameterType="com.admin.bean.User">
+		UPDATE user_info SET beat_scores = #{beatScores} WHERE id = #{id};
+	</update>
+
+	<select id="getExceptionAccountRecord" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(content) FROM exception_account_info WHERE type = #{type} AND content = #{content} AND end_time >= now();
+	</select>
+</mapper>

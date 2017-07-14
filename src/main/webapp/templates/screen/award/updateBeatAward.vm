@@ -1,0 +1,170 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet" />
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet" />
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+#if($status)
+
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="beatAwardId" value='$beatAward.id' id="beatAwardId">
+                <label
+                        for="name" class="col-sm-2 control-label">邮件内容</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input type="text" class="form-control" id="beatAwardContent"
+                           required="required" data-type="text" placeholder="请输入邮件内容"
+                           value='$beatAward.content'>
+                </div>
+            </div>
+
+            <div id="div1">
+                #set($award=$beatAward.award)
+            #set($tagId="beastAward")
+            #set($title="奖励")
+            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">描述</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="beatAwardDescription" class="form-control" value='$beatAward.description'
+                           required="required" type="text" data-type="text" placeholder="请输入描述"/>
+
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="startTime" class="col-sm-2 control-label">开始时间</label>
+                <div class="col-sm-8">
+                    <fmt:formatDate var="startTime"
+                                    value="${beatAward.startTime}"
+                                    pattern="yyyy-MM-dd HH:mm:ss" />
+                    <input type="text" id="beatAwardStartTime" required="required"
+                           class="ui_timepicker form-control" value='$beatAward.startTime'>
+                </div>
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="endTime" class="col-sm-2 control-label">结束时间</label>
+                <div class="col-sm-8">
+                    <fmt:formatDate var="endTime"
+                                    value="${beatAward.endTime}"
+                                    pattern="yyyy-MM-dd HH:mm:ss" />
+                    <input type="text" id="beatAwardEndTime" required="required"
+                           class="ui_timepicker form-control" value='$beatAward.endTime'>
+                </div>
+            </div>
+
+            <div class="col-sm-12 form-group">
+                <label for="endTime" class="col-sm-2 control-label">发放奖励截止时间</label>
+                <div class="col-sm-8">
+                    <fmt:formatDate var="endTime"
+                                    value="${beatAward.statisticTime}"
+                                    pattern="yyyy-MM-dd HH:mm:ss" />
+                    <input type="text" id="beatAwardStatisticTime" required="required"
+                           class="ui_timepicker form-control" value='$beatAward.statisticTime'>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">排名段(limit)</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input  id="beatAwardLimit" type="number" data-type="integer" class="form-control"
+                            placeholder="请输入排名段(limit)" required="required" value='$beatAward.limit'>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">排名段数量(offset)</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input  id="beatAwardOffset" type="number" data-type="integer" class="form-control"
+                            placeholder="请输入数量" required="required" value='$beatAward.offset'>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">谱面列表</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input  id="beatAwardSchemes" type="text" class="form-control"
+                            placeholder="请输入谱面id，多个谱面请用“ , ”分割（英文的）" required="required" value='#foreach($scheme in $beatAward.schemes)$scheme,#end'>
+                </div>
+            </div>
+
+
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">打榜期数</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="beatAwardPeriod" class="form-control" value='$beatAward.period'
+                           required="required" type="number" data-type="integer" placeholder="请输入打榜期数"/>
+
+                </div>
+            </div>
+
+
+
+            <div>
+                <button
+                        class="col-sm-offset-3 col-sm-2 btn btn-primary" onclick="updateBeatAward($propSize,$headSize,$musicSize,$equipSize,$frameSize,$pieceSize,$materialSize)" id="updateBeatAward-btn"
+                        style="display:inline-block;float:left;">保存修改
+                </button>
+                <a href=" /admin/award/all?token=$token" style="float:left;">
+                    <button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表
+                    </button>
+                </a>
+            </div>
+#else
+    <div style="padding-left: 10px">Server Error...</div>
+#end
+        </div>
+
+
+    </div>
+</div>
+
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".ui_timepicker").datetimepicker({
+            showSecond : true,
+            timeFormat : 'hh:mm:ss',
+            stepHour : 1,
+            stepMinute : 1,
+            stepSecond : 1
+        });
+    });
+
+</script>

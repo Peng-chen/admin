@@ -1,0 +1,93 @@
+<div class="container">
+    #parse("/screen/nav.vm")
+
+    <div class="data"
+         style="padding-left: 4%;  border: 0px;">
+        <div id="detailcontainer" class="panel panel-default">
+            <h3 class="panel-title">用户邮件</h3>
+
+            <div class="panel-heading">
+
+                <div class="row">
+                    <form action="/admin/userEmail/allUserEmailById" method="POST">
+                        <input type="hidden" name="token" value="$token">
+                        <input type="text" name="userId" placeholder="请输入用户id">
+                        <input type="submit" class="btn btn-primary" value="查询">
+                    </form>
+                </div>
+
+            </div>
+
+            #if($status)
+                <div class="panel-body">
+                    <table cellpadding="15px" class="table table-hover">
+                        <tr>
+                            <th>邮件id</th>
+                            <th>用户id</th>
+                            <th>发送者id</th>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>atachement</th>
+
+                            <th>创建时间</th>
+
+                            <th>是否已读</th>
+
+                            <th>类型</th>
+##                            <th>csb_name</th>
+                            <th>操作</th>
+
+
+                        </tr>
+                        #if($userEmails)
+                            #foreach( $email in $userEmails)
+                                <tr>
+                                    <td>$email.id</td>
+                                    <td>$email.userId</td>
+                                    <td>$email.senderId</td>
+                                    <td>$email.title</td>
+                                    <td>$email.content</td>
+                                    <td> #if($email.attachment)
+                                    #set($award=$email.attachment)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    <td>$email.createTime</td>
+                                    #if($email.read)
+                                        <td>已读</td>
+                                    #else
+                                        <td>未读</td>
+                                    #end
+
+                                    <td>$email.type</td>
+
+##                                    <td>#if($email.csbName)$email.csbName  #end</td>
+
+                                    <td>
+                                        <form action=" /admin/userEmail/detailinfo" method="post">
+                                            <input type="hidden" name="emailId" value="$email.id"/>
+                                            <input type="hidden" name="userId" value="$email.userId"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+
+                                        <form id="deleteUserEmail-form" action="" onsubmit="deleteUserEmail(this);" method="post">
+                                            <input type="hidden" name="emailId" value="$email.id"/>
+                                            <input type="hidden" name="userId" value="$email.userId"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input id="deleteUserEmail-btn" type="submit" class="btn btn-default"
+                                                   value="删除"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            #end
+                        #end
+                    </table>
+                </div>
+            #else
+                <div style="padding-left: 10px">Server Error...</div>
+            #end
+
+        </div>
+    </div>
+
+</div>

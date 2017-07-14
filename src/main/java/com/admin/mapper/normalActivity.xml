@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="normalActivity">
+	<resultMap type="com.admin.bean.NormalActivity" id="normalActivity">
+		<result property="id" column="id" />
+		<result property="type" column="type" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="schemes" column="schemes" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="massiveAward" column="massive_award"
+			javaType="Object" jdbcType="VARCHAR" />
+		<result property="leastAward" column="least_award" javaType="Object"
+			jdbcType="VARCHAR" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="tag" column="tag" />
+		<result property="period" column="period"/>
+	</resultMap>
+
+	<!-- 增加NormalActivity -->
+	<insert id="insertNormalActivity" parameterType="com.admin.bean.NormalActivity"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO normal_activity_info
+		(type, name, description, schemes, massive_award,
+		least_award,
+		start_time, end_time, tag,period)
+		VALUES (#{type},
+		#{name},
+		#{description},
+		#{schemes,javaType=List,jdbcType=ARRAY}, #{massiveAward,
+		javaType=Object,
+		jdbcType=VARCHAR},
+		#{leastAward,
+		javaType=Object,
+		jdbcType=VARCHAR},
+		'${startTime}', '${endTime}', #{tag},#{period});
+	</insert>
+
+	<!-- 修改NormalActivity -->
+	<update id="updateNormalActivity" parameterType="com.admin.bean.NormalActivity">
+		UPDATE normal_activity_info SET id=#{id}
+		<if test="type != null ">
+			, type=#{type}
+		</if>
+		<if test="name != null ">
+			, name=#{name}
+		</if>
+		<if test="period != null ">
+			, period=#{period}
+		</if>
+		<if test="description != null ">
+			, description=#{description}
+		</if>
+		<if test="schemes != null ">
+			, schemes=#{schemes,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="massiveAward != null ">
+			, massive_award=#{massiveAward, javaType=Object,
+			jdbcType=VARCHAR}
+		</if>
+		<if test="leastAward != null ">
+			, least_award=#{leastAward, javaType=Object,
+			jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+		, start_time='${startTime}'
+		</if>
+		<if test="endTime != null">
+		, end_time='${endTime}'
+		</if>
+		<if test="tag != null">
+			, tag=#{tag}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<!-- 删除NormalActivity -->
+	<delete id="deleteNormalActivity">
+		DELETE FROM normal_activity_info WHERE id=#{id};
+	</delete>
+
+	<!-- 查看NormalActivity -->
+	<select id="selectNormalActivity" resultMap="normalActivity">
+		SELECT id, type,period,
+		name,
+		description, schemes,
+		massive_award,
+		least_award,
+		start_time,end_time,
+		tag
+		FROM normal_activity_info
+		WHERE
+		id=#{id};
+	</select>
+
+	<!-- 查看NormalActivity -->
+	<select id="selectNormalActivities" parameterType="java.util.HashMap" resultMap="normalActivity">
+		SELECT id,
+		type,
+		name, description, schemes,
+		massive_award,
+		least_award,
+		start_time,
+		end_time,
+		tag,
+		period
+		FROM normal_activity_info
+		WHERE
+		<!--<if test="state == 1 ">-->
+			<!--<![CDATA[-->
+				<!--now() >=start_time  AND now()<=end_time AND (period = #{weekday} or period = 0)-->
+				<!--ORDER BY id ASC-->
+				<!--;-->
+			<!--]]>-->
+		<!--</if>-->
+		<if test="state == 1 ">
+			<![CDATA[
+				now() >=start_time  AND now()<=end_time
+				ORDER BY id ASC
+				;
+			]]>
+		</if>
+		<if test="state == 0 ">
+			<![CDATA[
+				start_time > now()
+				ORDER BY id ASC
+				;
+			]]>
+		</if>
+		<if test="state == -1 ">
+			<![CDATA[
+				end_time < now()
+				ORDER BY id ASC
+				;
+			]]>
+		</if>
+
+	</select>
+
+	<!--AND (period = ${weekday} or period = 0)-->
+
+
+	<!-- 查看已完成的活动 -->
+	<select id="selectNormalActivitiesPassed" resultType="java.lang.Integer">
+		SELECT
+		unnest(day_activities||week_activities)
+		FROM user_daily_record
+		WHERE
+		user_id=#{userId};
+	</select>
+
+
+
+	<!-- 是否首次通关 -->
+	<select id="isNormalActivityPassed" parameterType="java.util.Map"
+		resultType="java.lang.Boolean">
+		SELECT count(*)=1
+		FROM user_daily_record
+		WHERE user_id=#{userId} AND
+		<if test="type == 1">
+		<![CDATA[
+			#{activityId}=ANY(day_activities);
+		]]>
+		</if>
+		<if test="type == 2">
+		<![CDATA[
+			#{activityId}=ANY(week_activities);
+		]]>
+		</if>
+	</select>
+
+	<!-- 是否首次通关 -->
+	<update id="updateUserNormalActivity" parameterType="java.util.Map">
+		UPDATE user_daily_record
+		<if test="type == 1 ">
+			SET day_activities=day_activities||#{activityId} 
+		<![CDATA[
+			WHERE (array_length(day_activities,1) IS NULL OR #{activityId}<>ANY(day_activities))
+		]]>
+		</if>
+		<if test="type == 2 ">
+			SET week_activities=week_activities||#{activityId} 
+		<![CDATA[
+			WHERE (array_length(week_activities,1) IS NULL OR #{activityId}<>ANY(week_activities))
+		]]>
+		</if>
+		AND user_id=#{userId};
+	</update>
+
+	<update id="deleteUsersActivityPassed">
+		UPDATE user_daily_record
+		<if test="_parameter == 1 ">
+			SET day_activities='{}';
+		</if>
+		<if test="_parameter == 2 ">
+			SET week_activities='{}';
+		</if>
+	</update>
+</mapper>

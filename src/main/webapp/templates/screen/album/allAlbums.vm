@@ -1,0 +1,51 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px">
+		<div id="detailcontainer" class="panel panel-default"
+			style="width: 95%">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有曲包</h3>
+			</div>
+			
+			#if($status)
+				<div class="panel-body">
+					<table cellpadding="15px" class="table table-hover">
+						<tr>
+							<th>id</th>
+							<th>名称</th>
+							<th>描述</th>
+							<th>歌曲</th>
+							<th>操作</th>
+							
+						</tr>
+						#if($albums)
+							#foreach( $album in $albums)
+								<tr>
+									<td>$album.id</td>
+									<td>$album.name</td>
+									#if($album.description)
+									<td>$album.description</td>
+									#else
+									<td>无</td>
+									#end
+									<td>$album.musics</td>
+									<td><form action=" /admin/album/update">
+												<input type="hidden" name="albumId" value=$album.id /><input type="hidden" name="token" value="$token"/> <input
+													type="submit" class="btn btn-default" value="修改" />
+										</form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+
+</div>

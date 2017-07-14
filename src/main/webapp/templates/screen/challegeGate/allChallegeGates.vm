@@ -1,0 +1,63 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px;">
+		<div id="detailcontainer" class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有小关卡</h3>
+			</div>
+			
+			#if($status)
+				<div class="panel-body">
+					<table cellpadding="15px" class="table table-hover">
+						<tr>
+							<th>id</th>
+							<th>关卡名称</th>
+							<th>描述</th>
+							<th>挑战包id</th>
+							<th>关卡数</th>
+							<th>操作</th>
+						</tr>
+						#if($challegegates)
+							#foreach( $challegegate in $challegegates)
+								<tr>
+									<td>$challegegate.id</td>
+									
+									<td>$challegegate.name</td>
+									#if($challegegate.description == "$challegegate.description")
+                                        <td>$challegegate.description</td>
+									#else
+                                        <td></td>
+									#end
+
+									<td>$challegegate.challengeId</td>
+									
+									<td>$challegegate.gateNumber</td>
+									
+									<td><form action=" /admin/challegegate/detailInfo">
+												<input type="hidden" name="challegegateId" value=$challegegate.id /> 
+												<input type="hidden" name="token" value="$token"/> <input
+													type="submit" class="btn btn-default" value="详情" />
+										</form>
+                                        <form id="deleteChallegegate-form" action="#"
+                                              onsubmit="deleteChallegegate(this);">
+                                            <input type="hidden" name="challegegateId" value="$challegegate.id"/><input
+                                                type="hidden" name="token" value="$token"/> <input
+                                                id="deleteChallegegate-btn" type="submit" class="btn btn-default"
+                                                value="删除"/>
+                                        </form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+
+</div>

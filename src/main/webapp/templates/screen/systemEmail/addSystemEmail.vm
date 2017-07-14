@@ -1,0 +1,158 @@
+<div class="container">
+#parse("/screen/nav.vm")
+	<div class="data">
+		<div id="formDiv" class="span10">
+			
+				<div class="form-group col-sm-12">
+					<label for="title" class="col-sm-2 control-label">标题</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<input type="text" class="form-control" id="emailtitle"
+							required="required" placeholder="请输入标题">
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="content" class="col-sm-2 control-label">内容</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<textarea class="form-control" rows="3" placeholder="请输入内容"
+							required="required" data-type="text" id="emailcontent"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label for="type" class="col-sm-2 control-label">类型</label>
+					<div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+						<select class="form-control"  id="emailtype">
+							<option value="0">活动</option>
+							<option value="1">补偿</option>
+						</select>
+					</div>
+				</div>
+
+			#*附件*#
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">附件</label>
+                <div class="col-sm-2">
+                    <select class="form-control" name="award" id="attachmentSelect" onchange="selectChange('attachmentSelect')">
+                        <option value="0">基础</option>
+                        <option value="1">道具</option>
+                        <option value="2">头像</option>
+                        <option value="3">歌曲</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" name="award" id="attachmentSelect1">
+                        <option value="0">金币</option>
+                        <option value="1">经验</option>
+                        <option value="2">体力</option>
+                        <option value="3">残谱</option>
+                    </select>
+                    <select class="form-control" name="award" id="attachmentSelect2" style="display: none">
+						#if($props)
+							#foreach( $prop in $props)
+								#foreach($pr in $prop.entrySet())
+                                    <option value ="$pr.key">$pr.key=$pr.value</option>
+								#end
+							#end
+						#end
+                    </select>
+                    <select class="form-control" name="award" id="attachmentSelect3" style="display: none"
+					#if($heads)
+						#foreach( $head in $heads)
+							#foreach( $he in $head.entrySet())
+                                <option value ="$he.key">$he.key=$he.value</option>
+							#end
+						#end
+					#end
+                    </select>
+                    <select class="form-control" name="award" id="attachmentSelect4" style="display: none"
+					#if($musics)
+						#foreach( $music in $musics)
+							#foreach( $mu in $music.entrySet())
+                                <option value ="$mu.key">$mu.key=$mu.value</option>
+							#end
+						#end
+					#end
+                    </select>
+                </div>
+                <div class="col-sm-2" style="padding-right: 0px">
+                    <input type="number"  id="attachmentInput" class="form-control"
+                           placeholder="请输入数字" required="required" >
+                </div>
+                <div class="col-sm-2">
+                    <a class="btn btn-primary text-center btn-block" onclick="awardAdd('attachment')">添加</a>
+                </div>
+
+                <div class="col-sm-4" id="attachmentAward"></div>
+            </div>
+
+
+				#*<div class="form-group col-sm-12">
+					
+						<label for="visibleTime" class="col-sm-2 control-label">附件</label>
+						<div class="col-sm-2">
+							<select class="form-control" name="award" id="award">
+								<option value="0">金币</option>
+								<option value="1">经验</option>
+								<option value="2">体力</option>
+								<option value="3">残谱</option>
+								<option value="4">金币增加</option>
+								<option value="5">经验增加</option>
+								<option value="6">花朵延时</option>
+								<option value="7">花朵生长</option>
+								<option value="8">生命延长</option>
+								<option value="9">bad消除</option>
+							</select>
+						</div>
+						<div class="col-sm-2" style="padding-right: 0px">
+							<input type="number" min="1" value="1" name="dismissTime" required="required"
+								id="awardNum" class="ui_timepicker form-control" 
+								onfocus="javascript:if(this.value=='请输入数字')this.value='';">
+						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-primary text-center btn-block" onclick="add()">添加</a>
+						</div>
+					
+					<div class="col-sm-4" id="awardsList"></div>
+				</div>*#
+
+				<div class="form-group col-sm-12">
+					<div class="col-sm-offset-2 col-sm-6">
+						<button type="submit" id="addsysEmail-btn" onclick="addSystemEmail($propSize,$headSize,$musicSize)" class="btn btn-primary btn-block">确定</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+	<script type="text/javascript">
+
+		function add() {
+			var awardsList = document.getElementById("awardsList");
+			var newnode = document.createElement("div");
+			var award = document.getElementById("award");
+			var index = award.selectedIndex;
+			var awardName = award.options[index].text;
+			var awardValue = award.options[index].value;
+			var awardNum = document.getElementById("awardNum");
+			var num = awardNum.value;
+			var insertText = "<label id=\"" + awardValue + "Label\">"
+					+ awardName
+					+ "数量："
+					+ num
+					+ "</label><input type=\"hidden\" id=\"" + awardValue + "\" name=\"" + awardValue + "\" value=\"" + num + "\">";
+			if (isNaN(num)) {
+				awardNum.value = "请输入数字";
+			} else if (document.getElementById(awardValue)) {
+				var awardLabel = document.getElementById(awardValue + "Label");
+				awardLabel.innerHTML = awardName + "数量：" + num;
+				var awardInput = document.getElementById(awardValue);
+				awardInput.value = num;
+			} else {
+				newnode.innerHTML = insertText;
+				awardsList.appendChild(newnode);
+			}
+		}
+	</script>

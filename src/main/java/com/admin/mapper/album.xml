@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="album">
+	<resultMap type="com.admin.bean.Album" id="album">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="musics" column="musics" javaType="List"
+			jdbcType="ARRAY" />
+	</resultMap>
+
+    <select id="selectAlbum" resultMap="album">
+        SELECT
+        id, name, description, tag, musics
+        FROM
+        album_info
+        WHERE
+        id = #{id}
+        LIMIT 1;
+    </select>
+
+    <select id="selectAlbums" resultMap="album">
+        SELECT
+        id, name, description, tag, musics
+        FROM
+        album_info;
+    </select>
+
+    <insert id="insertAlbum" parameterType="com.admin.bean.Album"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT
+        INTO album_info(name, description, tag, musics)
+        VALUES(#{name}, #{description}, #{tag},
+        #{musics,
+        javaType=List,
+        jdbcType=ARRAY});
+    </insert>
+
+    <update id="updateAlbum" parameterType="com.admin.bean.Album">
+        UPDATE album_info
+        SET id = #{id}
+        <if test="name != null and name != ''">
+            ,name = #{name}
+        </if>
+        <if test="description != null and description != ''">
+            ,description = #{description}
+        </if>
+        <if test="tag != null and tag != ''">
+            ,tag = #{tag}
+        </if>
+        <if test="musics != null">
+            ,musics = #{musics, javaType=List, jdbcType=ARRAY}
+        </if>
+        WHERE id = #{id};
+    </update>
+
+    <delete id="deleteAlbum" parameterType="java.lang.Integer">
+        DELETE FROM
+        album_info
+        WHERE
+        id = #{id};
+    </delete>
+
+</mapper>

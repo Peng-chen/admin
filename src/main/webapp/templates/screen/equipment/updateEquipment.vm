@@ -1,0 +1,119 @@
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="equipid" value='$equipment.id' id="equipid"> <label
+                    for="name" class="col-sm-2 control-label">装备名称</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input type="text" class="form-control" id="updateEquipname"
+                           required="required" data-type="text" placeholder=""
+                           value='$equipment.name'>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">使用描述</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateequipdes" class="form-control" rows="3" value='$equipment.description'
+                           required="required" type="text" placeholder="请输入描述"/>
+
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">标记</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateEquiptag" type="text" class="form-control"
+                           required="required" data-type="integer"
+                           value='$equipment.tag' placeholder="">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">类型</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <select class="form-control" name="equiptype" id="updateEquipType">
+                        <option value="0" #if($equipment.type==0) selected="selected" #end>花朵</option>
+                        <option value="1" #if($equipment.type==1) selected="selected" #end>皮肤</option>
+                        <option value="2" #if($equipment.type==2) selected="selected" #end>小球</option>
+                        <option value="3" #if($equipment.type==3) selected="selected" #end>背景</option>
+                        <option value="4" #if($equipment.type==4) selected="selected" #end>音效</option>
+                        <option value="5" #if($equipment.type==5) selected="selected" #end>光效</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">装备quality</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateEquipquality" type="text" class="form-control" name="updateEquipquality"
+                           placeholder="请输入装备quality,比如:A" required="required" data-type="text"
+                           value="$equipment.quality">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">装备Source</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateEquipsource" type="text" class="form-control" name="updateEquipsource"
+                           placeholder="请输入装备Source" required="required" data-type="text"
+                           value="#if($equipment.source)$equipment.source#end">
+                </div>
+            </div>
+            <div>
+                <button
+                        class="col-sm-offset-3 col-sm-2 btn btn-primary" id="updateEquip-btn"
+                        style="display:inline-block;float:left;">保存修改
+                </button>
+                <a href=" /admin/allEquipments?token=$token" style="float:left;">
+                    <button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表
+                    </button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        if (0 == '$equipment.type') {
+            document.getElementById("updateEquipType").selectedIndex = 0;
+        } else if (1 == '$equipment.type') {
+            document.getElementById("updateEquipType").selectedIndex = 1;
+        } else if (2 == '$equipment.type') {
+            document.getElementById("updateEquipType").selectedIndex = 2;
+        } else if (3 == '$equipment.type') {
+            document.getElementById("updateEquipType").selectedIndex = 3;
+        } else if (4 == '$equipment.type') {
+            document.getElementById("updateEquipType").selectedIndex = 4;
+        } else if (5 == '$equipment.type') {
+            document.getElementById("updateEquipType").selectedIndex = 5;
+        }
+        ;
+    });
+
+</script>

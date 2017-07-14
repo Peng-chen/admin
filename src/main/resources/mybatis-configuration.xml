@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeHandlers>
+        <typeHandler javaType="List" jdbcType="ARRAY"
+                     handler="com.admin.utils.PsqlListHander"/>
+        <typeHandler javaType="Object" jdbcType="VARCHAR"
+                     handler="com.admin.utils.JsonHandler"/>
+    </typeHandlers>
+
+    <mappers>
+
+        <mapper resource="com/admin/mapper/normalActivity.xml"/>
+
+    </mappers>
+</configuration>

@@ -1,0 +1,88 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data">
+		<div id="formDiv" class="span10">
+##		<form id="uploadForm" action=" /service/admin/challege/uploadFile" method="POST" enctype="multipart/form-data" >
+		       <div class="form-group col-sm-12">
+					<label class="col-sm-2" style="font-size:16px;">添加关卡</label>
+					
+				</div>
+			
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">关卡名称</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input id="challegeName" name="challegeName" type="text" required="required" class="form-control col-sm-10"
+							 placeholder="请输入名称">
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">关卡描述</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<textarea id="challegeDes" name="challegeDes" class="form-control" rows="3" placeholder="请输入描述"
+							required="required" data-type="text" name="description"></textarea>
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">挑战包图片</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="challegeImage" name="challegeImage" type="text" class="form-control" 
+							placeholder="请输入图片tag" required="required" >
+					</div>
+				</div>
+
+
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">过关条件(js代码)</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<textarea id="jsTextArea" placeholder="请输入过关条件(js代码)" class="form-control" required="required"
+                                  rows="8"   data-type="text" name="determineCondition">
+
+						</textarea>
+					</div>
+				</div>
+				#*<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">js同名文件</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						
+                               <input id="fileupload" type="file" name="file" accept="application/javascript" class="form-control" 
+						                	placeholder="请选择与tag同名的js文件" />
+                      
+					</div>*#
+				</div>
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">要求玩家等级</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="requiredLevel" name="requiredLevel" type="number" min="1" step="1" class="form-control" 
+							placeholder="请输入等级" required="required" >
+					</div>
+				</div>
+				
+				<div class="form-group col-sm-12">
+					<div class="col-sm-offset-2 col-sm-6">
+						<button id="addChallege-btn" class="btn btn-primary btn-block"">确定</button>
+					</div>
+				</div>
+##		</form>
+		</div>
+	</div>
+</div>

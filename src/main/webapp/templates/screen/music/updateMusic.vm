@@ -1,0 +1,380 @@
+
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data">
+		<div id="formDiv" class="span10">
+	
+				<div class="form-group col-sm-12">
+					<label for="name" class="col-sm-2 control-label">名称</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input required="required" class="form-control col-sm-10"
+							id="name" data-type="text" placeholder="请输入名称" value="$music.name">
+					</div>	
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label for="description" class="col-sm-2 control-label">描述</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input required="required" class="form-control"
+							placeholder="请输入描述" id="description" type="text"  value="$music.description"/>
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">BPM</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input type="number" class="form-control" id="bpm"  value="$music.bpm"
+							placeholder="请输入BPM" required="required" >
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12" id="singerslist">
+					<label for="singers" class="col-sm-2 control-label">歌手</label>
+					#if($music.singer)
+						   #foreach($singer in $music.singer)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						         <input type="text" class="form-control" name="singers" value="$singer"
+							      placeholder="请输入歌手（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="singers" value="$singer"
+							      placeholder="请输入歌手（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					 #else
+					    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						         <input type="text" class="form-control" name="singers"
+							      placeholder="请输入歌手（可选）" required="required" data-type="text">
+					    </div>
+					 #end
+					<div id="singers_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="add('singerslist','singers_add','singers','请输入歌手')"
+						class="col-sm-offset-1 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12" id="lyricistlist">
+					<label for="lyricist" class="col-sm-2 control-label">作词</label>
+					#if($music.lyricist)
+						   #foreach($lyricist in $music.lyricist)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="lyricist" value="$lyricist"
+							placeholder="请输入作词人（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="lyricist" value="$lyricist"
+							placeholder="请输入作词人（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					 #else
+					    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						         <input type="text" class="form-control" name="lyricist"
+							      placeholder="请输入作词人（可选）" required="required" data-type="text">
+					    </div>
+					 #end
+					<div id="lyricist_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="add('lyricistlist','lyricist_add','lyricist','请输入作词人')"
+						class="col-sm-offset-1 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12" id="composerlist">
+					<label for="composer" class="col-sm-2 control-label">作曲</label>
+					#if($music.composer)
+						   #foreach($composer in $music.composer)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="composer" value="$composer"
+							placeholder="请输入作曲人（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="composer" value="$composer"
+							placeholder="请输入作曲人（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					 #else
+					   <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="composer"
+							placeholder="请输入作曲人（可选）" required="required" data-type="text">
+					   </div>
+					 #end
+					<div id="composer_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="add('composerlist','composer_add','composer','请输入作曲人')"
+						class="col-sm-offset-1 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12" id="arrangerlist">
+					<label for="arranger" class="col-sm-2 control-label">编曲</label>
+					#if($music.arranger)
+						   #foreach($arranger in $music.arranger)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="arranger" value="$arranger"
+							placeholder="请输入编曲人（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="arranger" value="$arranger"
+							placeholder="请输入编曲人（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					 #else
+					  <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="arranger"
+							placeholder="请输入编曲人（可选）" required="required" data-type="text">
+					  </div>
+					 #end
+					<div id="arranger_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="add('arrangerlist','arranger_add','arranger','请输入编曲者')"
+						class="col-sm-offset-1 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12" id="mixxerlist">
+					<label for="mixxer" class="col-sm-2 control-label">混音</label>
+					#if($music.mixxer)
+						   #foreach($mixxer in $music.mixxer)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="mixxer" value="$mixxer"
+							placeholder="请输入混音人（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="mixxer" value="$mixxer"
+							placeholder="请输入混音人（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					  #else
+					      <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="mixxer" 
+							placeholder="请输入混音人（可选）" required="required" data-type="text">
+					      </div>
+					 #end
+					<div id="mixxer_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="add('mixxerlist','mixxer_add','mixxer','请输入混音者')"
+						class="col-sm-offset-1 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12" id="harmonylist">
+					<label for="harmony" class="col-sm-2 control-label">和声</label>
+					#if($music.harmony)
+						   #foreach($harmony in $music.harmony)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="harmony" value="$harmony"
+							placeholder="请输入和声（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="harmony" value="$harmony"
+							placeholder="请输入和声（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					 #else
+					     <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="harmony" 
+							placeholder="请输入和声（可选）" required="required" data-type="text">
+					     </div>
+					 #end
+					<div id="harmony_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="add('harmonylist','harmony_add','harmony','请输入和声')"
+						class="col-sm-offset-1 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12" id="playerlist">
+					<label for="player" class="col-sm-2 control-label">演奏</label>
+					#if($music.player)
+						   #foreach($player in $music.player)
+						     #if($foreach.index==0)
+				          	    <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="player" value="$player"
+							placeholder="请输入演奏者（可选）" required="required" data-type="text">
+					            </div>
+					          #else
+					          <div class="col-sm-offset-2 col-sm-8 input-group" data-role="acknowledge-input" style="margin-top:5px;">
+						         <input type="text" class="form-control" name="player" value="$player"
+							placeholder="请输入演奏者（可选）" required="required" data-type="text">
+					           </div>
+					          #end
+					        #end
+					 #else
+					     <div class="col-sm-8 input-group" data-role="acknowledge-input">
+						        <input type="text" class="form-control" name="player"
+							placeholder="请输入演奏者（可选）" required="required" data-type="text">
+					     </div>
+					 #end
+					<a onclick="add('playerlist','player_add','player','请输入演奏者')"
+						class="col-sm-offset-1 btn btn-primary">增加</a>
+					<div id="player_add" class="col-sm-offset-2 col-sm-8"></div>
+					
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">时长</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input type="number" class="form-control" id="time"  value="$music.time"
+							placeholder="请输入时长" required="required" data-type="number">
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12" >
+					<label class="col-sm-2 control-label">谱曲</label>
+					<label class="col-sm-2 control-label">简单谱曲</label>
+					<div class="col-sm-2 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="Schemes">
+						   #if($music.defaultSchemes.get(0) == -1)
+						       <option value="-1">未知</option>
+						       #foreach($scheme in $validSchemes)
+								   <option value="$scheme.id">$scheme.tag</option>
+							   #end
+							#else
+                			   #foreach($s in $myscheme)
+								 #if($s.id == $music.defaultSchemes.get(0))
+								     <option value="$s.id">$s.tag</option>
+							     #end
+							   #end
+						    #end
+						</select>
+						
+					</div>
+				</div>
+				<div class="form-group col-sm-12" >
+					<label class="col-sm-offset-2 col-sm-2 control-label">一般谱曲</label>
+					<div class="col-sm-2 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="Schemes">
+						   #if($music.defaultSchemes.get(1) == -1)
+						       <option value="-1">未知</option>
+						       #foreach($scheme in $validSchemes)
+								   <option value="$scheme.id">$scheme.tag</option>
+							   #end
+							#else
+                			   #foreach($s in $myscheme)
+								 #if($s.id == $music.defaultSchemes.get(1))
+								     <option value="$s.id">$s.tag</option>
+							     #end
+							   #end
+						    #end
+						</select>
+					</div>
+				</div>
+				<div class="form-group col-sm-12" >
+					<label class="col-sm-offset-2 col-sm-2 control-label">困难谱曲</label>
+					<div class="col-sm-2 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="Schemes">
+						   #if($music.defaultSchemes.get(2) == -1)
+						       <option value="-1">未知</option>
+						       #foreach($scheme in $validSchemes)
+								   <option value="$scheme.id">$scheme.tag</option>
+							   #end
+							#else
+                			   #foreach($s in $myscheme)
+								 #if($s.id == $music.defaultSchemes.get(2))
+								     <option value="$s.id">$s.tag</option>
+							     #end
+							   #end
+						    #end
+						</select>
+					</div>
+				</div>
+				<div class="form-group col-sm-12" >
+					<label class="col-sm-offset-2 col-sm-2 control-label">大师谱曲</label>
+					<div class="col-sm-2 input-group sgmusics" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="Schemes">
+						   #if($music.defaultSchemes.get(3) == -1)
+						       <option value="-1">未知</option>
+						       #foreach($scheme in $validSchemes)
+								   <option value="$scheme.id">$scheme.tag</option>
+							   #end
+							#else
+                			   #foreach($s in $myscheme)
+								 #if($s.id == $music.defaultSchemes.get(3))
+								     <option value="$s.id">$s.tag</option>
+							     #end
+							   #end
+						    #end
+						</select>
+					</div>
+				</div>
+				<div class="form-group col-sm-12" id="schemesList">
+					
+					<div id="schemes_add" class="col-sm-offset-1 col-sm-11"
+						style="padding: 0px"></div>
+					<a onclick="addMusic('schemesList','schemes_add')"
+						class="col-sm-offset-2 btn btn-primary" style="margin-top: 5px">增加</a>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label class="col-sm-2 control-label">歌曲tag</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input type="text" class="form-control" id="tag"  value="$music.tag"
+							placeholder="请输入tag" required="required" data-type="text">
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<div class="col-sm-offset-1 col-sm-11">
+						<div class="checkbox">
+						    #if($music.systemOffered)
+						     	<input type="checkbox" id="systemOffered" checked="checked">
+						    #else
+						    	<input type="checkbox" id="systemOffered">
+						    #end
+							<label  for="systemOffered">
+								系统赠送
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					
+						<input type="hidden" id="musicId" value=$music.id /> 
+						<button id="updateMusic-btn" class="col-sm-offset-2 col-sm-2 btn btn-primary" type="submit" style="display:inline-block;float:left;">确认修改</button>
+					
+					<a href=" /admin/allMusics?token=$token" style="float:left;"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+				</div>
+		</div>
+	</div>
+</div>

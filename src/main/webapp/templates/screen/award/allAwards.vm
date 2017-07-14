@@ -1,0 +1,481 @@
+<div class="container">
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#divBeatScoreAward").hide();
+            var usualLabel = document.getElementById('beatScoreAward');
+            usualLabel.addEventListener('click', function () {
+
+                $("#divBeatAward").hide();
+                $("#divBeatScoreAward").toggle();
+            }, false);
+
+            var PKLabel = document.getElementById('beatAward');
+            PKLabel.addEventListener('click', function () {
+                $("#divBeatScoreAward").hide();
+                $("#divBeatAward").toggle();
+            }, false);
+        });
+    </script>
+    #parse("/screen/nav.vm")
+    <div class="data"
+         style="padding-left: 4%;  border: 0px">
+        <div id="detailcontainer" class="panel panel-default"
+             style="width: 95%">
+            <div class="panel-heading">
+                <h3 class="panel-title">所有奖励</h3>
+
+                <div class="row">
+                    <label id="beatAward" class="span4 offset2 btn-primary">打榜奖励</label>
+                    <label id="beatScoreAward" class="span4 btn-primary">打榜积分奖励</label>
+                </div>
+            </div>
+
+            #if($status)
+
+
+                <div class=" table-responsive " id="divBeatAward">
+                    <table cellpadding="10px" class="table table-hover table-bordered table-condensed text-center">
+                        <thead>
+                        <colgroup>
+                            <col width='3%'></col>
+                            <col width='12%'></col>
+                            <col width='12%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='8%'></col>
+                            <col width='3%'></col>
+                            <col width='3%'></col>
+                            <col width='8%'></col>
+                            <col width='3%'></col>
+                            <col width='4%'></col>
+                        </colgroup>
+                        <tr>
+                            <th>id</th>
+                            <th>奖励</th>
+                            <th>邮件内容</th>
+                            <th>描述</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+                            <th>发放奖励截止时间</th>
+                            <th>排名段(limit)</th>
+                            <th>排名段数量(offset)</th>
+                            <th>谱面列表</th>
+                            <th>打榜期数</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #if($now-allBeatAwards)
+                                #foreach( $beatAward in $now-allBeatAwards)
+
+                                    #if($beatAward)
+
+                                    <tr class="success">
+
+                                        <td>$beatAward.id</td>
+                                    ##                                        #if($beatAward.award)
+                                    ##                                            <td>$beatAward.award</td>
+                                    ##                                        #else
+                                    ##                                            <td></td>
+                                    ##                                        #end
+                                        <td> #if($beatAward.award)
+                                    #set($award=$beatAward.award)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                        <td>$beatAward.content</td>
+                                        #if($beatAward.description)
+                                            <td>$beatAward.description</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($beatAward.startTime)
+                                            <td>$beatAward.startTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($beatAward.endTime)
+                                            <td>$beatAward.endTime</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        <td>$beatAward.statisticTime</td>
+
+                                        #if($beatAward.limit)
+                                            <td>$beatAward.limit</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($beatAward.offset)
+                                            <td>$beatAward.offset</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($beatAward.schemes)
+                                            <td>$beatAward.schemes</td>
+                                        #else
+                                            <td></td>
+                                        #end
+                                        #if($beatAward.period)
+                                            <td>$beatAward.period</td>
+                                        #else
+                                            <td></td>
+                                        #end
+
+
+
+                                        <td>
+                                            <form action=" /admin/award/beatAwardInfo">
+                                                <input type="hidden" name="beatAwardId" value="$beatAward.id"/><input
+                                                    type="hidden" name="token" value="$token"/><input
+                                                    type="submit" class="btn btn-default" value="详情"/>
+                                            </form>
+                                            <form id="deleteBeatAward-form" action="#"
+                                                  onsubmit="deleteBeatAward(this);">
+                                                <input type="hidden" name="beatAwardId" value="$beatAward.id"/><input
+                                                    type="hidden" name="token" value="$token"/> <input
+                                                    id="deleteBeatAward-btn" type="submit" class="btn btn-default"
+                                                    value="删除"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                    #end
+                                #end
+                            #end
+
+                            #if($future-allBeatAwards)
+                                #foreach( $beatAward in $future-allBeatAwards)
+
+
+                                <tr class="warning">
+                                    <td>$beatAward.id</td>
+                                ##                                    #if($beatAward.award)
+                                ##                                        <td>$beatAward.award</td>
+                                ##                                    #else
+                                ##                                        <td></td>
+                                ##                                    #end
+                                    <td> #if($beatAward.award)
+                                    #set($award=$beatAward.award)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    <td>$beatAward.content</td>
+                                    #if($beatAward.description)
+                                        <td>$beatAward.description</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.startTime)
+                                        <td>$beatAward.startTime</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.endTime)
+                                        <td>$beatAward.endTime</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    <td>$beatAward.statisticTime</td>
+
+
+                                    #if($beatAward.limit)
+                                        <td>$beatAward.limit</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.offset)
+                                        <td>$beatAward.offset</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.schemes)
+                                        <td>$beatAward.schemes</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.period)
+                                        <td>$beatAward.period</td>
+                                    #else
+                                        <td></td>
+                                    #end
+
+
+
+                                    <td>
+                                        <form action=" /admin/award/beatAwardInfo">
+                                            <input type="hidden" name="beatAwardId" value="$beatAward.id"/><input
+                                                type="hidden" name="token" value="$token"/><input
+                                                type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+                                        <form id="deleteBeatAward-form" action="#" onsubmit="deleteBeatAward(this);">
+                                            <input type="hidden" name="beatAwardId" value="$beatAward.id"/><input
+                                                type="hidden" name="token" value="$token"/> <input
+                                                id="deleteBeatAward-btn" type="submit" class="btn btn-default"
+                                                value="删除"/>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                #end
+                            #end
+
+
+
+                            #if($before-allBeatAwards)
+                                #foreach( $beatAward in $before-allBeatAwards)
+
+
+                                <tr class="danger">
+                                    <td>$beatAward.id</td>
+                                ##                                    #if($beatAward.award)
+                                ##                                        <td>$beatAward.award</td>
+                                ##                                    #else
+                                ##                                        <td></td>
+                                ##                                    #end
+                                    <td> #if($beatAward.award)
+                                    #set($award=$beatAward.award)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    <td>$beatAward.content</td>
+                                    #if($beatAward.description)
+                                        <td>$beatAward.description</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.startTime)
+                                        <td>$beatAward.startTime</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.endTime)
+                                        <td>$beatAward.endTime</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    <td>$beatAward.statisticTime</td>
+
+
+                                    #if($beatAward.limit)
+                                        <td>$beatAward.limit</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.offset)
+                                        <td>$beatAward.offset</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.schemes)
+                                        <td>$beatAward.schemes</td>
+                                    #else
+                                        <td></td>
+                                    #end
+                                    #if($beatAward.period)
+                                        <td>$beatAward.period</td>
+                                    #else
+                                        <td></td>
+                                    #end
+
+
+
+                                    <td>
+                                        <form action=" /admin/award/beatAwardInfo">
+                                            <input type="hidden" name="beatAwardId" value="$beatAward.id"/><input
+                                                type="hidden" name="token" value="$token"/><input
+                                                type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+                                        <form id="deleteBeatAward-form" action="#" onsubmit="deleteBeatAward(this);">
+                                            <input type="hidden" name="beatAwardId" value="$beatAward.id"/><input
+                                                type="hidden" name="token" value="$token"/> <input
+                                                id="deleteBeatAward-btn" type="submit" class="btn btn-default"
+                                                value="删除"/>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                #end
+                            #end
+
+
+                        </tbody>
+                    </table>
+                </div>
+            #end
+
+            #if($status)
+
+                <div class=" table-responsive" id="divBeatScoreAward">
+                    <table cellpadding="10px" class="table table-hover table-bordered table-condensed text-center">
+                        <thead>
+                        ##                        <colgroup>
+                        ##                            <col width='3%'></col>
+                        ##                            <col width='3%'></col>
+                        ##                            <col width='3%'></col>
+                        ##                            <col width='8%'></col>
+                        ##                            <col width='8%'></col>
+                        ##                            <col width='8%'></col>
+                        ##                            <col width='10%'></col>
+                        ##                            <col width='10%'></col>
+                        ##                            <col width='10%'></col>
+                        ##                            <col width='10%'></col>
+                        ##                            <col width='10%'></col>
+                        ##                        </colgroup>
+                        <tr>
+                            <th data-editable="true">分数</th>
+                            <th data-editable="true">奖励</th>
+                            <th>邮件奖励形式</th>
+                            <th data-editable="true">开始时间</th>
+                            <th data-editable="true">结束时间</th>
+                            <th>打榜期数</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #if($now-allBeatScoreAwards)
+                                #foreach( $beatScoreAward in $now-allBeatScoreAwards)
+
+
+                                <tr class="success">
+                                    <td>$beatScoreAward.score</td>
+                                ##                                    #if($beatScoreAward.award)
+                                ##                                        <td>$beatScoreAward.award</td>
+                                ##                                    #else
+                                ##                                        <td></td>
+                                ##                                    #end
+                                    <td> #if($beatScoreAward.award)
+                                    #set($award=$beatScoreAward.award)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    <td>$beatScoreAward.content</td>
+                                    <td>$beatScoreAward.startTime</td>
+                                    <td>$beatScoreAward.endTime</td>
+                                    <td>$beatScoreAward.period</td>
+
+
+                                    <td>
+                                        <form action=" /admin/award/beatScoreAwardInfo">
+                                            <input type="hidden" name="score" value="$beatScoreAward.score"/>
+                                            <input type="hidden" name="startTime" value="$beatScoreAward.startTime"/>
+                                            <input type="hidden" name="endTime" value="$beatScoreAward.endTime"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+                                        <form id="deleteBeatScoreAward-form" action="#"
+                                              onsubmit="deleteBeatScoreAward(this);">
+                                            <input type="hidden" name="score" value="$beatScoreAward.score"/>
+                                            <input type="hidden" name="startTime" value="$beatScoreAward.startTime"/>
+                                            <input type="hidden" name="endTime" value="$beatScoreAward.endTime"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input id="deleteBeatScoreAward-btn" type="submit" class="btn btn-default"
+                                                   value="删除"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                                #end
+                            #end
+
+                            #if($future-allBeatScoreAwards)
+                                #foreach( $beatScoreAward in $future-allBeatScoreAwards)
+
+
+                                <tr class="warning">
+                                    <td>$beatScoreAward.score</td>
+                                ##                                    #if($beatScoreAward.award)
+                                ##                                        <td>$beatScoreAward.award</td>
+                                ##                                    #else
+                                ##                                        <td></td>
+                                ##                                    #end
+                                    <td> #if($beatScoreAward.award)
+                                    #set($award=$beatScoreAward.award)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    <td>$beatScoreAward.content</td>
+                                    <td>$beatScoreAward.startTime</td>
+                                    <td>$beatScoreAward.endTime</td>
+                                    <td>$beatScoreAward.period</td>
+
+
+                                    <td>
+                                        <form action=" /admin/award/beatScoreAwardInfo">
+                                            <input type="hidden" name="score" value="$beatScoreAward.score"/>
+                                            <input type="hidden" name="startTime" value="$beatScoreAward.startTime"/>
+                                            <input type="hidden" name="endTime" value="$beatScoreAward.endTime"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+                                        <form id="deleteBeatScoreAward-form" action="#"
+                                              onsubmit="deleteBeatScoreAward(this);">
+                                            <input type="hidden" name="score" value="$beatScoreAward.score"/>
+                                            <input type="hidden" name="startTime" value="$beatScoreAward.startTime"/>
+                                            <input type="hidden" name="endTime" value="$beatScoreAward.endTime"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input id="deleteBeatScoreAward-btn" type="submit" class="btn btn-default"
+                                                   value="删除"/>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                #end
+                            #end
+
+
+                            #if($before-allBeatScoreAwards)
+                                #foreach( $beatScoreAward in $before-allBeatScoreAwards)
+
+
+                                <tr class="danger">
+                                    <td>$beatScoreAward.score</td>
+                                ##                                    #if($beatScoreAward.award)
+                                ##                                        <td>$beatScoreAward.award</td>
+                                ##                                    #else
+                                ##                                        <td></td>
+                                ##                                    #end
+                                    <td> #if($beatScoreAward.award)
+                                    #set($award=$beatScoreAward.award)
+                                     #parse("/screen/awardString.vm")
+                                    #end</td>
+                                    <td>$beatScoreAward.content</td>
+                                    <td>$beatScoreAward.startTime</td>
+                                    <td>$beatScoreAward.endTime</td>
+                                    <td>$beatScoreAward.period</td>
+
+
+                                    <td>
+                                        <form action=" /admin/award/beatScoreAwardInfo">
+                                            <input type="hidden" name="score" value="$beatScoreAward.score"/>
+                                            <input type="hidden" name="startTime" value="$beatScoreAward.startTime"/>
+                                            <input type="hidden" name="endTime" value="$beatScoreAward.endTime"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+                                        <form id="deleteBeatScoreAward-form" action="#"
+                                              onsubmit="deleteBeatScoreAward(this);">
+                                            <input type="hidden" name="score" value="$beatScoreAward.score"/>
+                                            <input type="hidden" name="startTime" value="$beatScoreAward.startTime"/>
+                                            <input type="hidden" name="endTime" value="$beatScoreAward.endTime"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input id="deleteBeatScoreAward-btn" type="submit" class="btn btn-default"
+                                                   value="删除"/>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                #end
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            #else
+                <div style="padding-left: 10px">Server Error...</div>
+            #end
+        </div>
+
+
+    </div>
+
+</div>
+

@@ -1,0 +1,100 @@
+<link type="text/css"
+	href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+	rel="stylesheet" />
+<link type="text/css"
+	href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+	rel="stylesheet" />
+
+<div class="container">
+#parse("/screen/nav.vm")
+	<div class="data">
+		<div id="formDiv" class="span10">
+		
+				<div class="form-group col-sm-12">
+					<label for="title" class="col-sm-2 control-label">标题</label>
+					<div class="col-sm-6 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input type="text" id="title" class="form-control" name="title"
+							required="required" data-type="text" placeholder="请输入标题">
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="content" class="col-sm-2 control-label">内容</label>
+					<div class="col-sm-6 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<textarea id="content" class="form-control" rows="3" placeholder="请输入内容"
+							required="required" data-type="text" name="content"></textarea>
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="priority" class="col-sm-2 control-label">优先级</label>
+					<div class="col-sm-5 col-xm-5">
+						<select class="form-control" id="priority">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+						</select>
+						<p>（数字越大，优先级越高）</p>
+					</div>
+
+				</div>
+
+				<div class="form-group col-sm-12">
+					
+						<label for="visibleTime" class="col-sm-2 control-label">用户可见时间</label>
+						<div class="col-sm-6">
+							<input type="text" id="visibleTime" name="visibleTime" required="required"
+								class="ui_timepicker form-control" >
+						</div>
+				</div>
+				<div class="form-group col-sm-12">
+						<label for="dismissTime" class="col-sm-2 control-label">公告失效时间</label>
+						<div class="col-sm-6">
+							<input id="dismissTime" type="text" name="dismissTime" required="required"
+								class="ui_timepicker form-control" >
+						</div>
+				</div>
+
+				
+				<div class="form-group col-sm-12">
+					<div class="col-sm-offset-2 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-block" id="addAnnouncement-btn">确定</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			$(".ui_timepicker").datetimepicker({
+				showSecond : true,
+				timeFormat : 'hh:mm:ss',
+				stepHour : 1,
+				stepMinute : 1,
+				stepSecond : 1
+			})
+		});
+
+	</script>
+
+   

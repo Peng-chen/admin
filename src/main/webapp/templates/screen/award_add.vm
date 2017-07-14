@@ -1,0 +1,95 @@
+<div class="form-group col-sm-12">
+
+    <div class="col-sm-2">
+        <select class="form-control" name="award" id="${tagId}firstSelect" onchange="awardSelectChange('${tagId}firstSelect')">
+            <option value="1">基础</option>
+            <option value="2">道具</option>
+            <option value="3">头像</option>
+            <option value="4">歌曲</option>
+            <option value="5">装备</option>
+            <option value="6">边框</option>
+            <option value="7">碎片</option>
+            <option value="8">狗粮</option>
+
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <select class="form-control" name="${tagId}award1" id="${tagId}firstSelect1">
+            <option value="0">金币</option>
+            <option value="1">经验</option>
+            <option value="2">体力</option>
+            <option value="3">残谱</option>
+        </select>
+## style="display: none"
+        <select class="form-control" name="${tagId}award2" id="${tagId}firstSelect2" style="display: none" >
+			#if($props)
+				#foreach( $prop in $props)
+					#foreach($pr in $prop.entrySet())
+                        <option value ="$pr.key">$pr.key=$pr.value</option>
+					#end
+				#end
+			#end
+        </select>
+        <select class="form-control" name="${tagId}award3" id="${tagId}firstSelect3" style="display: none">
+		#if($heads)
+			#foreach( $head in $heads)
+				#foreach( $he in $head.entrySet())
+                    <option value ="$he.key">$he.key=$he.value</option>
+				#end
+			#end
+		#end
+        </select>
+        <select class="form-control" name="${tagId}award4" id="${tagId}firstSelect4" style="display: none">
+		#if($musics)
+			#foreach( $music in $musics)
+				#foreach( $mu in $music.entrySet())
+                    <option value ="$mu.key">$mu.key=$mu.value</option>
+				#end
+			#end
+		#end
+        </select>
+        <select class="form-control" name="${tagId}award5" id="${tagId}firstSelect5" style="display: none">
+        #if($equips)
+            #foreach( $equip in $equips)
+                #foreach( $mu1 in $equip.entrySet())
+                    <option value ="$mu1.key">$mu1.key=$mu1.value</option>
+                #end
+            #end
+        #end
+        </select>
+        <select class="form-control" name="${tagId}award6" id="${tagId}firstSelect6" style="display: none">
+        #if($frames)
+            #foreach( $frame in $frames)
+                #foreach( $mu2 in $frame.entrySet())
+                    <option value ="$mu2.key">$mu2.key=$mu2.value</option>
+                #end
+            #end
+        #end
+        </select>
+        <select class="form-control" name="${tagId}award7" id="${tagId}firstSelect7" style="display: none">
+        #if($pieces)
+            #foreach( $piece in $pieces)
+                #foreach( $mu3 in $piece.entrySet())
+                    <option value ="$mu3.key">$mu3.key=$mu3.value</option>
+                #end
+            #end
+        #end
+        </select>
+        <select class="form-control" name="${tagId}award8" id="${tagId}firstSelect8" style="display: none">
+        <option value ="1">1=红</option>
+        <option value ="2">2=蓝</option>
+        <option value ="3">3=绿</option>
+        <option value ="4">4=黄</option>
+
+        </select>
+    </div>
+    <div class="col-sm-2" style="padding-right: 0px">
+        <input type="number"  id="${tagId}firstInput" class="form-control"
+               placeholder="请输入数字" required="required" >
+    </div>
+    <div class="col-sm-2">
+        <a class="btn btn-primary text-center btn-block" onclick="awardAddClick('${tagId}first')">添加</a>
+    </div>
+
+    <div class="col-sm-4" id="${tagId}firstAward"></div>
+</div>

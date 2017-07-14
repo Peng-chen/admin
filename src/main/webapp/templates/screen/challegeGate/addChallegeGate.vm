@@ -1,0 +1,287 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data">
+		<div id="formDiv" class="span10">
+		
+		       <div class="form-group col-sm-12">
+					<label class="col-sm-2" style="font-size:16px;">添加小关卡</label>
+					
+				</div>
+			
+				<div class="form-group col-sm-12">
+					<label for="file" class="col-sm-2 control-label">所属挑战包id</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select id="challegeid" class="form-control col-sm-10">
+						#if($challenges)
+							#foreach( $challege in $challenges)
+                             <option value ="$challege.id">$challege.id</option>
+                            #end
+                         #end
+                        </select>
+						
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">所属挑战包关卡数</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input type="number" min="1" id="gateNumber" class="form-control" placeholder="请输入关卡数"
+							required="required" />
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">关卡名称</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="gateName" type="text" class="form-control" 
+							placeholder="请输入名称" required="required" >
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">描述</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="gatedes" type="text" class="form-control" 
+							placeholder="请输入描述" required="required" >
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">谱面列表</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="schemes" type="text" class="form-control" 
+							placeholder="请输入谱面id，多个谱面请用“，”分割" required="required" >
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">要求玩家等级</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="gaterequiredLevel" type="number" min="1" step="1" class="form-control" 
+							placeholder="请输入等级" required="required" >
+					</div>
+				</div>
+
+
+
+            <div id="div1">
+##                #set($award=$beatAward.award)
+            #set($tagId="firstAward_add")
+            #set($title="首次挑战成功奖励")
+##            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+            </div>
+            <div id="div2">
+##                #set($award=$beatAward.award)
+            #set($tagId="secondAward_add")
+            #set($title="前5次挑战成功奖励")
+##            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+            </div>
+            <div id="div3">
+##                #set($award=$beatAward.award)
+            #set($tagId="thirdAward_add")
+            #set($title="5次后挑战成功奖励")
+##            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+            </div>
+
+			#*首次挑战成功奖励  前5次挑战成功奖励  5次后挑战成功奖励*#
+##			<div class="form-group col-sm-12">
+##				<label for="bpm" class="col-sm-2 control-label">首次挑战成功奖励</label>
+##				<div class="col-sm-2">
+##					<select class="form-control" name="award" id="firstSelect" onchange="selectChange('firstSelect')">
+##						<option value="0">基础</option>
+##						<option value="1">道具</option>
+##						<option value="2">头像</option>
+##						<option value="3">歌曲</option>
+##					</select>
+##				</div>
+##				<div class="col-sm-2">
+##					<select class="form-control" name="award" id="firstSelect1">
+##						<option value="0">金币</option>
+##						<option value="1">经验</option>
+##						<option value="2">体力</option>
+##						<option value="3">残谱</option>
+##					</select>
+##					<select class="form-control" name="award" id="firstSelect2" style="display: none">
+##						#if($props)
+##							#foreach( $prop in $props)
+##								#foreach($pr in $prop.entrySet())
+##                                    <option value ="$pr.key">$pr.key=$pr.value</option>
+##								#end
+##							#end
+##						#end
+##					</select>
+##					<select class="form-control" name="award" id="firstSelect3" style="display: none"
+##						#if($heads)
+##							#foreach( $head in $heads)
+##								#foreach( $he in $head.entrySet())
+##									<option value ="$he.key">$he.key=$he.value</option>
+##								#end
+##							#end
+##						#end
+##					</select>
+##					<select class="form-control" name="award" id="firstSelect4" style="display: none"
+##						#if($musics)
+##							#foreach( $music in $musics)
+##								#foreach( $mu in $music.entrySet())
+##                                    <option value ="$mu.key">$mu.key=$mu.value</option>
+##								#end
+##							#end
+##						#end
+##					</select>
+##				</div>
+##				<div class="col-sm-2" style="padding-right: 0px">
+##					<input type="number"  id="firstInput" class="form-control"
+##							placeholder="请输入数字" required="required" >
+##				</div>
+##				<div class="col-sm-2">
+##					<a class="btn btn-primary text-center btn-block" onclick="awardAdd('first')">添加</a>
+##				</div>
+##
+##				<div class="col-sm-4" id="firstAward"></div>
+##			</div>
+##
+##
+##            <div class="form-group col-sm-12">
+##                <label for="bpm" class="col-sm-2 control-label">前5次挑战成功奖励</label>
+##                <div class="col-sm-2">
+##                    <select class="form-control" name="award" id="secondSelect" onchange="selectChange('secondSelect')">
+##                        <option value="0">基础</option>
+##                        <option value="1">道具</option>
+##                        <option value="2">头像</option>
+##                        <option value="3">歌曲</option>
+##                    </select>
+##                </div>
+##                <div class="col-sm-2">
+##                    <select class="form-control" name="award" id="secondSelect1">
+##                        <option value="0">金币</option>
+##                        <option value="1">经验</option>
+##                        <option value="2">体力</option>
+##                        <option value="3">残谱</option>
+##                    </select>
+##                    <select class="form-control" name="award" id="secondSelect2" style="display: none">
+##						#if($props)
+##							#foreach( $prop in $props)
+##								#foreach($pr in $prop.entrySet())
+##                                    <option value ="$pr.key">$pr.key=$pr.value</option>
+##								#end
+##							#end
+##						#end
+##                    </select>
+##                    <select class="form-control" name="award" id="secondSelect3" style="display: none"
+##					#if($heads)
+##						#foreach( $head in $heads)
+##							#foreach( $he in $head.entrySet())
+##                                <option value ="$he.key">$he.key=$he.value</option>
+##							#end
+##						#end
+##					#end
+##                    </select>
+##                    <select class="form-control" name="award" id="secondSelect4" style="display: none"
+##					#if($musics)
+##						#foreach( $music in $musics)
+##							#foreach( $mu in $music.entrySet())
+##                                <option value ="$mu.key">$mu.key=$mu.value</option>
+##							#end
+##						#end
+##					#end
+##                    </select>
+##                </div>
+##                <div class="col-sm-2" style="padding-right: 0px">
+##                    <input type="number"  id="secondInput" class="form-control"
+##                           placeholder="请输入数字" required="required" >
+##                </div>
+##                <div class="col-sm-2">
+##                    <a class="btn btn-primary text-center btn-block" onclick="awardAdd('second')">添加</a>
+##                </div>
+##
+##                <div class="col-sm-4" id="secondAward"></div>
+##            </div>
+##
+##
+##            <div class="form-group col-sm-12">
+##                <label for="bpm" class="col-sm-2 control-label">5次后挑战成功奖励</label>
+##                <div class="col-sm-2">
+##                    <select class="form-control" name="award" id="thirdSelect" onchange="selectChange('thirdSelect')">
+##                        <option value="0">基础</option>
+##                        <option value="1">道具</option>
+##                        <option value="2">头像</option>
+##                        <option value="3">歌曲</option>
+##                    </select>
+##                </div>
+##                <div class="col-sm-2">
+##                    <select class="form-control" name="award" id="thirdSelect1">
+##                        <option value="0">金币</option>
+##                        <option value="1">经验</option>
+##                        <option value="2">体力</option>
+##                        <option value="3">残谱</option>
+##                    </select>
+##                    <select class="form-control" name="award" id="thirdSelect2" style="display: none">
+##						#if($props)
+##							#foreach( $prop in $props)
+##								#foreach($pr in $prop.entrySet())
+##                                    <option value ="$pr.key">$pr.key=$pr.value</option>
+##								#end
+##							#end
+##						#end
+##                    </select>
+##                    <select class="form-control" name="award" id="thirdSelect3" style="display: none"
+##					#if($heads)
+##						#foreach( $head in $heads)
+##							#foreach( $he in $head.entrySet())
+##                                <option value ="$he.key">$he.key=$he.value</option>
+##							#end
+##						#end
+##					#end
+##                    </select>
+##                    <select class="form-control" name="award" id="thirdSelect4" style="display: none"
+##					#if($musics)
+##						#foreach( $music in $musics)
+##							#foreach( $mu in $music.entrySet())
+##                                <option value ="$mu.key">$mu.key=$mu.value</option>
+##							#end
+##						#end
+##					#end
+##                    </select>
+##                </div>
+##                <div class="col-sm-2" style="padding-right: 0px">
+##                    <input type="number"  id="thirdInput" class="form-control"
+##                           placeholder="请输入数字" required="required" >
+##                </div>
+##                <div class="col-sm-2">
+##                    <a class="btn btn-primary text-center btn-block" onclick="awardAdd('third')">添加</a>
+##                </div>
+##
+##                <div class="col-sm-4" id="thirdAward"></div>
+##            </div>
+
+			<div class="form-group col-sm-12">
+				<div class="col-sm-offset-2 col-sm-4">
+					<button id="addChallegeGate-btn" onclick="addChallegeGate($propSize,$headSize,$musicSize,$equipSize,$frameSize,$pieceSize,$materialSize)" class="btn btn-primary btn-block"">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+
+	</script>

@@ -1,0 +1,61 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px;">
+		<div id="detailcontainer" class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有 关卡</h3>
+			</div>
+			
+			#if($status)
+				<div class="panel-body">
+					<table cellpadding="15px" class="table table-hover">
+						<tr>
+							<th>id</th>
+							<th>关卡名称</th>
+							<th>描述</th>
+							<th>图片</th>
+							<th>要求玩家等级</th>
+##                            <th>js代码</th>
+							<th>操作</th>
+						</tr>
+						#if($challeges)
+							#foreach( $challege in $challeges)
+								<tr>
+									<td>$challege.id</td>
+									
+									<td>$challege.name</td>
+									<td>$challege.description</td>
+									<td>$challege.tag</td>
+									
+									<td>$challege.requiredLevel</td>
+##                                    <td>$challege.determineCondition</td>
+									
+									<td><form action=" /admin/challege/detailChallege">
+												<input type="hidden" name="challegeId" value=$challege.id />
+												<input type="hidden" name="token" value="$token"/>  <input
+													type="submit" class="btn btn-default" value="详情" />
+										</form>
+
+                                        <form id="deleteChallege-form" action="#"
+                                              onsubmit="deleteChallege(this);">
+                                            <input type="hidden" name="challegeId" value="$challege.id"/><input
+                                                type="hidden" name="token" value="$token"/> <input
+                                                id="deleteChallege-btn" type="submit" class="btn btn-default"
+                                                value="删除"/>
+                                        </form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+
+</div>

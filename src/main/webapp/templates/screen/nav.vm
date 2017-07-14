@@ -1,0 +1,354 @@
+<input type="hidden" id="tokenId" value="$token"/>
+<div class="navigation ">
+    <div class="list-group">
+        <a id="album" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>曲包
+
+        </a>
+
+        <div id="buttonlist-album"
+             #if($btnactive=="album")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/album?token=$token">
+                <button id="addScheme"
+                        #if($active=="addAlbum")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加曲包
+                </button>
+            </a>
+            <a href=" /admin/album/all?token=$token">
+                <button #if($active=="allAlbums")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>曲包管理
+                </button>
+            </a>
+            <button id="refreshAlbum" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新曲包缓存
+            </button>
+        </div>
+
+        <a id="activity" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>活动
+
+        </a>
+
+        <div id="buttonlist-activity"
+             #if($btnactive=="activity")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/addActivity?token=$token">
+                <button id="addActivity"
+                        #if($active=="addActivity")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加活动
+                </button>
+            </a>
+            <a href=" /admin/activity/all?token=$token">
+                <button #if($active=="allActivitys")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>活动管理
+                </button>
+            </a>
+            <button id="refreshActivity" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新活动缓存
+            </button>
+        </div>
+
+        <a id="award" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>打榜
+
+        </a>
+
+        <div id="buttonlist-award"
+             #if($btnactive=="award")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/addBeatAwardView?token=$token">
+                <button id="addBeatAward"
+                        #if($active=="addBeatAward")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加打榜奖励
+                </button>
+            </a>
+            <a href=" /admin/addBeatScoreAwardView?token=$token">
+                <button id="addBeatScoreAward"#if($active=="addBeatScoreAward")class="btn btn-default active" #else
+                        class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加打榜积分奖励
+                </button>
+            </a>
+            <a href="/admin/award/all?token=$token">
+                <button #if($active=="allAwards")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>奖励管理
+                </button>
+            </a>
+            <button id="refreshAward" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新奖励缓存
+            </button>
+        </div>
+
+        <a id="dataSource" href=" /admin/showDataSource?token=$token" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>数据源
+
+        </a>
+
+        <a id="music" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>歌曲
+        </a>
+
+        <div id="buttonlist-music"
+             #if($btnactive=="music")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/addMusic?token=$token">
+                <button #if($active=="addMusic")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加歌曲
+                </button>
+            </a>
+            <a href=" /admin/allMusics?token=$token">
+                <button #if($active=="allMusics")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>歌曲管理
+                </button>
+            </a>
+            <button id="refreshMusic" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新歌曲缓存
+            </button>
+        </div>
+        <a id="schema" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>谱面
+        </a>
+
+        <div id="buttonlist-schema"
+             #if($btnactive=="scheme")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/scheme?token=$token">
+                <button  #if($active=="addScheme")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加谱面
+                </button>
+            </a>
+            <a href=" /admin/scheme/allSchemes?token=$token">
+                <button  #if($active=="allSchemes")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>谱面管理
+                </button>
+            </a>
+            <button id="refreshScheme" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新谱面缓存
+            </button>
+        </div>
+        <a id="equip" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>装备
+        </a>
+
+        <div id="buttonlist-equip"
+             #if($btnactive=="equipment")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/equipment?token=$token">
+                <button #if($active=="addEquipment")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加装备
+                </button>
+            </a>
+            <a href=" /admin/allEquipments?token=$token">
+                <button #if($active=="allEquipments")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>装备管理
+                </button>
+            </a>
+            <button id="refreshEquip" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新装备缓存
+            </button>
+
+        </div>
+        <a id="headimage" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>头像
+        </a>
+
+        <div id="buttonlist-headimage"
+             #if($btnactive=="headImage")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/headImage?token=$token">
+                <button #if($active=="addHeadImage")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加头像
+                </button>
+            </a>
+            <a href=" /admin/allheadImages?token=$token">
+                <button #if($active=="allHeadImages")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>头像管理
+                </button>
+            </a>
+            <button id="refreshHead" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新头像缓存
+            </button>
+        </div>
+
+        <a id="props" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>道具
+        </a>
+
+        <div id="buttonlist-props"
+             #if($btnactive=="props")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/props?token=$token">
+                <button #if($active=="addProp")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加道具
+                </button>
+            </a>
+            <a href=" /admin/allProps?token=$token">
+                <button #if($active=="allProps")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>道具管理
+                </button>
+            </a>
+            <button id="refreshProps" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新道具缓存
+            </button>
+        </div>
+
+
+        <a id="goods" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>商品
+        </a>
+
+        <div id="buttonlist-goods"
+             #if($btnactive=="goods")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/goods?token=$token">
+                <button #if($active=="addGoods")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加商品
+                </button>
+            </a>
+            <a href=" /admin/allGoods?token=$token">
+                <button #if($active=="allGoods")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>商品管理
+                </button>
+            </a>
+            <button id="refreshGoods" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新商品缓存
+            </button>
+
+        </div>
+        <a id="challege" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>挑战包
+        </a>
+
+        <div id="buttonlist-challege"
+             #if($btnactive=="challege")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/challege?token=$token">
+                <button #if($active=="addChallege")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加挑战包
+                </button>
+            </a>
+            <a href=" /admin/allChalleges?token=$token">
+                <button #if($active=="allChalleges")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>挑战包管理
+                </button>
+            </a>
+            <a href=" /admin/challegeGate?token=$token">
+                <button
+                    #if($active=="addChallegeGate")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加小关卡
+                </button>
+            </a>
+            <a href=" /admin/allChallegeGates?token=$token">
+                <button
+                    #if($active=="allChallegeGates")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>小关卡管理
+                </button>
+            </a>
+            <button id="refreshChallege" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新挑战包缓存
+            </button>
+
+        </div>
+
+
+        <a id="charges" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>用户充值奖励
+
+        </a>
+
+        <div id="buttonlist-charges"
+             #if($btnactive=="charge")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/charge/addEmailAward?token=$token">
+                <button id="addEmailAward" #if($active=="addEmailAward")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>发放奖励
+                </button>
+            </a>
+                        <a href=" /admin/charge/addEmailAwards?token=$token">
+                            <button id="addEmailAwards" #if($active=="addEmailAwards")class="btn btn-default active" #else class="btn btn-default" #end>
+                                <span class="glyphicon glyphicon-minus"></span>批量发放奖励
+                            </button>
+                        </a>
+
+            <a href=" /admin/charge/showAllChargeView?token=$token">
+                <button #if($active=="allCharges")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>用户充值记录
+                </button>
+            </a>
+            <button id="refreshChargeUserEmail" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新用户邮件缓存
+            </button>
+        </div>
+
+
+        <a id="userEmail" type="button" class="list-group-item"> <span
+                class="glyphicon glyphicon-th-list"></span>用户邮件
+
+        </a>
+
+        <div id="buttonlist-userEmail"
+             #if($btnactive=="userEmail")class="list-group-in active" #else class="list-group-in" #end>
+        ##                <a href=" /admin/album?token=$token">
+        ##                    <button id="addScheme" #if($active=="addAlbum")class="btn btn-default active" #else class="btn btn-default" #end>
+        ##                        <span class="glyphicon glyphicon-minus"></span>增加曲包
+        ##                    </button>
+        ##                </a>
+            <a href=" /admin/userEmail/allUserEmails?token=$token">
+                <button #if($active=="allUserEmails")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>用户邮件管理
+                </button>
+            </a>
+            <button id="refreshUserEmail" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新用户邮件缓存
+            </button>
+        </div>
+
+        <a id="storygate" type="button" class="list-group-item">
+            <span class="glyphicon glyphicon-th-list"></span>剧情关卡
+        </a>
+
+        <div id="buttonlist-storygate"
+             #if($btnactive=="storyGate")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/allstoryGates?token=$token">
+                <button #if($active=="allStoryGates")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>关卡管理
+                </button>
+            </a>
+            <button id="refreshStoryGate" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新剧情关卡缓存
+            </button>
+        </div>
+        <a id="announcement" type="button" class="list-group-item">
+            <span class="glyphicon glyphicon-th-list"></span>系统公告
+        </a>
+
+        <div id="buttonlist-announcement"
+             #if($btnactive=="announcement")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/announcement?token=$token">
+                <button
+                    #if($active=="addAnnouncement")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加公告
+                </button>
+            </a>
+
+            <a href=" /admin/allonlineAnnouncements?token=$token">
+                <button
+                    #if($active=="allAnnouncements")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>公告管理
+                </button>
+            </a>
+            <button id="refreshAnnouncement" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新公告缓存
+            </button>
+        </div>
+        <a id="sysemail" type="button" class="list-group-item" style="">
+            <span class="glyphicon glyphicon-th-list"></span>系统邮件
+        </a>
+
+        <div id="buttonlist-sysemail"
+             #if($btnactive=="sysemail")class="list-group-in active" #else class="list-group-in" #end>
+            <a href=" /admin/SysEmail?token=$token">
+                <button  #if($active=="addSysEmail")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>增加邮件
+                </button>
+            </a>
+            <a href=" /admin/allEmails?token=$token">
+                <button #if($active=="allEmails")class="btn btn-default active" #else class="btn btn-default" #end>
+                    <span class="glyphicon glyphicon-minus"></span>邮件管理
+                </button>
+            </a>
+            <button id="refreshSysEmail" class="btn btn-default">
+                <span class="glyphicon glyphicon-minus"></span>刷新邮件缓存
+            </button>
+        </div>
+    </div>
+</div>

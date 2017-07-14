@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<!--<bean id="userDao" class="com.admin.dao.impl.UserDaoImpl">-->
+		<!--<property name="sqlSession" ref="sqlSession" />-->
+		<!--<property name="jedisPool" ref="jedisPool" />-->
+	<!--</bean>-->
+
+
+
+	<!--<bean id="userEmailDao" class="com.admin.dao.impl.UserEmailDaoImpl">-->
+		<!--<property name="sqlSession" ref="sqlSession" />-->
+		<!--<property name="jedisPool" ref="jedisPool" />-->
+	<!--</bean>-->
+
+
+
+	<!--<bean id="userSchemeRelationDao" class="com.admin.dao.impl.UserSchemeRelationDaoImpl">-->
+		<!--<property name="sqlSession" ref="sqlSession" />-->
+		<!--<property name="jedisPool" ref="jedisPool" />-->
+	<!--</bean>-->
+
+
+	<bean id="normalActivityDao" class="com.admin.dao.impl.NormalActivityDaoImpl">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<!--<bean id="userChallengeRelationDao" class="com.admin.dao.impl.UserChallengeRelationDaoImpl">-->
+		<!--<property name="sqlSession" ref="sqlSession" />-->
+		<!--<property name="jedisPool" ref="jedisPool" />-->
+	<!--</bean>-->
+
+
+
+</beans>

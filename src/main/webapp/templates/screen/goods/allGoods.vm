@@ -1,0 +1,70 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px;">
+		<div id="detailcontainer" class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有商品</h3>
+			</div>
+			
+			#if($status)
+				<div class="panel-body">
+					<table cellpadding="15px" class="table table-hover">
+						<tr>
+							<th>id</th>
+							<th>类型</th>
+							<th>币种类型</th>
+							<th>价格</th>
+							<th>商品在表中id</th>
+							<th>操作</th>
+						</tr>
+						#if($goods)
+							#foreach( $good in $goods)
+								<tr>
+									<td>$good.id</td>
+									#if($good.type==0)
+									<td>充值品</td>
+									#elseif($good.type==1)
+									<td>曲包</td>
+									#elseif($good.type==2)
+									<td>谱面</td>
+									#elseif($good.type==3)
+									<td>头像</td>
+									#elseif($good.type==4)
+									<td>道具</td>
+									#elseif($good.type==5)
+									<td>装备</td>
+									#end
+									
+									#if($good.currencyType==0)
+									<td>金币</td>
+									#elseif($good.currencyType==1)
+									<td>残谱</td>
+									#elseif($good.currencyType==2)
+									<td>人民币</td>
+									#end
+									
+									<td>$good.price</td>
+									
+									<td>$good.productId</td>
+									
+									<td><form action=" /admin/goods/update">
+												<input type="hidden" name="goodId" value=$good.id />
+												<input type="hidden" name="token" value="$token"/>  <input
+													type="submit" class="btn btn-default" value="修改" />
+										</form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+
+</div>

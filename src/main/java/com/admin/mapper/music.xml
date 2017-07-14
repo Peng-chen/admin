@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="music">
+	<resultMap type="com.admin.bean.Music" id="music">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="bpm" column="bpm" />
+		<result property="singer" column="singer" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="lyricist" column="lyricist" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="composer" column="composer" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="arranger" column="arranger" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="mixxer" column="mixxer" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="harmony" column="harmony" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="player" column="player" javaType="List"
+			jdbcType="ARRAY" />
+		<result property="time" column="duration" />
+		<result property="systemOffered" column="system_offered" />
+		<result property="tag" column="tag" />
+		<result property="defaultSchemes" column="default_schemes"
+			javaType="List" jdbcType="ARRAY" />
+		<result property="totalPlayCount" column="total_play_count" />
+		<result property="lastPlayCount" column="last_play_count" />
+		<result property="hot" column="hot" />
+		<result property="createTime" column="create_time" />
+		<result property="quality" column="quality" />
+		<result property="musicType" column="music_type" />
+		<result property="unlockLevel" column="unlock_level" />
+	</resultMap>
+	<!-- 增加music -->
+	<insert id="insertMusic" parameterType="com.admin.bean.Music"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO music_info
+		(name,description, bpm
+		<if test="singer != null ">
+			,singer
+		</if>
+		<if test="lyricist != null ">
+			,lyricist
+		</if>
+		<if test="composer != null ">
+			,composer
+		</if>
+		<if test="arranger != null ">
+			,arranger
+		</if>
+		<if test="mixxer != null ">
+			,mixxer
+		</if>
+		<if test="harmony != null ">
+			,harmony
+		</if>
+		<if test="player != null ">
+			,player
+		</if>
+		,duration,system_offered,tag,default_schemes)
+		VALUES(#{name},#{description},#{bpm}
+		<if test="singer != null ">
+			,#{singer,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="lyricist != null ">
+			,#{lyricist,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="composer != null ">
+			,#{composer,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="arranger != null ">
+			,#{arranger,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="mixxer != null ">
+			,#{mixxer,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="harmony != null ">
+			,#{harmony,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="player != null ">
+			,#{player,javaType=List,jdbcType=ARRAY}
+		</if>
+		,#{time},#{systemOffered},
+		#{tag},#{defaultSchemes,javaType=List,jdbcType=ARRAY});
+	</insert>
+
+	<update id="updateMusic" parameterType="com.admin.bean.Music">
+		UPDATE music_info SET id=#{id}
+		<if test="name != null and name != ''">
+			,name=#{name}
+		</if>
+		<if test="description != null and description != ''">
+			,description=#{description}
+		</if>
+		<if test="bpm != null ">
+			,bpm=#{bpm}
+		</if>
+		<if test="singer != null ">
+			,singer=#{singer,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="lyricist != null ">
+			,lyricist=#{lyricist,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="composer != null ">
+			,composer=#{composer,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="arranger != null ">
+			,arranger=#{arranger,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="mixxer != null ">
+			,mixxer=#{mixxer,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="harmony != null ">
+			,harmony=#{harmony,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="player != null ">
+			,player=#{player,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="time != null ">
+			,duration=#{time}
+		</if>
+		<if test="systemOffered != null ">
+			,system_offered=#{systemOffered}
+		</if>
+		<if test="tag != null ">
+			,tag=#{tag}
+		</if>
+		<if test="defaultSchemes != null ">
+			,default_schemes=#{defaultSchemes,javaType=List,jdbcType=ARRAY}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<delete id="deleteMusic" parameterType="java.lang.Integer">
+		DELETE FROM
+		music_info
+		WHERE id=#{id};
+	</delete>
+
+	<select id="selectMusic" resultMap="music">
+		SELECT
+		id,name,description,
+		bpm,
+		singer,lyricist,composer,harmony,
+		arranger,mixxer,player,duration,
+		system_offered,tag,
+		default_schemes,total_play_count,last_play_count,
+		hot,create_time,quality,music_type,unlock_level
+		FROM
+		music_info
+		WHERE id=#{id}
+		LIMIT 1;
+	</select>
+
+	<select id="selectAllMusics" resultMap="music">
+		SELECT
+		id,name,description,
+		bpm,
+		singer,lyricist,composer,harmony,
+		arranger,mixxer,player,duration,
+		system_offered,tag,
+		default_schemes,total_play_count,last_play_count,
+		hot,create_time,quality,music_type,unlock_level
+		FROM
+		music_info
+	</select>
+</mapper>

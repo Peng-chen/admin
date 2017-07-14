@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+.tip {
+	color: red;
+	font-size: 5px;
+}
+
+select {
+	width: 100px;
+}
+
+#music_list {
+	background-color: white;
+}
+#musicdata {
+	text-align: center;
+}
+
+h2 {
+	font-size: 18px;
+	color: #333;
+	font-weight: bold;
+	margin: 0;
+	margin-bottom: 15px;
+}
+.demo-info {
+	background: #FFFEE6;
+	color: #8F5700;
+	padding: 12px;
+}
+.demo-tip {
+	width: 24px;
+	height: 16px;
+	float: left;
+}
+.easyui-accordion .easyui-linkbutton {
+	width: 100%;
+}
+
+.musicEdit {
+	color: red;
+}
+table{
+	text-align: right;
+}
+

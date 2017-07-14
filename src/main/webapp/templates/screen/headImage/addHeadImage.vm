@@ -1,0 +1,112 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data">
+		<div id="formDiv" class="span10">
+		
+		       <div class="form-group col-sm-12">
+					<label class="col-sm-2" style="font-size:16px;">添加头像</label>
+					
+				</div>
+		
+			
+				<div class="form-group col-sm-12">
+					<label for="file" class="col-sm-2 control-label">头像名称</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input id="headname" required="required" class="form-control col-sm-10"
+							name="file" data-type="text" placeholder="请输入头像名称">
+					</div>
+				</div>
+
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">头像效果描述</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<textarea  id="headdes" class="form-control" rows="3" placeholder="请输入描述"
+							required="required" data-type="text" name="description"></textarea>
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">头像tag</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="headtag" type="text" class="form-control" name="headtag"
+							placeholder="请输入头像tag" required="required" >
+					</div>
+				</div>
+            	<div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">头像quality</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input  id="headquality" type="number" class="form-control" name="hardLevel"
+                            placeholder="请输入头像quality" required="required" data-type="integer">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">头像source</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+						<input  id="headsource" class="form-control" rows="3" placeholder="请输入头像source"
+                                   required="required" data-type="text" name="description"></input>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">头像技能</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+						<textarea  id="headskill" class="form-control" rows="3" placeholder="请输入头像技能"
+                                   required="required" data-type="text" name="description"></textarea>
+                </div>
+            </div>
+
+##            <div class="form-group col-sm-12">
+##                <label for="bpm" class="col-sm-2 control-label">类型</label>
+##                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+##                    <div data-role="acknowledgement">
+##                        <i></i>
+##                    </div>
+##                    <input  id="headtype" type="number" class="form-control" name="headtype"
+##                            placeholder="请输入类型" required="required" data-type="integer">
+##                </div>
+##            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">类型</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <select class="form-control" name="equiptype" id="headtype">
+                        <option value="0" >无类别</option>
+                        <option value="1" >红</option>
+                        <option value="2" >蓝</option>
+                        <option value="3">绿</option>
+                        <option value="4" >黄</option>
+                    </select>
+                </div>
+            </div>
+				
+				<div class="form-group col-sm-12">
+					<div class="col-sm-offset-2 col-sm-6">
+						<button id="addHeadImage-btn" class="btn btn-primary btn-block"">确定</button>
+					</div>
+				</div>
+		</div>
+	</div>
+
+</div>

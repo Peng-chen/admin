@@ -1,0 +1,71 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet" />
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet" />
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+            <div id ="radioDiv" class="form-group col-sm-12">
+
+
+                    <label for="name" class=" col-sm-2 control-label">
+                        <input type="radio" name="options" id="option1" value="1" checked="checked">
+                        安卓数据源</label>
+                    <label for="name" class=" col-sm-2 control-label">
+                        <input type="radio" name="options" id="option2" value="2">
+                        ios数据源</label>
+
+                    <button id="changeDataSource-btn1" class="btn btn-primary">确定</button>
+
+##                </div>
+##                <input type="hidden" name="Activityid" value='$activity.id' id="Activityid">
+##                <label
+##                        for="name" class="col-sm-2 control-label">类型</label>
+##
+##                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+##                    <div data-role="acknowledgement">
+##                        <i></i>
+##                    </div>
+##                    <input type="number" class="form-control" id="Activitytype"
+##                           required="required" data-type="integer" placeholder="请输入类型,请输入数字"
+##                           value='$activity.type'>
+##                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var btn = document.getElementById('changeDataSource-btn1');
+
+        btn.addEventListener('click', function(){
+
+//            alert("<%=path+"/admin/dataSource"%>");
+
+            var selectedButton = $('#radioDiv input:radio:checked').val();
+
+            $.ajax({
+                url: "/admin/dataSource",
+                type: "POST",
+                data: "value="+selectedButton,
+                success:function(data){
+                    if(data=="success")
+                    alert("数据源切换成功");
+                    else
+                    alert("数据源切换失败");
+                }
+            });
+
+        }, false);
+
+    });
+</script>

@@ -1,0 +1,91 @@
+<div class="container">
+	#parse("/screen/nav.vm")
+
+    <div class="data"
+         style="padding-left: 4%;  border: 0px;">
+        <div id="detailcontainer" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">所有道具</h3>
+            </div>
+
+			#if($status)
+                <div class="panel-body">
+                    <table cellpadding="15px" class="table table-hover">
+                        <tr>
+                            <th>id</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>属性</th>
+                            <th>可用模式</th>
+                            <th>标识</th>
+							<th>操作</th>
+                        </tr>
+						#if($props)
+							#foreach( $prop in $props)
+                                <tr>
+                                    <td>$prop.id</td>
+									<td>$prop.name</td>
+                                    <td>$prop.description</td>
+
+									#if($prop.attribute==1)
+                                        <td>使游戏失败</td>
+									#elseif($prop.attribute==2)
+                                        <td>使游戏通关</td>
+									#elseif($prop.attribute==3)
+                                        <td>无影响</td>
+									#end
+
+									#if($prop.mode=="0000")
+                                        <td>所有模式均不可用</td>
+									#elseif($prop.mode=="0001")
+                                        <td>活动可用</td>
+									#elseif($prop.mode=="0010")
+                                        <td>挑战模式可用</td>
+									#elseif($prop.mode=="0011")
+                                        <td>挑战模式和活动可用</td>
+									#elseif($prop.mode=="0100")
+                                        <td>剧情模式可用</td>
+									#elseif($prop.mode=="0101")
+                                        <td>剧情模式和活动可用</td>
+									#elseif($prop.mode=="0110")
+                                        <td>剧情模式和挑战模式可用</td>
+									#elseif($prop.mode=="0111")
+                                        <td>剧情模式、挑战模式和活动可用</td>
+									#elseif($prop.mode=="1000")
+                                        <td>自由模式可用</td>
+									#elseif($prop.mode=="1001")
+                                        <td>自由模式和活动可用</td>
+									#elseif($prop.mode=="1010")
+                                        <td>自由模式和挑战模式可用</td>
+									#elseif($prop.mode=="1011")
+                                        <td>自由模式、挑战模式和活动可用</td>
+									#elseif($prop.mode=="1100")
+                                        <td>自由模式和剧情模式可用</td>
+									#elseif($prop.mode=="1101")
+                                        <td>自由模式、剧情模式和活动可用</td>
+									#elseif($prop.mode=="1110")
+                                        <td>自由模式、剧情模式和挑战模式可用</td>
+									#elseif($prop.mode=="1111")
+                                        <td>所有模式均可用</td>
+									#end
+                                    <td>$prop.tag</td>
+
+                                    <td><form action=" /admin/props/update">
+                                        <input type="hidden" name="propId" value=$prop.id />
+                                        <input type="hidden" name="token" value="$token"/>  <input
+                                            type="submit" class="btn btn-default" value="修改" />
+                                    </form>
+                                    </td>
+
+                                </tr>
+							#end
+						#end
+                    </table>
+                </div>
+			#else
+                <div style="padding-left: 10px">Server Error...</div>
+			#end
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scheme">
+	<resultMap type="com.admin.bean.Scheme" id="scheme">
+		<result property="id" column="id" />
+		<result property="tag" column="tag" />
+		<result property="hardLevel" column="hard_level" />
+		<result property="totalPlayCount" column="total_play_count" />
+		<result property="lastPlayCount" column="last_play_count" />
+		<result property="hot" column="hot" />
+		<result property="createTime" column="create_time" />
+		<result property="limitNote" column="limit_note" />
+		<result property="scores" column="scores"
+				javaType="List" jdbcType="ARRAY"/>
+		<result property="standardScore" column="standard_score" />
+		<result property="quality" column="quality" />
+	</resultMap>
+
+	<!-- 操作已上线的scheme -->
+	<insert id="insertScheme" parameterType="com.admin.bean.Scheme"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO scheme_info
+		(tag,hard_level,total_play_count,last_play_count,hot,create_time,limit_note,scores,standard_score,quality)
+		VALUES(#{tag},#{hardLevel},#{totalPlayCount},#{lastPlayCount},#{hot},'${createTime}',#{limitNote},#{scores,javaType=List,jdbcType=ARRAY},#{standardScore},#{quality});
+	</insert>
+
+	<update id="updateScheme" parameterType="com.admin.bean.Scheme">
+		UPDATE scheme_info SET id=#{id}
+		<if test="tag != null and tag != ''">
+			,tag=#{tag}
+		</if>
+		<if test="hardLevel != null ">
+			,hard_level=#{hardLevel}
+		</if>
+		<if test="totalPlayCount != null ">
+			,total_play_count=#{totalPlayCount}
+		</if>
+		<if test="lastPlayCount != null ">
+			,last_play_count=#{lastPlayCount}
+		</if>
+		<if test="hot != null">
+			,hot=#{hot}
+		</if>
+		<if test="createTime != null ">
+			,create_time='${createTime}'
+		</if>
+		<if test="limitNote != null ">
+			,limit_note=#{limitNote}
+		</if>
+		<if test="scores != null and scores != ''">
+			,scores=#{scores,javaType=List,jdbcType=ARRAY}
+		</if>
+		<if test="standardScore != null ">
+			,standard_score=#{standardScore}
+		</if>
+		<if test="quality != null ">
+			,quality=#{quality}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<select id="selectScheme" resultMap="scheme" parameterType="java.lang.Integer">
+		SELECT
+		id,tag,hard_level,total_play_count,last_play_count,hot,limit_note,create_time,scores, standard_score,quality
+		FROM scheme_info
+		WHERE id=#{id}
+		LIMIT 1;
+	</select>
+
+	<select id="selectAllSchemes" resultMap="scheme">
+		SELECT
+		id,tag,hard_level,total_play_count,last_play_count,hot,limit_note,create_time,scores, standard_score,quality
+		FROM scheme_info
+	</select>
+	
+	<select id="selectAllSchemesId" resultType="int">
+		SELECT id FROM scheme_info
+	</select>
+
+	<!-- 删除Scheme -->
+	<delete id="deleteScheme">
+		DELETE FROM scheme_info WHERE id=#{id};
+	</delete>
+</mapper>

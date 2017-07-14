@@ -1,0 +1,78 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px;">
+		<div id="detailcontainer" class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有装备</h3>
+			</div>
+			
+			#if($status)
+				<div class="table-responsive">
+					<table cellpadding="15px" class="table table-hover table-bordered table-condensed text-center">
+						<tr>
+							<th>id</th>
+							<th>名称</th>
+							<th>使用描述</th>
+							<th>tag</th>
+							<th>类型</th>
+                            <th>quality</th>
+                            <th>source</th>
+							<th>操作</th>
+						</tr>
+						#if($equipments)
+							#foreach( $equipment in $equipments)
+								<tr>
+									<td>$equipment.id</td>
+									<td>$equipment.name</td>
+									#if($equipment.description)
+									<td>$equipment.description</td>
+									#else
+									<td>无</td>
+									#end
+									
+									<td>$equipment.tag</td>
+									
+									#if($equipment.type==0)
+									<td>花朵</td>
+									#elseif($equipment.type==1)
+									<td>皮肤</td>
+									#elseif($equipment.type==2)
+									<td>小球</td>
+									#elseif($equipment.type==3)
+									<td>背景</td>
+									#elseif($equipment.type==4)
+									<td>音效</td>
+									#elseif($equipment.type==5)
+									<td>光效</td>
+									#end
+
+
+
+                                    <td>#if($equipment.quality)$equipment.quality#end</td>
+                                    <td>#if($equipment.source)$equipment.source#end</td>
+									
+									<td><form action=" /admin/equipment/update">
+												<input type="hidden" name="equipId" value=$equipment.id />
+												<input type="hidden" name="token" value="$token"/>  <input
+													type="submit" class="btn btn-default" value="修改" />
+										</form>
+                                        <form id="deleteEquipment-form" action="#" onsubmit="deleteEquipment(this);">
+                                            <input type="hidden" name="equipId" value=$equipment.id /><input type="hidden" name="token" value="$token"/> <input
+                                                id="deleteEquipment-btn"   type="submit" class="btn btn-default" value="删除" />
+                                        </form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,117 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet" />
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet" />
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+            #if($status)
+
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">分数</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p class="form-control"  style="color: #2E9BF7">$beatScoreAward.score</p>
+
+                </div>
+            </div>
+
+            <div id="div1">
+                #set($award=$beatScoreAward.award)
+            #set($tagId="beatScoreAward_show")
+            #set($title="奖励")
+            #parse("/screen/award_show.vm")
+            </div>
+            <div class="form-group col-sm-12">
+
+                <label for="name" class="col-sm-2 control-label">邮件奖励形式</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p class="form-control"  style="color: #2E9BF7">$beatScoreAward.content</p>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">开始时间</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p class="form-control"  style="color: #2E9BF7">$beatScoreAward.startTime</p>
+
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">结束时间</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p class="form-control"  style="color: #2E9BF7">$beatScoreAward.endTime</p>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">打榜期数</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p class="form-control" style="color: #2E9BF7">$beatScoreAward.period</p>
+                </div>
+            </div>
+
+            #else
+                <div style="padding-left: 10px">Server Error...</div>
+            #end
+
+
+    <div>
+        <form action=" /admin/award/updateBeatScoreAwardView">
+            <input type="hidden" name="score" value="$beatScoreAward.score" />
+            <input type="hidden" name="startTime" value="$beatScoreAward.startTime" />
+            <input type="hidden" name="endTime" value="$beatScoreAward.endTime" />
+            <input type="hidden" name="token" value="$token"/>
+            <button class="col-sm-offset-2 col-sm-2 btn btn-primary" type="submit" style="display:inline-block;float:left;">修改</button>
+        </form>
+        <a href=" /admin/award/all?token=$token" style="float:left;"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+    </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".ui_timepicker").datetimepicker({
+            showSecond : true,
+            timeFormat : 'hh:mm:ss',
+            stepHour : 1,
+            stepMinute : 1,
+            stepSecond : 1
+        });
+    });
+
+</script>

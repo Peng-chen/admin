@@ -1,0 +1,118 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet" />
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet" />
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+            #if($status)
+
+
+
+                <div class="form-group col-sm-12">
+                    <label for="startTime" class="col-sm-2 control-label">分数</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="beatScoreAwardScore" required="required"
+                               class=" form-control" value='$beatScoreAward.score' disabled >
+                    </div>
+                </div>
+                            <div class="form-group col-sm-12">
+                                <label for="startTime" class="col-sm-2 control-label">开始时间</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="beatScoreAwardStartTime" required="required"
+                                           class=" form-control" value='$beatScoreAward.startTime' disabled >
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <label for="endTime" class="col-sm-2 control-label">结束时间</label>
+                                <div class="col-sm-8">
+
+                                    <input type="text" id="beatScoreAwardEndTime" required="required"
+                                           class=" form-control" value='$beatScoreAward.endTime' disabled >
+                                </div>
+                            </div>
+
+            <div class="form-group col-sm-12">
+##                <input type="hidden" name="beatScoreAwardScore" value='$beatScoreAward.score' id="beatScoreAwardScore">
+##                <input type="hidden" name="beatScoreAwardStartTime" value='$beatScoreAward.startTime' id="beatScoreAwardStartTime">
+##                <input type="hidden" name="beatScoreAwardEndTime" value='$beatScoreAward.endTime' id="beatScoreAwardEndTime">
+                <label
+                        for="name" class="col-sm-2 control-label">邮件奖励形式</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input type="text" class="form-control" id="beatScoreAwardContent"
+                           required="required" data-type="text" placeholder="请输入邮件奖励形式"
+                           value='$beatScoreAward.content'>
+                </div>
+            </div>
+
+
+                <div id="div1">
+                    #set($award=$beatScoreAward.award)
+            #set($tagId="beatScoreAward")
+            #set($title="奖励")
+            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+                </div>
+
+
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">期数</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="beatScoreAwardPeriod" class="form-control" value='$beatScoreAward.period'
+                           required="required" type="number" data-type="integer" placeholder="请输入打榜期数"/>
+
+                </div>
+            </div>
+
+
+            <div>
+                <button
+                        class="col-sm-offset-3 col-sm-2 btn btn-primary" onclick="updatebeatScoreAward($propSize,$headSize,$musicSize,$equipSize,$frameSize,$pieceSize,$materialSize)" id="updatebeatScoreAward-btn"
+                        style="display:inline-block;float:left;">保存修改
+                </button>
+                <a href=" /admin/award/all?token=$token" style="float:left;">
+                    <button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表
+                    </button>
+                </a>
+            </div>
+                #else
+                    <div style="padding-left: 10px">Server Error...</div>
+                #end
+        </div>
+
+
+    </div>
+</div>
+
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".ui_timepicker").datetimepicker({
+            showSecond : true,
+            timeFormat : 'hh:mm:ss',
+            stepHour : 1,
+            stepMinute : 1,
+            stepSecond : 1
+        });
+    });
+
+</script>

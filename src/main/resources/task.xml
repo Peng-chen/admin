@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+
+
+	<!--<bean name="normalActivityTasks" class="com.admin.task.NormalActivityTask">-->
+		<!--<property name="paramsService" ref="paramsService" />-->
+		<!--<property name="normalActivityService" ref="normalActivityService" />-->
+	<!--</bean>-->
+
+
+
+
+
+
+	<!--&lt;!&ndash; 刷新活动 &ndash;&gt;-->
+	<!--<bean id="refreshActivity"-->
+		  <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+		<!--<property name="targetObject">-->
+			<!--<ref bean="normalActivityTasks" />-->
+		<!--</property>-->
+		<!--<property name="targetMethod">-->
+			<!--<value>refreshActivity</value>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+	<!--<bean name="refreshActivityTask"-->
+		  <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+		<!--<property name="jobDetail">-->
+			<!--<ref bean="refreshActivity" />-->
+		<!--</property>-->
+		<!--<property name="cronExpression" value="0 10 0 * * ?" />-->
+
+	<!--</bean>-->
+
+
+	<!--<bean id="normalSchedulerFactory"-->
+		<!--class="org.springframework.scheduling.quartz.SchedulerFactoryBean"-->
+		<!--lazy-init="false" scope="singleton">-->
+		<!--<property name="triggers">-->
+			<!--<list>-->
+				<!--<ref bean="refreshAnnouncementTask" />-->
+				<!--<ref bean="refreshActivityTask" />-->
+				<!--<ref bean="clearUsersDailyActivityPassedRecordTask" />-->
+				<!--<ref bean="clearUsersWeeklyActivityPassedRecordTask" />-->
+				<!--<ref bean="reInitUsersRemainderCountTask" />-->
+				<!--<ref bean="clearExpiredDonateEmailsTask" />-->
+				<!--<ref bean="clearExpiredSystemEmailsTask" />-->
+				<!--<ref bean="clearOverTimeVipsTask" />-->
+				<!--<ref bean="clearOverTimeExperienceTask" />-->
+				<!--<ref bean="postFreeMuscleEmailTask1" />-->
+				<!--<ref bean="postFreeMuscleEmailTask2" />-->
+				<!--<ref bean="clearFreeMuscleEmailTask1" />-->
+				<!--<ref bean="clearFreeMuscleEmailTask2" />-->
+				<!--<ref bean="postRedPacketEmailTask" />-->
+				<!--<ref bean="loginTemporaryClearTask" />-->
+				<!--<ref bean="clearWeeklyActivationTask" />-->
+				<!--<ref bean="clearDailyActivationTask" />-->
+				<!--<ref bean="deliverBeatAwardIfOkTask" />-->
+			<!--</list>-->
+		<!--</property>-->
+	<!--</bean>-->
+</beans>

@@ -1,0 +1,180 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data">
+		<div id="formDiv" class="span10">
+				<fieldset disabled>
+					<div class="form-group col-sm-12">
+						<label for="title" class="col-sm-2 control-label">标题:</label>
+						<div class="col-sm-8 input-group">
+							<p  style="color: #2E9BF7">$systemEmail.title</p>
+						</div>
+					</div>
+
+					<div class="form-group col-sm-12">
+						<label for="content" class="col-sm-2 control-label">内容:</label>
+						<div class="col-sm-8 input-group">
+							<p style="color: #2E9BF7">$systemEmail.content</p>
+						</div>
+					</div>
+
+					<div class="form-group col-sm-12">
+						<label for="type" class="col-sm-2 control-label">类型:</label>
+						<div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+								#if($systemEmail.type == 0)
+									<p style="color: #2E9BF7">活动</p>
+								#elseif($systemEmail.type == 1)
+									<p style="color: #2E9BF7">补偿</p>
+								#end
+						</div>
+					</div>
+                    <div class="form-group col-sm-12">
+                        <label for="visibleTime" class="col-sm-2 control-label">附件:</label>
+					</div>
+
+
+                    <table border="0" class="table">
+                        <tr>
+                            <td>
+                                <div class="form-group col-sm-12">
+                                    普通:
+									<span style="color: #2E9BF7; margin-bottom: 10px">金币数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px">
+											#if($systemEmail.attachment.gold)
+												$systemEmail.attachment.gold
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+									<span style="color: #2E9BF7; margin-bottom: 10px">经验数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px">
+											#if($systemEmail.attachment.experience)
+												$systemEmail.attachment.experience
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+									<span style="color: #2E9BF7; margin-bottom: 10px">体力数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px">
+											#if($systemEmail.attachment.muscle)
+												$systemEmail.attachment.muscle
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+									<span style="color: #2E9BF7; margin-bottom: 10px">残谱数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px">
+											#if($systemEmail.attachment.brokenChart)
+												$systemEmail.attachment.brokenChart
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    道具:
+									<span style="color: #2E9BF7; margin-bottom: 10px">
+										#foreach( $entry in $systemEmail.attachment.props)
+											$entry.id X $entry.count&nbsp;&nbsp;
+										#end
+                                    </span>
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    头像:
+									<span style="color: #2E9BF7; margin-bottom: 10px">
+										#foreach( $entry in $systemEmail.attachment.headImages)
+											$entry&nbsp;&nbsp;
+										#end
+                                    </span>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    歌曲:
+									<span style="color: #2E9BF7; margin-bottom: 10px">
+										#foreach( $entry in $systemEmail.attachment.musics)
+											$entry&nbsp;&nbsp;
+										#end
+                                    </span>
+                                </div>
+                                <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+                            </td>
+                        </tr>
+					</table>
+					#*<div class="form-group col-sm-12">
+							<label for="visibleTime"
+								class="col-sm-1 control-label"><b>基础</b></label>
+							<div class="col-sm-2"
+								style="padding-left: 0px; padding-right: 0px">
+								<p style="color: #2E9BF7; margin-bottom: 10px">金币数量</p> 
+								<p style="color: #2E9BF7; margin-bottom: 10px">经验数量</p> 
+								<p style="color: #2E9BF7; margin-bottom: 10px">体力数量</p> 
+								<p style="color: #2E9BF7; margin-bottom: 10px">残谱数量</p> 
+							</div>
+							<div class="col-sm-2" style="padding-right: 0px">
+							  #if($systemEmail.attachment.gold)
+								<p style="color: #2E9BF7; margin-bottom: 10px">$systemEmail.attachment.gold </p> 
+							  #else
+							    <p style="color: #2E9BF7; margin-bottom: 10px">0</p> 
+							  #end
+							   #if($systemEmail.attachment.experience)
+								<p style="color: #2E9BF7; margin-bottom: 10px">$systemEmail.attachment.experience </p> 
+							  #else
+							    <p style="color: #2E9BF7; margin-bottom: 10px">0</p> 
+							  #end
+							  #if($systemEmail.attachment.muscle)
+								<p style="color: #2E9BF7; margin-bottom: 10px">$systemEmail.attachment.muscle </p> 
+							  #else
+							    <p style="color: #2E9BF7; margin-bottom: 10px">0</p> 
+							  #end
+							  #if($systemEmail.attachment.brokenChart)
+								<p style="color: #2E9BF7; margin-bottom: 10px">$systemEmail.attachment.brokenChart </p> 
+							  #else
+							    <p style="color: #2E9BF7; margin-bottom: 10px">0</p> 
+							  #end
+							</div>
+						
+							<label for="visibleTime" class="col-sm-1 control-label"
+								style="padding-left: 0px"><b>道具</b></label>
+							<div class="col-sm-2"
+								style="padding-left: 0px; padding-right: 0px">
+								#foreach( $entry in $systemEmail.attachment.props)
+											<p style="color: #2E9BF7; margin-bottom: 10px">$entry.id X $entry.count</p>
+									#end
+							</div>
+
+							<label for="visibleTime" class="col-sm-1 control-label"
+								   style="padding-left: 0px"><b>头像</b></label>
+
+							<div class="col-sm-2"
+								 style="padding-left: 0px; padding-right: 0px">
+								#foreach( $entry in $systemEmail.attachment.headImages)
+									<p style="color: #2E9BF7; margin-bottom: 10px">$entry</p>
+								#end
+							</div>
+                    	</div>
+                   		 <div class="form-group col-sm-12">
+							<label for="visibleTime" class="col-sm-1 control-label"
+								   style="padding-left: 0px"><b>歌曲</b></label>
+							<div class="col-sm-2"
+								 style="padding-left: 0px; padding-right: 0px">
+								#foreach( $entry in $systemEmail.attachment.musics)
+                                    <p style="color: #2E9BF7; margin-bottom: 10px">$entry</p>
+								#end
+							</div>
+                   		 </div>*#
+				</fieldset>
+				<div>
+					<a href=" /admin/allEmails?token=$token" style="float:left;margin-left:200px"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+				</div>
+		</div>
+	</div>
+</div>

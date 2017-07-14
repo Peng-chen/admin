@@ -1,0 +1,71 @@
+
+#if($award.gold)
+    gold:$award.gold;
+#end
+#if($award.experience)
+experience:$award.experience;
+#end
+#if($award.muscle)
+muscle:$award.muscle;
+#end
+#if($award.brokenChart)
+brokenChart:$award.brokenChart;
+#end
+#if($award.props)
+  props:[#foreach($prop in $award.props)
+##    #foreach($member in $prop.entrySet())
+   [$prop.id:$prop.count],
+##    #end
+    #end
+];
+#end
+
+#if($award.musics)
+   music:[
+    #foreach($music in $award.musics)
+        $music,
+    #end
+    ];
+#end
+
+#if($award.headImages)
+headImages:[
+    #foreach($headImage in $award.headImages)
+        $headImage,
+    #end
+];
+#end
+
+#if($award.pieces)
+pieces:[
+    #foreach($piece in $award.pieces)
+    [$piece.pieceId:$piece.pieceNumber],
+    #end
+];
+#end
+
+#if($award.equips)
+
+equips:[
+    #foreach($equip in $award.equips)
+        $equip,
+    #end
+];
+#end
+
+#if($award.materials)
+materials:[
+    #foreach($material in $award.materials)
+        [$material.materialType:$material.materialNumber],
+    #end
+];
+#end
+
+#if($award.frames)
+frames:[
+    #foreach($frame in $award.frames)
+        $frame,
+    #end
+];
+
+#end

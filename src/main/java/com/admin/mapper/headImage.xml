@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="headImage">
+	<resultMap type="com.admin.bean.HeadImage" id="headImage">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="tag" column="tag" />
+		<result property="source" column="source" />
+		<result property="quality" column="quality" />
+		<result property="skill" column="skill" />
+		<result property="type" column="type" />
+
+	</resultMap>
+
+
+	<resultMap id="headImageEffectInfo" type="com.admin.bean.HeadImageEffectInfo">
+		<result property="headimageId" column="headimage_id" />
+		<result property="rank" column="rank" />
+		<result property="headImageEffect" column="headimage_effect" javaType="Object"
+				jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!-- 增加Headtag -->
+	<insert id="insertHeadImage" parameterType="com.admin.bean.HeadImage"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		headimage_info(name,description, tag,source,quality,skill,type)
+		VALUES(#{name}, #{description}, #{tag},#{source}, #{quality}, #{skill},#{type});
+	</insert>
+
+	<!-- 修改Headtag -->
+	<update id="updateHeadImage" parameterType="com.admin.bean.HeadImage">
+		UPDATE headimage_info SET id=#{id}
+		<if test="name != null ">
+			, name=#{name}
+		</if>
+		<if test="description != null ">
+			, description=#{description}
+		</if>
+		<if test="tag != null ">
+			, tag=#{tag}
+		</if>
+		<if test="quality != null ">
+			, quality=#{quality}
+		</if>
+		<if test="source != null ">
+			, source=#{source}
+		</if>
+		<if test="skill != null ">
+			, skill=#{skill}
+		</if>
+		<if test="type != null ">
+			, type=#{type}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<!-- 删除Headtag -->
+	<delete id="deleteHeadImage">
+		DELETE FROM headimage_info WHERE id=#{id};
+	</delete>
+
+	<!-- 查看Headtag -->
+	<select id="selectHeadImage" resultMap="headImage">
+		SELECT id, name, description, tag, quality, source, skill, type
+		FROM
+		headimage_info
+		WHERE id=#{id};
+	</select>
+
+	<!-- 查看所有Headtag -->
+	<select id="selectAllHeadImages" resultMap="headImage">
+		SELECT id, name, description, tag, quality, source, skill, type
+		FROM
+		headimage_info;
+	</select>
+
+	<select id="selectHeadImageEffectInfo" resultMap="headImageEffectInfo">
+		SELECT headimage_id,rank,headimage_effect FROM headimage_effect_info;
+	</select>
+</mapper>

@@ -1,0 +1,254 @@
+<div class="form-group col-sm-12">
+    <table border="0" class="table">
+        <tr>
+            <td>
+                <label for="bpm" class="col-sm-4 control-label">$title</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group col-sm-12">
+                    普通:
+									<span style="color: #2E9BF7; margin-bottom: 10px">金币数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px"
+                                              id="firstGold"
+											#if($award.gold)
+                                              value="$award.gold"
+											#else
+                                              value="0"
+											#end>
+
+											#if($award.gold)
+												$award.gold
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+									<span style="color: #2E9BF7; margin-bottom: 10px">经验数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px"
+                                              id="firstExp"
+											#if($award.experience)
+                                              value="$award.experience"
+											#else
+                                              value="0"
+											#end>
+
+											#if($award.experience)
+												$award.experience
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+									<span style="color: #2E9BF7; margin-bottom: 10px">体力数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px"
+                                              id="firstMuscle"
+											#if($award.muscle)
+                                              value="$award.muscle"
+											#else
+                                              value="0"
+											#end>
+
+											#if($award.muscle)
+												$award.muscle
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+									<span style="color: #2E9BF7; margin-bottom: 10px">残谱数量X
+										<span style="color: #2E9BF7; margin-bottom: 10px"
+                                              id="firstBroken"
+											#if($award.brokenChart)
+                                              value="$award.brokenChart"
+											#else
+                                              value="0"
+											#end>
+											#if($award.brokenChart)
+												$award.brokenChart
+											#else
+                                                0
+											#end
+                                            &nbsp;&nbsp;
+										</span>
+									</span>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    道具:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstProp"
+                                          value="#foreach($entry in $award.props)$entry.id,$entry.count@#end">
+
+										#foreach( $entry in $award.props)
+											$entry.id X $entry.count&nbsp;&nbsp;
+										#end
+                                    </span>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    头像:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstHead"
+                                          value="#foreach($entry in $award.headImages)$entry,#end">
+										#foreach( $entry in $award.headImages)
+											$entry&nbsp;&nbsp;
+										#end
+                                    </span>
+                </div>
+                <div class="form-group col-sm-12">
+                    歌曲:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstMusic"
+                                          value="#foreach($entry in $award.musics)$entry,#end">
+										#foreach( $entry in$award.musics)
+											$entry&nbsp;&nbsp;
+										#end
+                                    </span>
+                </div>
+                <div class="form-group col-sm-12">
+                    装备:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstEquips"
+                                          value="#foreach($entry in $award.equips)$entry,#end">
+                                        #foreach( $entry in$award.equips)
+                                            $entry&nbsp;&nbsp;
+                                        #end
+                                    </span>
+                </div>
+                <div class="form-group col-sm-12">
+                    边框:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstFrames"
+                                          value="#foreach($entry in $award.frames)$entry,#end">
+                                        #foreach( $entry in$award.frames)
+                                            $entry&nbsp;&nbsp;
+                                        #end
+                                    </span>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    碎片:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstPieces"
+                                          value="#foreach($entry in $award.pieces)$entry.pieceId,$entry.pieceNumber@#end">
+
+                                        #foreach( $entry in $award.pieces)
+                                            $entry.pieceId X $entry.pieceNumber&nbsp;&nbsp;
+                                        #end
+                                    </span>
+                </div>
+                <div class="form-group col-sm-12">
+                    狗粮:
+									<span style="color: #2E9BF7; margin-bottom: 10px"
+                                          id="firstMaterials"
+                                          value="#foreach($entry in $award.materials)$entry.materialType,$entry.materialNumber@#end">
+
+                                        #foreach( $entry in $award.materials)
+                                            $entry.materialType X $entry.materialNumber&nbsp;&nbsp;
+                                        #end
+                                    </span>
+                </div>
+                <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+            </td>
+        </tr>
+    </table>
+    <div class="col-sm-2">
+        <select class="form-control" name="award" id="${tagId}firstSelect" onchange="awardSelectChange('${tagId}firstSelect')">
+            <option value="1">基础</option>
+            <option value="2">道具</option>
+            <option value="3">头像</option>
+            <option value="4">歌曲</option>
+            <option value="5">装备</option>
+            <option value="6">边框</option>
+            <option value="7">碎片</option>
+            <option value="8">狗粮</option>
+
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <select class="form-control" name="${tagId}award1" id="${tagId}firstSelect1">
+            <option value="0">金币</option>
+            <option value="1">经验</option>
+            <option value="2">体力</option>
+            <option value="3">残谱</option>
+        </select>
+## style="display: none"
+        <select class="form-control" name="${tagId}award2" id="${tagId}firstSelect2" style="display: none" >
+			#if($props)
+				#foreach( $prop in $props)
+					#foreach($pr in $prop.entrySet())
+                        <option value ="$pr.key">$pr.key=$pr.value</option>
+					#end
+				#end
+			#end
+        </select>
+        <select class="form-control" name="${tagId}award3" id="${tagId}firstSelect3" style="display: none">
+		#if($heads)
+			#foreach( $head in $heads)
+				#foreach( $he in $head.entrySet())
+                    <option value ="$he.key">$he.key=$he.value</option>
+				#end
+			#end
+		#end
+        </select>
+        <select class="form-control" name="${tagId}award4" id="${tagId}firstSelect4" style="display: none">
+		#if($musics)
+			#foreach( $music in $musics)
+				#foreach( $mu in $music.entrySet())
+                    <option value ="$mu.key">$mu.key=$mu.value</option>
+				#end
+			#end
+		#end
+        </select>
+        <select class="form-control" name="${tagId}award5" id="${tagId}firstSelect5" style="display: none">
+        #if($equips)
+            #foreach( $equip in $equips)
+                #foreach( $mu1 in $equip.entrySet())
+                    <option value ="$mu1.key">$mu1.key=$mu1.value</option>
+                #end
+            #end
+        #end
+        </select>
+        <select class="form-control" name="${tagId}award6" id="${tagId}firstSelect6" style="display: none">
+        #if($frames)
+            #foreach( $frame in $frames)
+                #foreach( $mu2 in $frame.entrySet())
+                    <option value ="$mu2.key">$mu2.key=$mu2.value</option>
+                #end
+            #end
+        #end
+        </select>
+        <select class="form-control" name="${tagId}award7" id="${tagId}firstSelect7" style="display: none">
+        #if($pieces)
+            #foreach( $piece in $pieces)
+                #foreach( $mu3 in $piece.entrySet())
+                    <option value ="$mu3.key">$mu3.key=$mu3.value</option>
+                #end
+            #end
+        #end
+        </select>
+        <select class="form-control" name="${tagId}award8" id="${tagId}firstSelect8" style="display: none">
+        <option value ="1">1=红</option>
+        <option value ="2">2=蓝</option>
+        <option value ="3">3=绿</option>
+        <option value ="4">4=黄</option>
+
+        </select>
+
+
+    </div>
+    <div class="col-sm-2" style="padding-right: 0px">
+        <input type="number"  id="${tagId}firstInput" class="form-control"
+               placeholder="请输入数字" required="required" >
+    </div>
+    <div class="col-sm-2">
+        <a class="btn btn-primary text-center btn-block" onclick="awardAddClick('${tagId}first')">添加</a>
+    </div>
+
+    <div class="col-sm-4" id="${tagId}firstAward"></div>
+</div>

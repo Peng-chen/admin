@@ -1,0 +1,68 @@
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data"
+		style="padding-left: 4%;  border: 0px;">
+		<div id="detailcontainer" class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">所有谱面</h3>
+			</div>
+			
+			#if($status)
+##				<div class="panel-body">
+                    <div class="table-responsive">
+					<table  cellpadding="15px" class="table table-hover table-bordered table-condensed text-center">
+						<tr>
+							<th>id</th>
+							<th>tag</th>
+							<th>note上限</th>
+							<th>难度等级</th>
+							<th>总游戏次数</th>
+							<th>最近游戏次数</th>
+							<th>热度</th>
+                            <th>创建时间</th>
+                            <th>标准分数</th>
+                            <th>分数列表</th>
+                            <th>谱面quality</th>
+							<th>操作</th>
+						</tr>
+						#if($schemes)
+							#foreach( $scheme in $schemes)
+								<tr>
+									<td>$scheme.id</td>
+									<td>$scheme.tag</td>
+									<td>$scheme.limitNote</td>
+									<td>$scheme.hardLevel</td>
+									
+									<td>$scheme.totalPlayCount</td>
+									<td>$scheme.lastPlayCount</td>
+									<td>$scheme.hot</td>
+                                    <td>$scheme.createTime</td>
+                                    <td>$scheme.standardScore</td>
+                                    <td>$scheme.scores</td>
+                                    <td>#if($scheme.quality)$scheme.quality
+									#end</td>
+
+									<td><form action=" /admin/scheme/update">
+												<input type="hidden" name="schemeId" value=$scheme.id /> 
+												<input type="hidden" name="token" value="$token"/> <input
+													type="submit" class="btn btn-default" value="修改" />
+										</form>
+                                        <form id="deleteScheme-form" action="#" onsubmit="deleteScheme(this);">
+                                            <input type="hidden" name="schemeId" value=$scheme.id /><input type="hidden" name="token" value="$token"/> <input
+                                                id="deleteScheme-btn"   type="submit" class="btn btn-default" value="删除" />
+                                        </form>
+									</td>
+									
+								</tr>
+							#end
+						#end
+					</table>
+				</div>
+			#else
+				<div style="padding-left: 10px">Server Error...</div>
+			#end
+		</div>
+	</div>
+</div>
+

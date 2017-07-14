@@ -1,0 +1,94 @@
+<div class="container">
+#parse("/screen/nav.vm")
+	<div class="data">
+		<div id="formDiv" class="span10">
+				<div class="form-group col-sm-12">
+					<input type="hidden" name="challegeId" value='$challege.id' id="challegeid"> <label
+						for="name" class="col-sm-2 control-label">关卡名称</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+                        <p class="form-control" style="color: #2E9BF7">$challege.name</p>
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="description" class="col-sm-2 control-label">描述</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+                        <p class="form-control" style="color: #2E9BF7">$challege.description</p>
+					
+					</div>
+				</div>
+
+##			before is like this :
+##				<div class="form-group col-sm-12">
+##					<label for="bpm" class="col-sm-2 control-label">挑战包图片</label>
+##					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+##						<div data-role="acknowledgement">
+##							<i></i>
+##						</div>
+##						<input  id="updatechallegeImage" type="file" accept="image/*" class="form-control"
+##							placeholder="请选择图片" required="required" value='$challege.image'>
+##					</div>
+##				</div>
+
+##			after is like this:
+
+            <div class="form-group col-sm-12">
+                <label class="col-sm-2 control-label">挑战包图片</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p class="form-control" style="color: #2E9BF7">$challege.tag</p>
+                </div>
+            </div>
+
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-2 control-label">要求玩家等级</label>
+					<div class="col-sm-8 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+                        <p class="form-control" style="color: #2E9BF7">$challege.requiredLevel</p>
+					</div>
+				</div>
+
+            <div class="form-group col-sm-12">
+                <label class="col-sm-2 control-label">过关条件(js代码)</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <pre class="form-control" style="color: #2E9BF7">$challege.determineCondition</pre>
+
+
+                </div>
+            </div>
+
+
+				<div>
+##					<button
+##						class="col-sm-offset-3 col-sm-2 btn btn-primary" id="updateChallege-btn" style="display:inline-block;float:left;">保存修改</button>
+##					<a href=" /admin/allChalleges?token=$token" style="float:left;"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+
+                    <form action=" /admin/challege/update">
+                        <input type="hidden" name="challegeId" value=$challege.id />
+                        <input type="hidden" name="token" value="$token"/>  <input
+                            type="submit" class="col-sm-offset-2 col-sm-2 btn btn-primary" value="修改" />
+                    </form>
+
+                    <a href=" /admin/allChalleges?token=$token" style="float:left;">
+                        <button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表
+                        </button>
+                    </a>
+
+
+				</div>
+			
+		</div>
+	</div>
+</div>

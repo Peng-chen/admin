@@ -1,0 +1,96 @@
+<div class="container">
+	#parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="propId" value='$prop.id' id="propid"> <label
+                    for="name" class="col-sm-2 control-label">商品id</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <p>$prop.id</p>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="propId" value='$prop.name' id="propname"> <label
+                    for="name" class="col-sm-2 control-label">道具名称</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateName" min="0" class="form-control"
+                           required="required" value='$prop.name' placeholder="请输入名称">
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">道具描述</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateDescription" min="0" class="form-control"
+                           required="required" value='$prop.description' placeholder="请输入描述">
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="attribute" class="col-sm-2 control-label">道具属性</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <select class="form-control" name="updateAttribute" id="updateAttribute">
+                        <option value="1">使游戏失败</option>
+                        <option value="2">使游戏通关</option>
+                        <option value="3">无影响</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">可用模式</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <table>
+                        <tr>
+                            <td><input type="checkbox" id="freeModel">自由模式</td>
+                        </tr>
+						<tr>
+                            <td><input type="checkbox" id="storyModel">剧情模式</td>
+						</tr>
+                        <tr>
+                            <td><input type="checkbox" id="challengeModel">挑战模式</td>
+						</tr>
+                        <tr>
+                            <td><input type="checkbox" id="activeModel">活动</td>
+						</tr>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">标识</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateTag" min="0" step="1" class="form-control"
+                           required="required" value='$prop.tag' placeholder="标识">
+                </div>
+            </div>
+            <div>
+                <button
+                        class="col-sm-offset-3 col-sm-2 btn btn-primary" id="updateProps-btn" style="display:inline-block;float:left;">保存修改</button>
+                <a href=" /admin/allProps?token=$token" style="float:left;"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--<bean id="baseService" class="com.admin.service.impl.BaseServiceImpl">-->
+        <!--<property name="userDao" ref="userDao"/>-->
+        <!--<property name="userPropRelationDao" ref="userPropRelationDao"/>-->
+        <!--<property name="muscleUseTimeCache" ref="muscleUseTimeDao"/>-->
+        <!--<property name="userSystemEmailDao" ref="userSystemEmailDao"/>-->
+        <!--<property name="userSchemeRelationDao" ref="userSchemeRelationDao"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="userService" class="com.admin.service.impl.UserServiceImpl"-->
+          <!--parent="baseService">-->
+        <!--<property name="userEquipRelationService" ref="userEquipRelationService"/>-->
+        <!--<property name="userHeadImageRelationService" ref="userHeadImageRelationService"/>-->
+        <!--<property name="systemEmailService" ref="systemEmailService"/>-->
+        <!--<property name="loginAwardService" ref="loginAwardService"/>-->
+        <!--<property name="tokenCache" ref="tokenDao"/>-->
+        <!--<property name="userCache" ref="userCache"/>-->
+        <!--<property name="userPieceRelationService" ref="userPieceRelationService"/>-->
+        <!--<property name="userAlbumRelationService" ref="userAlbumRelationService"/>-->
+        <!--<property name="userSchemeRelationDao" ref="userSchemeRelationDao"/>-->
+        <!--<property name="userPropRelationService" ref="userPropRelationService"/>-->
+        <!--<property name="collectionService" ref="collectionService"/>-->
+        <!--<property name="userFreeExperienceService" ref="userFreeExperienceService"/>-->
+        <!--<property name="jedisPool" ref="jedisPool"/>-->
+        <!--<property name="dataStatisticsService" ref="dataStatisticsService"/>-->
+        <!--<property name="materialService" ref="materialService" />-->
+        <!--<property name="giftPackDao" ref="giftPackDao"/>-->
+        <!--<property name="userHeadimageFrameDao" ref="userHeadimageFrameDao" />-->
+        <!--<property name="activationService" ref="activationService" />-->
+    <!--</bean>-->
+
+
+    <!--<bean id="normalActivityService" class="com.admin.service.impl.NormalActivityServiceImpl"-->
+          <!--parent="baseService">-->
+        <!--<property name="normalActivityDao" ref="normalActivityDao"/>-->
+        <!--<property name="challengeGateService" ref="challengeGateService"/>-->
+        <!--<property name="activationService" ref="activationService" />-->
+    <!--</bean>-->
+
+</beans>

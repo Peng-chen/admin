@@ -1,0 +1,160 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet" />
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet" />
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="ActivityId" value='$activity.id' id="ActivityId">
+                <label
+                        for="name" class="col-sm-2 control-label">类型</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input type="number" class="form-control" id="ActivityType"
+                           required="required" data-type="integer" placeholder="请输入类型,请输入数字"
+                           value='$activity.type'>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">周期</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="ActivityPeriod" class="form-control" value='$activity.period'
+                           required="required" type="number" data-type="integer" placeholder="请输入周期"/>
+
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">名称</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="ActivityName" type="text" class="form-control"
+                           required="required" data-type="text"
+                           value='$activity.name' placeholder="请输入名称">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">标签</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="ActivityTag" type="text" class="form-control"
+                           required="required" data-type="text"
+                           value='$activity.tag' placeholder="标签">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">描述、简介</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="ActivityDescription" type="text" class="form-control"
+                           required="required" data-type="integer"
+                           value='$activity.description' placeholder="请输入描述、简介">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">谱面列表</label>
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input  id="ActivitySchemes" type="text" class="form-control"
+                            placeholder="请输入谱面id，多个谱面请用“ , ”分割（英文的）" required="required" value='#foreach($scheme in $activity.schemes)$scheme,#end'>
+                </div>
+            </div>
+
+            <div id="div1">
+                #set($award=$activity.massiveAward)
+            #set($tagId="massiveAward")
+            #set($title="首次挑战成功的奖励")
+            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+            </div>
+            <div id="div2">
+                #set($tagId="leastAward")
+                #set($award=$activity.leastAward)
+                #set($title="非首次挑战成功的奖励")
+                #parse("/screen/award_show.vm")
+                #parse("/screen/award_add.vm")
+                <div>
+
+            <div class="form-group col-sm-12">
+                <label for="startTime" class="col-sm-2 control-label">开始时间</label>
+                <div class="col-sm-8">
+                    <fmt:formatDate var="startTime"
+                                    value="${activity.startTime}"
+                                    pattern="yyyy-MM-dd HH:mm:ss" />
+                    <input type="text" id="updateStartTime" required="required"
+                           class="ui_timepicker form-control" value='$activity.startTime'>
+                </div>
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="endTime" class="col-sm-2 control-label">结束时间</label>
+                <div class="col-sm-8">
+                    <fmt:formatDate var="endTime"
+                                    value="${activity.endTime}"
+                                    pattern="yyyy-MM-dd HH:mm:ss" />
+                    <input type="text" id="updateEndTime" required="required"
+                           class="ui_timepicker form-control" value='$activity.endTime'>
+                </div>
+            </div>
+
+
+
+            <div>
+                <button
+                        class="col-sm-offset-3 col-sm-2 btn btn-primary" onclick="updateActivity($propSize,$headSize,$musicSize,$equipSize,$frameSize,$pieceSize,$materialSize)" id="updateActivity-btn"
+                        style="display:inline-block;float:left;">保存修改
+                </button>
+                <a href=" /admin/activity/all?token=$token" style="float:left;">
+                    <button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表
+                    </button>
+                </a>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".ui_timepicker").datetimepicker({
+            showSecond : true,
+            timeFormat : 'hh:mm:ss',
+            stepHour : 1,
+            stepMinute : 1,
+            stepSecond : 1
+        });
+    });
+
+</script>

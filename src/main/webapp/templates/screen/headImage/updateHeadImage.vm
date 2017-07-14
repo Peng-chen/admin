@@ -1,0 +1,121 @@
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="headId" value='$headImage.id' id="headId"> <label
+                    for="name" class="col-sm-2 control-label">头像名称</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input type="text" class="form-control" id="updateHeadname"
+                           required="required" data-type="text" placeholder=""
+                           value='$headImage.name'/>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">头像描述</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+						<textarea id="updateHeaddes" class="form-control" rows="3" value='$headImage.description'
+                                  required="required" type="text" placeholder="请输入描述">$headImage.description</textarea>
+
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">标记</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateHeadtag" type="text" class="form-control"
+                           required="required" data-type="integer"
+                           value='$headImage.tag' placeholder="请输入标记"/>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">头像quality</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateHeadquality" type="number" class="form-control" name="hardLevel"
+                           placeholder="请输入头像quality" required="required" data-type="integer"
+                           value="$headImage.quality"/>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">头像source</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="updateHeadsource" class="form-control" rows="3" placeholder="请输入头像source"
+                           required="required" data-type="text" name="description" value="$headImage.source"></input>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">头像技能</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <textarea id="updateHeadskill" class="form-control" rows="3" placeholder="请输入头像技能"
+                              required="required" data-type="text" name="description"
+                              value="$headImage.skill">$headImage.skill</textarea>
+                </div>
+            </div>
+
+##            <div class="form-group col-sm-12">
+##                <label for="bpm" class="col-sm-2 control-label">类型</label>
+##
+##                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+##                    <div data-role="acknowledgement">
+##                        <i></i>
+##                    </div>
+##                    <input id="updateHeadtype" type="number" class="form-control" name="headtype"
+##                           placeholder="请输入类型" required="required" data-type="integer" value="$headImage.type"/>
+##                </div>
+##            </div>
+
+
+            <div class="form-group col-sm-12">
+                <label for="bpm" class="col-sm-2 control-label">类型</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <select class="form-control" name="equiptype" id="updateHeadtype">
+                        <option value="0" #if($headImage.type==0) selected="selected" #end>无类别</option>
+                        <option value="1" #if($headImage.type==1) selected="selected" #end>红</option>
+                        <option value="2" #if($headImage.type==2) selected="selected" #end>蓝</option>
+                        <option value="3" #if($headImage.type==3) selected="selected" #end>绿</option>
+                        <option value="4" #if($headImage.type==4) selected="selected" #end>黄</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button
+                        class="col-sm-offset-3 col-sm-2 btn btn-primary" id="updateHead-btn"
+                        style="display:inline-block;float:left;">保存修改
+                </button>
+                <a href=" /admin/allheadImages?token=$token" style="float:left;">
+                    <button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表
+                    </button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

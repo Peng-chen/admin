@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="systemEmail">
+	<resultMap type="com.admin.bean.Email" id="systemEmail">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="attachment" column="attachment" javaType="Object"
+			jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" />
+		<result property="type" column="type" />
+		<result property="csbName" column="csb_name" />
+	</resultMap>
+
+	<insert id="insertSystemEmail" parameterType="com.admin.bean.Email"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO system_email_info
+		(title,content,attachment,type)
+		VALUES(#{title},
+		#{content},
+		#{attachment, javaType=Object, jdbcType=VARCHAR},
+		#{type});
+	</insert>
+
+	<update id="updateSystemEmail" parameterType="com.admin.bean.Email">
+		UPDATE system_email_info SET id=#{id}
+		<if test="title != null and title!= ''">
+			,title=#{title}
+		</if>
+		, content=#{content}
+		, attachment=#{attachment,
+		javaType=Object,jdbcType=VARCHAR}
+		, type=#{type}
+		WHERE
+		id=#{id};
+	</update>
+
+	<delete id="deleteSystemEmail" parameterType="java.lang.Long">
+		DELETE FROM
+		system_email_info
+		WHERE id=#{id};
+	</delete>
+
+	<select id="selectSystemEmailById" parameterType="java.lang.Long"
+		resultMap="systemEmail">
+		SELECT
+		id,title,content,attachment,create_time,type,csb_name
+		FROM
+		system_email_info
+		WHERE id=#{id};
+	</select>
+
+	<select id="selectAllSystemEmails" resultMap="systemEmail">
+		SELECT
+		id,title,content,attachment,create_time,type,csb_name
+		FROM system_email_info;
+	</select>
+</mapper>

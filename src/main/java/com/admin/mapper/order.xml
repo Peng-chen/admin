@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+
+    <resultMap id="userRechargeRelation" type="com.admin.bean.UserRechargeRelation">
+        <result property="userId" column="user_id"/>
+        <result property="md5" column="receipt_md5"/>
+        <result property="receipt" column="receipt"/>
+        <result property="money" column="money"/>
+        <result property="orderId" column="order_id"/>
+        <result property="goodId" column="good_id"/>
+        <result property="platform" column="platform"/>
+        <result property="platformOrderId" column="platform_order_id"/>
+        <result property="orderState" column="order_state"/>
+        <result property="orderCreateTime" column="order_create_time"/>
+        <result property="orderCompleteTime" column="order_complete_time"/>
+    </resultMap>
+
+
+    <resultMap id="userCompleteCharge" type="com.admin.bean.UserCompleteCharge">
+        <result property="userId" column="userId"/>
+        <result property="money" column="money"/>
+    </resultMap>
+
+    <select id="selectUserCompleteChargeByTimeAndMoney" parameterType="java.util.Map" resultMap="userCompleteCharge">
+    SELECT userId,money FROM (SELECT user_id AS userId,SUM(money) AS money FROM user_recharge_relation
+    WHERE order_state = 3
+     <if test="startTime != null and startTime != '' ">
+        AND <![CDATA[ order_complete_time>='${startTime}' ]]>
+       </if>
+       <if test="endTime != null and endTime != '' ">
+        AND <![CDATA[ order_complete_time <= '${endTime}' ]]>
+       </if>
+        group by user_id  ) AS T where TRUE
+        <if test="minMoney != null and maxMoney>=0 ">
+            AND  <![CDATA[ T.money>= ${minMoney} ]]>
+        </if>
+        <if test="maxMoney != null and maxMoney>0 ">
+            AND  <![CDATA[ T.money<= ${maxMoney}  ]]>
+        </if>
+        order by money DESC;
+    </select>
+
+    <select id="selectUserCompleteChargeByTime" parameterType="java.util.Map" resultMap="userCompleteCharge">
+        SELECT user_id AS userId,SUM(money) AS money FROM user_recharge_relation
+        WHERE order_state = 3
+        <if test="startTime != null and startTime != '' ">
+            AND <![CDATA[ order_complete_time>='${startTime}' ]]>
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            AND <![CDATA[ order_complete_time <= '${endTime}' ]]>
+        </if>
+
+        group by user_id order by money DESC ;
+    </select>
+
+
+    <!--<select id="selectCompleteChargesByUserId" parameterType="java.util.Map" resultMap="userRechargeRelation">-->
+        <!--SELECT user_id ,money ,order_id,good_id,platform,platform_order_id,order_state,order_create_time,order_complete_time FROM user_recharge_relation-->
+        <!--WHERE user_id = #{userId}-->
+        <!--<if test="startTime != null and startTime != '' ">-->
+            <!--AND <![CDATA[ order_complete_time>='${startTime}' ]]>-->
+        <!--</if>-->
+        <!--<if test="endTime != null and endTime != '' ">-->
+            <!--AND <![CDATA[ order_complete_time <= '${endTime}' ]]>-->
+        <!--</if>-->
+
+    <!--</select>-->
+    <select id="selectCompleteChargesByUserId" parameterType="java.util.Map" resultMap="userRechargeRelation">
+        SELECT user_id ,money ,order_id,good_id,platform,platform_order_id,order_state,order_create_time,order_complete_time FROM user_recharge_relation
+        WHERE user_id = #{userId}
+        <if test="startTime != null and startTime != '' ">
+            AND <![CDATA[ order_create_time>='${startTime}' ]]>
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            AND <![CDATA[ order_create_time <= '${endTime}' ]]>
+        </if>
+
+    </select>
+
+    <insert id="insertNewOrder" parameterType="com.admin.bean.OrderInfo">
+        INSERT INTO user_recharge_relation(
+        user_id
+        ,money
+        ,order_id
+        ,good_id,platform,order_state,order_info,order_create_time
+        )
+        VALUES(
+          #{user_id},#{total_price},#{cp_order_id}
+          ,#{good_id},#{platform},#{order_state},#{orderInfoJson},NOW()
+        )
+    </insert>
+
+
+    <select id="selectStateByOrderId" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT user_id AS userId,order_state AS state,order_id AS orderId,money,good_id AS goodid FROM user_recharge_relation
+        WHERE order_id = #{orderId};
+    </select>
+
+    <select id="selectStateByUserId" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT user_id AS userId,order_state AS state,good_id AS orderId,money FROM user_recharge_relation
+        WHERE user_id = #{userId}
+        <if test="state != null">
+            AND order_state = #{state}
+        </if>;
+    </select>
+
+
+    <update id="updateOrderStateAfterRecharge" parameterType="java.util.Map">
+        UPDATE user_recharge_relation
+        SET order_state = #{orderState},order_complete_time = NOW()
+        WHERE order_id = #{orderId}
+    </update>
+
+    <update id="updateOrderInfo" parameterType="java.util.Map">
+        UPDATE user_recharge_relation
+        SET order_state = #{orderState},order_complete_time = NOW()
+        <if test="platformOrderId != null">
+            ,platform_order_id = #{platformOrderId}
+        </if>
+        <if test="receipt != null">
+            ,receipt = #{receipt}
+        </if>
+        <if test="receiptMd5 != null">
+            ,receipt_md5 = #{receiptMd5}
+        </if>
+        WHERE order_id = #{orderId}
+    </update>
+
+    <update id="updateWxOrderCreateInfo" parameterType="java.util.Map">
+        UPDATE user_recharge_relation
+        SET platform_order_info = #{info}
+        WHERE order_id = #{orderId};
+    </update>
+
+    <select id="iosExceptionRechargeCheck" resultMap="userRechargeRelation">
+       SELECT user_id,receipt_md5,receipt,money,order_id,good_id,platform,platform_order_id,order_state,order_create_time,order_complete_time
+       FROM user_recharge_relation WHERE order_state = 3 and money = 12
+    </select>
+</mapper>

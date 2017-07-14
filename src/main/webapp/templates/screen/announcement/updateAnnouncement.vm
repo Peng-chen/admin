@@ -1,0 +1,127 @@
+<link type="text/css"
+	href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+	rel="stylesheet" />
+<link type="text/css"
+	href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+	rel="stylesheet" />
+
+<div class="container">
+#parse("/screen/nav.vm")
+	<div class="data">
+		<div id="formDiv" class="span10">
+				
+					
+					<div class="form-group col-sm-12">
+						<input type="hidden" id="announcementId"
+							value='${announcement.id}'> <label for="title"
+							class="col-sm-2 control-label">标题</label>
+						<div class="col-sm-8 input-group" data-role="acknowledge-input">
+							<div data-role="acknowledgement">
+								<i></i>
+							</div>
+							<input type="text" class="form-control" id="updatetitle"
+								required="required" data-type="text"
+								value='$announcement.title'>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<label for="content" class="col-sm-2 control-label">内容</label>
+						<div class="col-sm-8 input-group" data-role="acknowledge-input">
+							<div data-role="acknowledgement">
+								<i></i>
+							</div>
+							<textarea class="form-control" rows="3" required="required"
+								data-type="text" id="updatecontent">$announcement.content</textarea>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<label for="priority" class="col-sm-2 control-label">优先级</label>
+						<div class="col-sm-4 col-xm-4"
+							style="padding-left: 0px; margin-right: 0px">
+							<select class="form-control" id="updatepriority">
+								<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group col-sm-12">
+							<label for="visibleTime" class="col-sm-2 control-label">用户可见时间</label>
+							<div class="col-sm-8">
+								<fmt:formatDate var="visibleTime"
+									value="${announcement.visibleTime}"
+									pattern="yyyy-MM-dd HH:mm:ss" />
+								<input type="text" id="updatevisibleTime" required="required"
+									class="ui_timepicker form-control" value='$announcement.visibleTime'>
+							</div>
+					</div>
+					<div class="col-sm-12 form-group">
+							<label for="dismissTime" class="col-sm-2 control-label">公告失效时间</label>
+							<div class="col-sm-8">
+								<fmt:formatDate var="dismissTime"
+									value="${announcement.dismissTime}"
+									pattern="yyyy-MM-dd HH:mm:ss" />
+								<input type="text" id="updatedismissTime" required="required"
+									class="ui_timepicker form-control" value='$announcement.dismissTime'>
+							</div>
+					</div>
+
+					
+				<div>
+					<button 
+						class="col-sm-offset-3 col-sm-2 btn btn-primary" id="updateAnnouncement-btn" style="display:inline-block;float:left;">保存修改</button>
+					<a href=" /admin/allonlineAnnouncements?token=$token" style="float:left;"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+				</div>
+			
+		</div>
+	</div>
+</div>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+	src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".ui_timepicker").datetimepicker({
+				showSecond : true,
+				timeFormat : 'hh:mm:ss',
+				stepHour : 1,
+				stepMinute : 1,
+				stepSecond : 1
+			})
+		});
+		
+		$(function() {
+			if (1=='$announcement.priority' ) {
+				document.getElementById("updatepriority").selectedIndex = 0;
+			} else if (2=='$announcement.priority' ) {
+				document.getElementById("updatepriority").selectedIndex = 1;
+			} else if (3=='$announcement.priority' ) {
+				document.getElementById("updatepriority").selectedIndex = 2;
+			} else if (4=='$announcement.priority' ) {
+				document.getElementById("updatepriority").selectedIndex = 3;
+			} else if (5=='$announcement.priority' ) {
+				document.getElementById("updatepriority").selectedIndex = 4;
+			}else if (6=='$announcement.priority') {
+				document.getElementById("updatepriority").selectedIndex = 5;
+			}else if (7=='$announcement.priority') {
+				document.getElementById("updatepriority").selectedIndex = 6;
+			}else if (8=='$announcement.priority') {
+				document.getElementById("updatepriority").selectedIndex = 7;
+			}else if (9=='$announcement.priority') {
+				document.getElementById("updatepriority").selectedIndex = 8;
+			};
+		});
+
+    </script>

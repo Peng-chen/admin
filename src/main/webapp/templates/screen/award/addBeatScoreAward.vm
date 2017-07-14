@@ -1,0 +1,105 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet" />
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet" />
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+
+            <div class="form-group col-sm-12">
+                <label for="startTime" class="col-sm-2 control-label">分数</label>
+                <div class="col-sm-8">
+                    <input type="number" id="beatScoreAwardScore_add" required="required" type="number" data-type="integer"
+                           class=" form-control" value=''  >
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="startTime" class="col-sm-2 control-label">开始时间</label>
+                <div class="col-sm-8">
+                    <input type="text" id="beatScoreAwardStartTime_add" required="required"
+                           class="ui_timepicker form-control" value=''  >
+                </div>
+            </div>
+            <div class="col-sm-12 form-group">
+                <label for="endTime" class="col-sm-2 control-label">结束时间</label>
+                <div class="col-sm-8">
+
+                    <input type="text" id="beatScoreAwardEndTime_add" required="required"
+                           class=" ui_timepicker form-control" value=''  >
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+                <label
+                        for="name" class="col-sm-2 control-label">邮件奖励形式</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input type="text" class="form-control" id="beatScoreAwardContent_add"
+                           required="required" data-type="text" placeholder="请输入邮件奖励形式"
+                           value=''>
+                </div>
+            </div>
+
+
+            <div id="div1">
+                #set($award=$beatScoreAward.award)
+            #set($tagId="beatScoreAward_add")
+            #set($title="奖励")
+            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+            </div>
+
+
+            <div class="form-group col-sm-12">
+                <label for="description" class="col-sm-2 control-label">期数</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+                    <input id="beatScoreAwardPeriod_add" class="form-control" value=''
+                           required="required" type="number" data-type="integer" placeholder="请输入打榜期数"/>
+
+                </div>
+            </div>
+
+
+            <div class="form-group col-sm-12">
+                <div class="col-sm-offset-2 col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-block" onclick="addBeatScoreAward($propSize,$headSize,$musicSize,$equipSize,$frameSize,$pieceSize,$materialSize)"   id="addActivity-btn">确定</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".ui_timepicker").datetimepicker({
+            showSecond : true,
+            timeFormat : 'hh:mm:ss',
+            stepHour : 1,
+            stepMinute : 1,
+            stepSecond : 1
+        });
+    });
+
+</script>

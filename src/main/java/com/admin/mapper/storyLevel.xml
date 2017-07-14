@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="storyLevel">
+	<resultMap type="com.admin.bean.StoryLevel" id="storyLevel">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="image" column="image" />
+		<result property="animation" column="animation" />
+		<result property="musics" column="musics" javaType="List"
+			jdbcType="ARRAY" />
+	</resultMap>
+
+	<!-- 增加StoryLeveInfo -->
+	<insert id="insertStoryLevel" parameterType="com.admin.bean.StoryLevel"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		story_gate_info (name,
+		description, image, animation, musics)
+		VALUES(#{name}, #{description},
+		#{image}, #{animation},
+		#{musics,javaType=List,jdbcType=ARRAY});
+	</insert>
+
+	<!-- 修改StoryLeveInfo -->
+	<update id="updateStoryLevel" parameterType="com.admin.bean.StoryLevel">
+		UPDATE story_gate_info SET id=#{id}
+		<if test="name != null ">
+			, name=#{name}
+		</if>
+		<if test="description != null ">
+			, description=#{description}
+		</if>
+		<if test="image != null ">
+			, image=#{image}
+		</if>
+		<if test="animation != null ">
+			, animation=#{animation}
+		</if>
+		<if test="musics != null ">
+			, musics=#{musics,javaType=List,jdbcType=ARRAY}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<!-- 删除StoryLeveInfo -->
+	<delete id="deleteStoryLevel">
+		DELETE FROM story_gate_info WHERE id=#{id};
+	</delete>
+
+	<!-- 查看StoryLeveInfo -->
+	<select id="selectStoryLevel" resultMap="storyLevel">
+		SELECT id, name,
+		description, image, animation,
+		musics
+		FROM story_gate_info
+		WHERE
+		id=#{id};
+	</select>
+
+	<!-- 查看所有StoryLeveInfo -->
+	<select id="selectAllStoryLevels" resultMap="storyLevel">
+		SELECT id, name,
+		description, image, animation,
+		musics
+		FROM story_gate_info;
+	</select>
+</mapper>

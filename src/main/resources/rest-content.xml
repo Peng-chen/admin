@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc   
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context  
+    	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="propertyConfigurer" class="com.admin.utils.CustomizedPropertyConfigurer">
+		<property name="locations">
+			<list>
+				<!-- <value>classpath*:ClientVersion.properties</value> -->
+				<!-- <value>classpath*:mongo.properties</value> -->
+				<!--<value>classpath*:redis.properties</value>-->
+				<!--<value>classpath*:zookeeper.properties</value>-->
+				<value>classpath*:client_version.properties</value>
+				<value>classpath*:admin-account.properties</value>
+				<!-- <value>classpath*:mGameServer.properties</value> -->
+			</list>
+		</property>
+	</bean>
+
+
+	<bean
+			class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+
+
+	<!--数据库安卓-->
+	<bean id="androidDataSource" 	class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="username" value="postgres" />
+		<!-- 本机密码 -->
+		<property name="url" value="jdbc:postgresql://192.168.2.129:5432/MGameDB_NEW" />
+		<property name="password" value="postgres" />
+
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="500" />
+		<property name="defaultAutoCommit" value="true" />
+	</bean>
+
+	<!--数据库IOS-->
+	<bean id="iosDataSource" 	class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="username" value="postgres" />
+		<!-- 本机密码 -->
+		<!--<property name="url" value="jdbc:postgresql://115.231.92.42:5432/MGameDB_6_1" />-->
+		<property name="password" value="3i#UVLccho222lwKVvMO" />
+
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="500" />
+		<property name="defaultAutoCommit" value="true" />
+	</bean>
+
+
+
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="androidDataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-configuration.xml" />
+		<property name="dataSource" ref="androidDataSource" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<!-- <constructor-arg index="1" value="BATCH" /> -->
+	</bean>
+
+	<!-- service 拦截 -->
+	<bean id="serviceInterceptor" class="com.admin.service.interceptor.ServiceInterceptor" />
+
+	<bean
+			class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>serviceInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--<bean id="zkClient" class="com.admin.utils.zookeeper.ZkClient">-->
+		<!--<constructor-arg>-->
+			<!--<value>${zookeeper.server}</value>-->
+		<!--</constructor-arg>-->
+		<!--<constructor-arg>-->
+			<!--<value>${zookeeper.namespace}</value>-->
+		<!--</constructor-arg>-->
+	<!--</bean>-->
+
+
+	<!-- <import resource="rest-mongoConfig.xml" /> -->
+	<!--<import resource="rest-redis.xml" />-->
+	<!--<import resource="rest-services.xml" />-->
+	<!--<import resource="rest-daos.xml" />-->
+	<import resource="task.xml" />
+</beans>

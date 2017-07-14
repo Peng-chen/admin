@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="award">
+    <resultMap id="levelUpAward" type="com.admin.bean.LevelUpAward">
+        <result property="id" column="id" />
+        <result property="level" column="level" />
+        <result property="award" column="award" javaType="Object"
+                jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="beatScoreAward" type="com.admin.bean.BeatScoreAward">
+        <result property="score" column="score" />
+        <result property="content" column="content" />
+        <result property="award" column="award" javaType="Object"
+                jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="period" column="period" />
+    </resultMap>
+
+    <resultMap id="beatAward" type="com.admin.bean.BeatAward">
+        <result property="id" column="id" />
+        <result property="award" column="award" javaType="Object"
+                jdbcType="VARCHAR"/>
+        <result property="content" column="content" />
+        <result property="description" column="description" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time" />
+        <result property="statisticTime" column="statistic_time" />
+        <result property="limit" column="limit" />
+        <result property="offset" column="offset" />
+        <result property="schemes" column="schemes" javaType="List"
+                jdbcType="ARRAY"/>
+        <result property="period" column="period" />
+    </resultMap>
+
+    <resultMap id="userScore" type="com.admin.bean.UserScore">
+        <result property="userId" column="userId"/>
+        <result property="score" column="score" />
+    </resultMap>
+
+    <select id="selectLevelUpAward" resultMap="levelUpAward">
+        SELECT id,level,award FROM level_up_award;
+    </select>
+
+    <select id="selectBeatScoreAward" resultMap="beatScoreAward">
+      SELECT score,award,content,start_time,end_time,period
+      FROM beat_score_award
+      WHERE now() >= start_time and end_time >= now()
+      ORDER BY score;
+    </select>
+
+    <select id="selectOneBeatScoreAward" resultMap="beatScoreAward">
+        SELECT score,award,content,start_time,end_time,period
+        FROM beat_score_award
+        WHERE score=#{score} AND start_time='${startTime}' AND end_time='${endTime}'
+    </select>
+
+    <select id="selectBeatScoreAwards" resultMap="beatScoreAward">
+        SELECT score,award,content,start_time,end_time,period
+        FROM beat_score_award
+        WHERE <if test="state == 1 ">
+        <![CDATA[
+				now() >=start_time  AND now()<=end_time
+
+			]]>
+    </if>
+        <if test="state == 0 ">
+            <![CDATA[
+				start_time > now()
+
+			]]>
+        </if>
+        <if test="state == -1 ">
+            <![CDATA[
+				end_time < now()
+			]]>
+        </if>
+        ORDER BY score;
+    </select>
+
+
+    <select id="selectOneBeatAward" resultMap="beatAward">
+        SELECT id,award,content,description,start_time,end_time,statistic_time,"limit","offset",schemes,period
+        FROM beat_award
+        WHERE
+        id=#{beatId};
+    </select>
+
+    <select id="selectBeatAward" resultMap="beatAward">
+        SELECT id,award,content,description,start_time,end_time,statistic_time,"limit","offset",schemes,period
+        FROM beat_award
+        WHERE now() >= start_time and end_time >= now() ORDER BY "limit"+"offset";
+    </select>
+
+
+    <select id="selectBeatAwards" resultMap="beatAward">
+        SELECT id,award,content,description,start_time,end_time,statistic_time,"limit","offset",schemes,period
+        FROM beat_award
+        WHERE
+        <if test="state == 1 ">
+            <![CDATA[
+				now() >=start_time  AND now()<=end_time
+
+			]]>
+        </if>
+        <if test="state == 0 ">
+            <![CDATA[
+				start_time > now()
+
+			]]>
+        </if>
+        <if test="state == -1 ">
+            <![CDATA[
+				end_time < now()
+			]]>
+        </if>
+
+
+        ORDER BY "limit"+"offset";
+
+    </select>
+
+    <select id="selectBeatAwardDeliver" resultMap="beatAward">
+        SELECT id,award,content,description,start_time,end_time,statistic_time,"limit","offset",schemes,period
+        FROM beat_award
+        WHERE now() >= end_time and statistic_time >= now() ORDER BY "limit"+"offset";
+    </select>
+
+
+    <insert id="deliverBeatAward" parameterType="com.admin.bean.BeatAward">
+        INSERT INTO user_email_info(user_id,title,content,attachment,sender_id,has_read)
+        SELECT user_id,'系统邮件',#{content},#{award,javaType=Object,jdbcType=VARCHAR},'0',false
+        FROM (SELECT SUM(max_score) AS score,user_id FROM user_brush_list_relation WHERE scheme_id IN
+        <foreach item="item" index="index" collection="schemes" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY user_id)AS T
+        ORDER BY score DESC limit #{limit} offset #{offset};
+    </insert>
+
+    <select id="selectUserBeatScore" parameterType="java.util.ArrayList" resultMap="userScore">
+        SELECT SUM(max_score) AS score,user_id as userId FROM user_brush_list_relation WHERE scheme_id IN
+        <foreach item="item" index="index" collection="schemes" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY score DESC;
+    </select>
+
+    <!-- 删除BeatAward -->
+    <delete id="deleteBeatAward">
+        DELETE FROM beat_award WHERE id=#{beatAwardId};
+    </delete>
+
+    <!-- 删除BeatScoreAward -->
+    <delete id="deleteBeatScoreAward">
+        DELETE FROM beat_score_award  WHERE score=#{score} AND start_time='${startTime}' AND end_time='${endTime}';
+    </delete>
+
+
+    <!-- 增加BeatAward -->
+    <insert id="insertBeatAward" parameterType="com.admin.bean.BeatAward"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO beat_award
+        (award,content,description,start_time,end_time,statistic_time,"limit","offset",schemes,period)
+        VALUES (
+        #{award,
+        javaType=Object,
+        jdbcType=VARCHAR},
+        #{content},
+        #{description},
+       '${startTime}',
+       '${endTime}',
+       '${statisticTime}', #{limit}, #{offset},
+        #{schemes,javaType=List,jdbcType=ARRAY}, #{period});
+    </insert>
+
+
+    <!-- 增加BeatScoreAward -->
+    <insert id="insertBeatScoreAward" parameterType="com.admin.bean.BeatScoreAward"
+           >
+        INSERT INTO beat_score_award
+        (score,award,content,start_time,end_time,period)
+        VALUES (
+        #{score},
+        #{award,
+        javaType=Object,
+        jdbcType=VARCHAR},
+        #{content},
+        '${startTime}',
+        '${endTime}',
+        #{period});
+    </insert>
+
+
+    <!-- 修改BeatAward -->
+    <update id="updateBeatAward" parameterType="com.admin.bean.BeatAward">
+        UPDATE beat_award SET id=#{id}
+
+        <if test="award != null ">
+            , award=#{award, javaType=Object,
+			jdbcType=VARCHAR}
+        </if>
+        <if test="content != null ">
+            , content=#{content}
+        </if>
+        <if test="description != null ">
+            , description=#{description}
+        </if>
+
+        <if test="startTime != null">
+            , start_time='${startTime}'
+        </if>
+        <if test="endTime != null">
+            , end_time='${endTime}'
+        </if>
+        <if test="statisticTime != null">
+            , statistic_time='${statisticTime}'
+        </if>
+        <if test="limit != null ">
+            , "limit"=#{limit}
+        </if>
+        <if test="offset != null ">
+            , "offset"=#{offset}
+        </if>
+        <if test="schemes != null ">
+            , schemes=#{schemes,javaType=List,jdbcType=ARRAY}
+        </if>
+
+        <if test="period != null">
+            , period=#{period}
+        </if>
+        WHERE id=#{id};
+    </update>
+
+
+
+    <!--score,award,content,start_time,end_time,period-->
+
+    <!-- 修改BeatScoreAward -->
+    <update id="updateBeatScoreAward" parameterType="com.admin.bean.BeatScoreAward">
+        UPDATE beat_score_award SET score=#{score}
+
+        <if test="award != null ">
+            , award=#{award, javaType=Object,
+			jdbcType=VARCHAR}
+        </if>
+        <if test="content != null ">
+            , content=#{content}
+        </if>
+
+        <if test="startTime != null">
+            , start_time='${startTime}'
+        </if>
+        <if test="endTime != null">
+            , end_time='${endTime}'
+        </if>
+
+        <if test="period != null">
+            , period=#{period}
+        </if>
+        WHERE score=#{score} AND start_time='${startTime}' AND end_time='${endTime}';
+    </update>
+
+</mapper>

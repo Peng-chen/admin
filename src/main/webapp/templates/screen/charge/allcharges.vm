@@ -1,0 +1,112 @@
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-1.8.17.custom.css"
+      rel="stylesheet"/>
+<link type="text/css"
+      href=" /timepicker/css/jquery-ui-timepicker-addon.css"
+      rel="stylesheet"/>
+
+<div class="container">
+    #parse("/screen/nav.vm")
+
+    <div class="data" style="padding-left: 4%;  border: 0px;">
+        <div id="detailcontainer" class="panel panel-default">
+            <h3 class="panel-title">用户充值记录</h3>
+
+            <div class="panel-heading">
+
+
+
+            </div>
+            <div >
+                <form action="/admin/charge/all" method="POST">
+                    <div>
+                        <label class=" btn-primary">时间区间</label>
+                        <input type="hidden" name="token" value="$token">
+                        <input type="text" name="startTime" class="ui_timepicker " placeholder="请输入充值开始时间"
+                               value="#if($startTime&&$startTime!="")$startTime#end"/>
+                        <input type="text" name="endTime" class="ui_timepicker " placeholder="请输入充值结束时间"
+                               value="#if($endTime&&$startTime!="")$endTime#end"/>
+                    </div>
+                    <div>
+                        <label class=" btn-primary">金额区间</label>
+                        <input type="number" name="minMoney"  placeholder="请输入最小金额"
+                               value="#if($minMoney>0)$minMoney#end"/>
+                        <input type="number" name="maxMoney" placeholder="请输入最大金额"
+                               value="#if($maxMoney>0)$maxMoney#end"/>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="查询">
+                </form>
+            </div>
+            #if($status)
+                <div class=" table-responsive">
+                    <table cellpadding="15px" class="table table-hover text-center">
+                        <tr>
+                            <th>用户id</th>
+                            <th>本段时间充值总金额</th>
+                            <th>操作</th>
+
+
+                        </tr>
+                        #if($allCharges)
+                            #set($totalSuccess=0)
+                            #foreach( $charge in $allCharges)
+                                <tr>
+
+                                    <td>$charge.userId</td>
+                                    <td>$charge.money</td>
+                                    #set($totalSuccess=$totalSuccess+$charge.money)
+                                    <td>
+                                        <form action=" /admin/charge/chargeInfo" method="post">
+                                            <input type="hidden" name="userId" value="$charge.userId"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input type="hidden" name="startTime" value="$startTime">
+                                            <input type="hidden" name="endTime" value=" $endTime ">
+                                            <input type="submit" class="btn btn-default" value="详情"/>
+                                        </form>
+
+                                        <form id="addEmailAward-form" action="/admin/charge/addEmailAward" method="get">
+                                            <input type="hidden" name="userId" value="$charge.userId"/>
+                                            <input type="hidden" name="token" value="$token"/>
+                                            <input id="addEmailAward-btn" type="submit" class="btn btn-default"
+                                                   value="发奖励"/>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                            #end
+                            <tr>
+                                <td>总计</td>
+                                <td>$totalSuccess</td>
+                                <td></td>
+                            </tr>
+                        #end
+                    </table>
+                </div>
+            #else
+                <div style="padding-left: 10px">Server Error...</div>
+            #end
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript"
+        src=" /timepicker/js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".ui_timepicker").datetimepicker({
+            showSecond: true,
+            timeFormat: 'hh:mm:ss',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+        });
+    });
+
+</script>

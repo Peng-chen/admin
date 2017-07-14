@@ -1,0 +1,341 @@
+
+<div class="container">
+#parse("/screen/nav.vm")
+
+	<div class="data">
+		<div id="formDiv" class="span10">
+				<fieldset disabled>
+
+                    <div class="form-group col-sm-12">
+                        <label class="col-sm-2 control-label">id</label>
+                        <div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+                            <p style="color: #2E9BF7">$challegegate.id</p>
+                        </div>
+                    </div>
+
+					<div class="form-group col-sm-12">
+						<label  class="col-sm-2 control-label">名称</label>
+						<div class="col-sm-8 input-group">
+							<p style="color: #2E9BF7">$challegegate.name</p>
+						</div>
+					</div>
+
+					<div class="form-group col-sm-12">
+						<label  class="col-sm-2 control-label">描述</label>
+						<div class="col-sm-8 input-group">
+							<p style="color: #2E9BF7">#if($challegegate.description == "$challegegate.description")
+							$challegegate.description
+							#end</p>
+						</div>
+					</div>
+
+					<div class="form-group col-sm-12">
+						<label class="col-sm-2 control-label">挑战包id</label>
+						<div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+							<p style="color: #2E9BF7">$challegegate.challengeId</p>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<label  class="col-sm-2 control-label">关卡数</label>
+						<div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+							<p style="color: #2E9BF7">$challegegate.gateNumber</p>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<label class="col-sm-2 control-label">谱面列表</label>
+						<div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+							<p style="color: #2E9BF7">$challegegate.schemes</p>
+						</div>
+					</div>
+					<div class="form-group col-sm-12">
+						<label class="col-sm-2 control-label">要求玩家等级</label>
+						<div class="col-sm-5" style="padding-left: 0px; margin-right: 0px">
+							<p style="color: #2E9BF7">$challegegate.requiredLevel</p>
+						</div>
+					</div>
+
+
+                    <div id="div1">
+					                #set($award=$challegegate.massiveAward)
+            #set($tagId="firstAward")
+            #set($title="首次挑战成功奖励")
+            #parse("/screen/award_show.vm")
+##            #parse("/screen/award_add.vm")
+                    </div>
+                    <div id="div2">
+					                #set($award=$challegegate.normalAward)
+            #set($tagId="secondAward")
+            #set($title="前5次挑战成功奖励")
+            #parse("/screen/award_show.vm")
+##            #parse("/screen/award_add.vm")
+                    </div>
+                    <div id="div3">
+					                #set($award=$challegegate.leastAward)
+            #set($tagId="thirdAward")
+            #set($title="5次后挑战成功奖励")
+            #parse("/screen/award_show.vm")
+##            #parse("/screen/award_add.vm")
+                    </div>
+
+
+##					#*首次  massiveAward*#
+##
+##
+##
+##					#*前5次  normalAward*#
+##					<table border="0" class="table">
+##						<tr>
+##							<td>
+##                                <span class="form-group col-sm-12">
+##                                    #*<label class="col-sm-2 control-label">*#首次挑战成功奖励#*</label>*#
+##                                </span>
+##							</td>
+##							<td>
+##                                <div class="form-group col-sm-12">
+##                                    普通:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">金币数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.massiveAward.gold)
+##												$challegegate.massiveAward.gold
+##											#else
+##												0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">经验数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.massiveAward.experience)
+##												$challegegate.massiveAward.experience
+##											#else
+##												0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">体力数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.massiveAward.muscle)
+##												$challegegate.massiveAward.muscle
+##											#else
+##												0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">残谱数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.massiveAward.brokenChart)
+##												$challegegate.massiveAward.brokenChart
+##											#else
+##												0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##                                </div>
+##
+##                                <div class="form-group col-sm-12">
+##                                    道具:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.massiveAward.props)
+##                                            $entry.id X $entry.count&nbsp;&nbsp;
+##										#end
+##									</span>
+##                                </div>
+##
+##                                <div class="form-group col-sm-12">
+##                                    头像:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.massiveAward.headImages)
+##                                        	$entry&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##                                <div class="form-group col-sm-12">
+##                                    歌曲:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.massiveAward.musics)
+##                                        	$entry&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##                                <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+##							</td>
+##						</tr>
+##						<tr>
+##							<td>
+##                                <span class="form-group col-sm-12">
+##                                    #*<label class="col-sm-2 control-label">*#前五次挑战成功奖励#*</label>*#
+##                                </span>
+##							</td>
+##							<td>
+##                                <div class="form-group col-sm-12">
+##                                    普通:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">金币数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.normalAward.gold)
+##												$challegegate.normalAward.gold
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">经验数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.normalAward.experience)
+##												$challegegate.normalAward.experience
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">体力数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.normalAward.muscle)
+##												$challegegate.normalAward.muscle
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">残谱数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.normalAward.brokenChart)
+##												$challegegate.normalAward.brokenChart
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##                                </div>
+##
+##                                <div class="form-group col-sm-12">
+##                                    道具:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.normalAward.props)
+##											$entry.id X $entry.count&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##
+##                                <div class="form-group col-sm-12">
+##                                    头像:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.normalAward.headImages)
+##											$entry&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##                                <div class="form-group col-sm-12">
+##                                    歌曲:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.normalAward.musics)
+##											$entry&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##                                <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+##							</td>
+##						</tr>
+##                        <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+##						<tr>
+##							<td>
+##                                <span class="form-group col-sm-12">
+##                                    #*<label class="col-sm-2 control-label">*#五次后挑战成功奖励#*</label>*#
+##                                </span>
+##							</td>
+##							<td>
+##                                <div class="form-group col-sm-12">
+##                                    普通:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">金币数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.leastAward.gold)
+##												$challegegate.leastAward.gold
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">经验数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.leastAward.experience)
+##												$challegegate.leastAward.experience
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">体力数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.leastAward.muscle)
+##												$challegegate.leastAward.muscle
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##									<span style="color: #2E9BF7; margin-bottom: 10px">残谱数量X
+##										<span style="color: #2E9BF7; margin-bottom: 10px">
+##											#if($challegegate.leastAward.brokenChart)
+##												$challegegate.leastAward.brokenChart
+##											#else
+##                                                0
+##											#end
+##                                            &nbsp;&nbsp;
+##										</span>
+##									</span>
+##                                </div>
+##
+##                                <div class="form-group col-sm-12">
+##                                    道具:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.leastAward.props)
+##											$entry.id X $entry.count&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##
+##                                <div class="form-group col-sm-12">
+##                                    头像:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.leastAward.headImages)
+##											$entry&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##                                <div class="form-group col-sm-12">
+##                                    歌曲:
+##									<span style="color: #2E9BF7; margin-bottom: 10px">
+##										#foreach( $entry in $challegegate.leastAward.musics)
+##											$entry&nbsp;&nbsp;
+##										#end
+##                                    </span>
+##                                </div>
+##							</td>
+##						</tr>
+##					</table>
+
+
+					#*5次后  leastAward*#
+
+
+				</fieldset>
+				<div>
+				    <form action=" /admin/challegegate/update">
+						<input type="hidden" name="challegegateId" value=$challegegate.id />
+						<input type="hidden" name="token" value="$token"/>  
+						<button class="col-sm-offset-2 col-sm-2 btn btn-primary" type="submit" style="display:inline-block;float:left;">修改</button>
+					</form>
+					<a href=" /admin/allChallegeGates?token=$token" style="float:left;"><button class="col-sm-offset-6 col-sm-2 btn btn-primary" style="display:inline;width: 200%;">返回列表</button></a>
+				</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,91 @@
+
+<div class="container">
+#parse("/screen/nav.vm")
+<div class="data">
+		<div id="formDiv" class="span10">
+				<div class="form-group col-sm-12">
+					<label for="name" class="col-sm-1 control-label">名称</label>
+					<div class="col-sm-11 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input id="albumname" type="text" class="form-control" name="name"
+							required="required" data-type="text" placeholder="请输入名称">
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="description" class="col-sm-1 control-label">描述</label>
+					<div class="col-sm-11 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<textarea  id="albumdes" class="form-control" rows="3" placeholder="请输入描述"
+							required="required" data-type="text" name="description"></textarea>
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-1 control-label">封面</label>
+					<div class="col-sm-11 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<input  id="backgroundImage" type="text" class="form-control" name="backgroundImage"
+							required="required" data-type="integer" placeholder="请输入封面文件名">
+					</div>
+				</div>
+				<div class="form-group col-sm-12">
+					<label for="bpm" class="col-sm-1 control-label">歌曲</label>
+					
+					<div class="col-sm-2 input-group" data-role="acknowledge-input">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="musics">
+						    #foreach($music in $validMusics)
+								<option value="$music.id">$music.name</option>
+							#end
+						</select>
+					</div>
+					<div class="col-sm-2 input-group"
+						data-role="acknowledge-input" style="margin-left:20px;">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="musics">
+						    #foreach($music in $validMusics)
+								<option value="$music.id">$music.name</option>
+							#end
+						</select>
+					</div>
+					<div class="col-sm-2 input-group"
+						data-role="acknowledge-input" style="margin-left:20px;">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="musics">
+						    #foreach($music in $validMusics)
+								<option value="$music.id">$music.name</option>
+							#end
+						</select>
+					</div>
+					<div class="col-sm-2 input-group"
+						data-role="acknowledge-input" style="margin-left:20px;">
+						<div data-role="acknowledgement">
+							<i></i>
+						</div>
+						<select class="form-control" name="musics">
+						    #foreach($music in $validMusics)
+								<option value="$music.id">$music.name</option>
+							#end
+						</select>
+					</div>
+					
+				</div>
+				<div class="form-group col-sm-12">
+					<div class="col-sm-offset-2 col-sm-6">
+						<button id="addAlbum-btn" class="btn btn-primary btn-block" >确定</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

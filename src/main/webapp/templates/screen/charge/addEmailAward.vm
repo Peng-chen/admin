@@ -1,0 +1,58 @@
+<div class="container">
+    #parse("/screen/nav.vm")
+    <div class="data">
+        <div id="formDiv" class="span10">
+            <div class="form-group col-sm-12">
+                <input type="hidden" name="senderId" value='0' id="senderId">
+                <label for="userId" class="col-sm-2 control-label">用户Id</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <input type="number" class="form-control" id="userId"
+                           required="required" value="#if($userId)$userId#end" #if($userId) disabled #end placeholder="请输入userId">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="title" class="col-sm-2 control-label">标题</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <input type="text" class="form-control" id="emailTitle"
+                           required="required" placeholder="请输入标题">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="content" class="col-sm-2 control-label">内容</label>
+
+                <div class="col-sm-8 input-group" data-role="acknowledge-input">
+                    <div data-role="acknowledgement">
+                        <i></i>
+                    </div>
+						<textarea class="form-control" rows="3" placeholder="请输入内容"
+                                  required="required" data-type="text" id="emailContent"></textarea>
+                </div>
+            </div>
+
+            <div id="div1" class="form-group col-sm-12">
+                <label for="content" class="col-sm-2 control-label">attachment</label>
+
+                <div class="col-sm-10 input-group" data-role="acknowledge-input">
+            #set($tagId="userEmail_add")
+            #set($title="attachment")
+##            #parse("/screen/award_show.vm")
+            #parse("/screen/award_add.vm")
+
+                </div>
+            </div>
+
+
+            <div class="form-group col-sm-12">
+                <div class="col-sm-offset-2 col-sm-6">
+                    <button type="submit" id="addUserEmail-btn"
+                            onclick="addUserEmailAward($propSize,$headSize,$musicSize,$equipSize,$frameSize,$pieceSize,$materialSize)"
+                            class="btn btn-primary btn-block">确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

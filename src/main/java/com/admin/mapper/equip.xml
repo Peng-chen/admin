@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="equip">
+    <resultMap type="com.admin.bean.Equip" id="equip">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="description" column="description" />
+        <result property="tag" column="tag" />
+        <result property="type" column="type" />
+        <result property="quality" column="quality" />
+        <result property="source" column="source" />
+    </resultMap>
+
+    <insert id="insertEquip" parameterType="com.admin.bean.Equip"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO equip_info
+        (name,description,tag,type,quality,source)
+        VALUES(#{name}, #{description}, #{tag},#{type}, #{quality},#{source})
+    </insert>
+
+    <update id="updateEquip" parameterType="com.admin.bean.Equip">
+        UPDATE equip_info
+        SET id=#{id}
+        <if test="name != null and name !=''">
+            ,name=#{name}
+        </if>
+        <if test="description != null and description != ''">
+            ,description=#{description}
+        </if>
+        <if test="tag != null and tag != ''">
+            ,tag=#{tag}
+        </if>
+        <if test="type != null">
+            ,type=#{type}
+        </if>
+        <if test="quality != null and quality != ''">
+            ,quality=#{quality}
+        </if>
+        <if test="source != null and source != ''">
+            ,source=#{source}
+        </if>
+        WHERE id=#{id};
+    </update>
+
+    <delete id="deleteEquip" parameterType="java.lang.Integer">
+        DELETE FROM
+        equip_info
+        WHERE id=#{id};
+    </delete>
+
+    <select id="selectEquip" parameterType="java.lang.Integer"
+            resultMap="equip">
+        SELECT
+        id, name, description, tag, type, quality, source
+        FROM equip_info
+        WHERE
+        id=#{id}
+        LIMIT 1;
+    </select>
+
+    <select id="selectEquips" resultMap="equip">
+        SELECT
+        id, name, description, tag, type, quality, source
+        FROM equip_info;
+    </select>
+</mapper>

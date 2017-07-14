@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prop">
+	<resultMap type="com.admin.bean.Prop" id="prop">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="attribute" column="attribute" />
+		<result property="mode" column="mode" />
+		<result property="tag" column="tag" />
+		<result property="quality" column="quality" />
+		<result property="type" column="type" />
+	</resultMap>
+
+	<!-- 增加ProPs -->
+	<insert id="insertProp" parameterType="com.admin.bean.Prop"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO prop_info(name,
+		description, attribute, mode, tag) VALUES(#{name}, #{description},
+		#{attribute}, B'${mode}', #{tag});
+	</insert>
+
+	<!-- 修改ProPs -->
+	<update id="updateProp" parameterType="com.admin.bean.Prop">
+		UPDATE prop_info SET id=#{id}
+		<if test="name != null ">
+			, name=#{name}
+		</if>
+		<if test="description != null ">
+			, description=#{description}
+		</if>
+		<if test="attribute != null ">
+			, attribute=#{attribute}
+		</if>
+		<if test="mode != null ">
+			, mode=B'${mode}'
+		</if>
+		<if test="tag != null and tag!='' ">
+			, tag=#{tag}
+		</if>
+		WHERE id=#{id};
+	</update>
+
+	<!-- 删除ProPs -->
+	<delete id="deleteProp">
+		DELETE FROM prop_info WHERE id=#{id};
+	</delete>
+
+	<!-- 查看ProPs -->
+	<select id="selectProp" resultMap="prop">
+		SELECT id, name, description,
+		attribute, mode, tag, quality, type
+		FROM
+		prop_info
+		WHERE id=#{propId};
+	</select>
+
+	<!-- 查看所有ProPs -->
+	<select id="selectAllProps" resultMap="prop">
+		SELECT id, name,
+		description, attribute, mode, tag, quality,type
+		FROM
+		prop_info;
+	</select>
+</mapper>
